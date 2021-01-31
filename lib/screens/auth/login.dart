@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodshelf/screens/auth/forgot_password.dart';
+import 'package:foodshelf/screens/main_page.dart';
 import 'package:foodshelf/utility/brand_colors.dart';
 import 'package:foodshelf/screens/auth/signup.dart';
 import 'package:foodshelf/widgets/button_widget.dart';
@@ -12,16 +13,17 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            alignment: Alignment.topCenter,
-            image: Image.asset('assets/images/png/background.png').image,
-          ),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        image: DecorationImage(
+          alignment: Alignment.topCenter,
+          image: Image.asset('assets/images/png/background.png').image,
         ),
-        child: Padding(
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +76,10 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(height: 20),
               ButtonWidget(
                   color: BrandColors.colorAccent,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => MainPage()));
+                  },
                   title: 'Sign In'),
               SizedBox(height: 10),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [

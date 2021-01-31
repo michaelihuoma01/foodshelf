@@ -8,6 +8,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.5.0-nullsafety.1"
+  badges:
+    dependency: "direct main"
+    description:
+      name: badges
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.6"
   boolean_selector:
     dependency: transitive
     description:
@@ -123,6 +130,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.0"
+  pigment:
+    dependency: transitive
+    description:
+      name: pigment
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
+  polygon_clipper:
+    dependency: "direct main"
+    description:
+      name: polygon_clipper
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   select_form_field:
     dependency: "direct main"
     description:
@@ -177,6 +198,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.19-nullsafety.2"
+  tinycolor:
+    dependency: "direct main"
+    description:
+      name: tinycolor
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
   typed_data:
     dependency: transitive
     description:
