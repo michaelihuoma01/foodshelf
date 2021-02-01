@@ -56,6 +56,7 @@ flutter:
     - assets/images/png/ 
     - assets/images/png/home.png
     - assets/images/svg/
+    - assets/images/svg/hello.svg
     - assets/fonts/
     - assets/
 

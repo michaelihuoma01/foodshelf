@@ -64,41 +64,59 @@ class _MainPageState extends State<MainPage>
               onTap: (int index) {
                 currentPage = index;
                 tabBarController.jumpToPage(index);
-                if (index == 0) {
-                  home = Image.asset('assets/images/png/home_active.png',
-                      height: 20);
-                  cart = Image.asset('assets/images/png/cart.png', height: 20);
-                  notifications = Image.asset(
-                      'assets/images/png/notifications.png',
-                      height: 20);
-                  profile =
-                      Image.asset('assets/images/png/profile.png', height: 20);
-                } else if (index == 1) {
-                  home = Image.asset('assets/images/png/home.png', height: 20);
-                  cart = Image.asset('assets/images/png/cart_active.png',
-                      height: 20);
-                  notifications = Image.asset(
-                      'assets/images/png/notifications.png',
-                      height: 20);
-                  profile =
-                      Image.asset('assets/images/png/profile.png', height: 20);
-                } else if (index == 2) {
-                  home = Image.asset('assets/images/png/home.png', height: 20);
-                  cart = Image.asset('assets/images/png/cart.png', height: 20);
-                  notifications = Image.asset(
-                      'assets/images/png/notifications_active.png',
-                      height: 20);
-                  profile =
-                      Image.asset('assets/images/png/profile.png', height: 20);
-                } else if (index == 3) {
-                  home = Image.asset('assets/images/png/home.png', height: 20);
-                  cart = Image.asset('assets/images/png/cart.png', height: 20);
-                  notifications = Image.asset(
-                      'assets/images/png/notifications.png',
-                      height: 20);
-                  profile = Image.asset('assets/images/png/profile_active.png',
-                      height: 20);
-                }
+
+                WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                  if (index == 0) {
+                    setState(() {
+                      home = Image.asset('assets/images/png/home_active.png',
+                          height: 20);
+                      cart =
+                          Image.asset('assets/images/png/cart.png', height: 20);
+                      notifications = Image.asset(
+                          'assets/images/png/notifications.png',
+                          height: 20);
+                      profile = Image.asset('assets/images/png/profile.png',
+                          height: 20);
+                    });
+                  } else if (index == 1) {
+                    setState(() {
+                      home =
+                          Image.asset('assets/images/png/home.png', height: 20);
+                      cart = Image.asset('assets/images/png/cart_active.png',
+                          height: 20);
+                      notifications = Image.asset(
+                          'assets/images/png/notifications.png',
+                          height: 20);
+                      profile = Image.asset('assets/images/png/profile.png',
+                          height: 20);
+                    });
+                  } else if (index == 2) {
+                    setState(() {
+                      home =
+                          Image.asset('assets/images/png/home.png', height: 20);
+                      cart =
+                          Image.asset('assets/images/png/cart.png', height: 20);
+                      notifications = Image.asset(
+                          'assets/images/png/notifications_active.png',
+                          height: 20);
+                      profile = Image.asset('assets/images/png/profile.png',
+                          height: 20);
+                    });
+                  } else if (index == 3) {
+                    setState(() {
+                      home =
+                          Image.asset('assets/images/png/home.png', height: 20);
+                      cart =
+                          Image.asset('assets/images/png/cart.png', height: 20);
+                      notifications = Image.asset(
+                          'assets/images/png/notifications.png',
+                          height: 20);
+                      profile = Image.asset(
+                          'assets/images/png/profile_active.png',
+                          height: 20);
+                    });
+                  }
+                });
               },
               activeIndex: currentPage,
               indicatorColors: [

@@ -23,7 +23,7 @@ class _HomeTabState extends State<HomeTab> {
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey[100],
+        color: Colors.grey[200],
         image: DecorationImage(
           alignment: Alignment.topCenter,
           image: Image.asset('assets/images/png/background.png').image,
@@ -37,7 +37,7 @@ class _HomeTabState extends State<HomeTab> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 40),
+                padding: const EdgeInsets.symmetric(vertical: 60),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
