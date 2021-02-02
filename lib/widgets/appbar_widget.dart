@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:foodshelf/utility/brand_colors.dart';
 
 class AppBarWidget extends StatelessWidget implements PreferredSize {
   final String title;
   final Function onIconTap;
-  final bool autoLeading, white, padded;
+  final bool autoLeading, white, padded, isColored;
 
   const AppBarWidget({
     Key key,
@@ -11,6 +12,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSize {
     this.autoLeading = true,
     this.white = true,
     this.padded = false,
+    this.isColored = true,
     this.onIconTap,
   }) : super(key: key);
 
@@ -38,8 +40,14 @@ class AppBarWidget extends StatelessWidget implements PreferredSize {
             onTap: () => Navigator.pop(context), //.pop(),
             child: Row(
               children: [
-                Icon(Icons.chevron_left, size: 30, color: Colors.white),
-                Text('Back', style: TextStyle(color: Colors.white))
+                Icon(Icons.chevron_left,
+                    size: 30,
+                    color:
+                        (isColored) ? BrandColors.colorAccent : Colors.black),
+                (isColored)
+                    ? Text('Back',
+                        style: TextStyle(color: BrandColors.colorAccent))
+                    : Container(),
               ],
             ),
           ),

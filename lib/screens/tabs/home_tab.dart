@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:foodshelf/screens/pages/details.dart';
+import 'package:foodshelf/screens/pages/search.dart';
 import 'package:foodshelf/utility/brand_colors.dart';
 import 'package:foodshelf/widgets/food_home.dart';
 import 'package:foodshelf/widgets/food_type.dart';
@@ -84,7 +86,12 @@ class _HomeTabState extends State<HomeTab> {
                         ),
                       ],
                     ),
-                    Icon(Icons.search, color: Colors.white)
+                    InkWell(
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SearchPage())),
+                        child: Icon(Icons.search, color: Colors.white))
                   ],
                 ),
               ),
@@ -218,31 +225,39 @@ class _HomeTabState extends State<HomeTab> {
                       child: Container(
                         // width: 190,
                         height: 215,
-                        child: GridView.count(
-                          crossAxisCount: 2,
-                          childAspectRatio: (itemWidth / itemHomeHeight),
-                          children: [
-                            FoodHome(
-                                url: 'assets/images/png/ricebag.png',
-                                title: 'Brown rice',
-                                subtitle: 'Price: 50 AED',
-                                bgColor: Colors.grey[400]),
-                            FoodHome(
-                                url: 'assets/images/png/ricebag.png',
-                                title: 'Medium grain rice',
-                                subtitle: 'Price: 55 AED',
-                                bgColor: Colors.grey[400]),
-                            FoodHome(
-                                url: 'assets/images/png/ricebag.png',
-                                title: 'Long grain rice',
-                                subtitle: 'Price: 40 AED',
-                                bgColor: Colors.grey[400]),
-                            FoodHome(
-                                url: 'assets/images/png/ricebag.png',
-                                title: 'Short grain rice',
-                                subtitle: 'Price: 45 AED',
-                                bgColor: Colors.grey[400]),
-                          ],
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => DetailsPage()));
+                          },
+                          child: GridView.count(
+                            crossAxisCount: 2,
+                            childAspectRatio: (itemWidth / itemHomeHeight),
+                            children: [
+                              FoodHome(
+                                  url: 'assets/images/png/ricebag.png',
+                                  title: 'Brown rice',
+                                  subtitle: 'Price: 50 AED',
+                                  bgColor: Colors.grey[400]),
+                              FoodHome(
+                                  url: 'assets/images/png/ricebag.png',
+                                  title: 'Medium grain rice',
+                                  subtitle: 'Price: 55 AED',
+                                  bgColor: Colors.grey[400]),
+                              FoodHome(
+                                  url: 'assets/images/png/ricebag.png',
+                                  title: 'Long grain rice',
+                                  subtitle: 'Price: 40 AED',
+                                  bgColor: Colors.grey[400]),
+                              FoodHome(
+                                  url: 'assets/images/png/ricebag.png',
+                                  title: 'Short grain rice',
+                                  subtitle: 'Price: 45 AED',
+                                  bgColor: Colors.grey[400]),
+                            ],
+                          ),
                         ),
                       ),
                     ),

@@ -35,10 +35,8 @@ class AddToCartItem extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     child: Image.asset('assets/images/png/ricebag.png',
                         height: 100)),
-            SizedBox(height: 5),
-
-                 Text('Quantity', style: TextStyle(fontFamily: 'Bold')), 
-              
+                SizedBox(height: 5),
+                Text('Quantity', style: TextStyle(fontFamily: 'Bold')),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -94,23 +92,19 @@ class AddToCartItem extends StatelessWidget {
                             fontFamily: 'Regular',
                             color: Colors.grey,
                             fontSize: 12)),
-                  ), 
-                  RaisedButton(
-                    shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(100)),
-                    color: BrandColors.colorAccent,
-                    textColor: Colors.black,
-                    onPressed: () {},
-                    child: Container(
-                      height: 40,
-                      child: Center(
-                        child: Text(
-                          'Place Order',
-                          style: TextStyle(fontSize: 20, fontFamily: 'Bold'),
-                        ),
-                      ),
-                    ),
                   ),
+                  RaisedButton(
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(100)),
+                      color: BrandColors.colorAccent,
+                      textColor: Colors.black,
+                      onPressed: () {},
+                      child: Container(
+                          height: 40,
+                          child: Center(
+                              child: Text('Place Order',
+                                  style: TextStyle(
+                                      fontSize: 20, fontFamily: 'Bold'))))),
                 ],
               ),
             ),
