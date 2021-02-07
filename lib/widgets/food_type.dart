@@ -19,7 +19,6 @@ class _FoodTypeState extends State<FoodType> {
       padding: const EdgeInsets.only(right: 10, bottom: 10),
       child: Container(
         width: 83,
-        // height: 125,
         decoration: BoxDecoration(
           color: widget.bgColor,
           borderRadius: BorderRadius.all(Radius.circular(18)),

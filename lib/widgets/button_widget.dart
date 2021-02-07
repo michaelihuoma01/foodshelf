@@ -9,7 +9,7 @@ class ButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
+    return FlatButton(
       shape: new RoundedRectangleBorder(
           borderRadius: new BorderRadius.circular(100)),
       color: color,

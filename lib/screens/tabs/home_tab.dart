@@ -108,7 +108,7 @@ class _HomeTabState extends State<HomeTab> {
                   }
                 },
                 child: Container(
-                  height: 135,
+                  height: MediaQuery.of(context).size.height * .15,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     children: [
@@ -145,29 +145,28 @@ class _HomeTabState extends State<HomeTab> {
               (isVisible)
                   ? Expanded(
                       child: Container(
-                        // height: 185,
                         child: GridView.count(
                           crossAxisCount: 4,
                           childAspectRatio: (itemWidth / itemHeight),
                           children: [
-                            FoodType(
-                                url: 'assets/images/svg/rice.svg',
-                                title: 'Rice',
-                                color: BrandColors.colorAccent,
-                                bgColor: BrandColors.colorAccent),
-                            FoodType(
-                                url: 'assets/images/svg/cereal.svg',
-                                title: 'Cereal and Seeds',
-                                bgColor: Colors.grey[300]),
-                            FoodType(
-                                url: 'assets/images/svg/breakfast.svg',
-                                title: 'Breakfast Cereals',
-                                bgColor: Colors.grey[300]),
-                            FoodType(
-                                url: 'assets/images/svg/snacks.svg',
-                                height: 35,
-                                title: 'Snacks',
-                                bgColor: Colors.grey[300]),
+                            // FoodType(
+                            //     url: 'assets/images/svg/rice.svg',
+                            //     title: 'Rice',
+                            //     color: BrandColors.colorAccent,
+                            //     bgColor: BrandColors.colorAccent),
+                            // FoodType(
+                            //     url: 'assets/images/svg/cereal.svg',
+                            //     title: 'Cereal and Seeds',
+                            //     bgColor: Colors.grey[300]),
+                            // FoodType(
+                            //     url: 'assets/images/svg/breakfast.svg',
+                            //     title: 'Breakfast Cereals',
+                            //     bgColor: Colors.grey[300]),
+                            // FoodType(
+                            //     url: 'assets/images/svg/snacks.svg',
+                            //     height: 35,
+                            //     title: 'Snacks',
+                            //     bgColor: Colors.grey[300]),
                             FoodType(
                                 url: 'assets/images/svg/pasta.svg',
                                 title: 'Pasta and Sauces',
@@ -223,8 +222,6 @@ class _HomeTabState extends State<HomeTab> {
                     )
                   : Expanded(
                       child: Container(
-                        // width: 190,
-                        height: 215,
                         child: InkWell(
                           onTap: () {
                             Navigator.push(

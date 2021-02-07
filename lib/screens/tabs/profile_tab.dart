@@ -24,32 +24,32 @@ class _ProfileTabState extends State<ProfileTab> {
         backgroundColor: Colors.transparent,
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.only(left: 30, right: 30, top: 200),
+            padding: const EdgeInsets.only(left: 30, right: 30, top: 180),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Profile Settings',
                     style: TextStyle(fontSize: 30, fontFamily: 'Bold')),
-                SizedBox(height: 20),
+                SizedBox(height: 30),
                 ProfieTile(icon: Icons.edit, title: 'Edit Profile'),
-                SizedBox(height: 20),
+                SizedBox(height: 30),
                 ProfieTile(icon: Icons.list, title: 'My Orders'),
-                SizedBox(height: 20),
+                SizedBox(height: 30),
                 ProfieTile(icon: Icons.lock, title: 'Change Password'),
-                SizedBox(height: 20),
+                SizedBox(height: 30),
                 ProfieTile(icon: Icons.location_on, title: 'Delivery Address'),
-                SizedBox(height: 20),
+                SizedBox(height: 30),
                 ProfieTile(icon: Icons.web, title: 'Change Language'),
-                SizedBox(height: 20),
+                SizedBox(height: 30),
                 ProfieTile(icon: Icons.call, title: 'Contact Us'),
-                SizedBox(height: 20),
+                SizedBox(height: 30),
                 InkWell(
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => Faqs()));
                     },
                     child: ProfieTile(icon: Icons.help, title: 'FAQs')),
-                SizedBox(height: 20),
+                SizedBox(height: 30),
                 InkWell(
                     onTap: () {
                       Navigator.push(context,
@@ -57,15 +57,19 @@ class _ProfileTabState extends State<ProfileTab> {
                     },
                     child: ProfieTile(
                         icon: Icons.list_alt, title: 'Terms & Conditions')),
-                SizedBox(height: 20),
+                SizedBox(height: 30),
                 InkWell(
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => AboutUs()));
                     },
                     child: ProfieTile(icon: Icons.info, title: 'About Us')),
-                SizedBox(height: 20),
-                ProfieTile(icon: Icons.power, title: 'Log Out'),
+                SizedBox(height: 30),
+                Row(children: [
+                  Icon(Icons.power_settings_new, color: Colors.black, size: 16),
+                  SizedBox(width: 10),
+                  Text('Log out', style: TextStyle(fontSize: 17)),
+                ]),
               ],
             ),
           ),
