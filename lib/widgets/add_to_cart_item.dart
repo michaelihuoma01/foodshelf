@@ -93,7 +93,7 @@ class AddToCartItem extends StatelessWidget {
                             color: Colors.grey,
                             fontSize: 12)),
                   ),
-                  RaisedButton(
+                  FlatButton(
                       shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(100)),
                       color: BrandColors.colorAccent,
