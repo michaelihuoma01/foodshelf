@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodshelf/screens/pages/payment_summary.dart';
 import 'package:foodshelf/utility/brand_colors.dart';
 import 'package:foodshelf/widgets/button_widget.dart';
 import 'package:foodshelf/widgets/counter_button.dart';
@@ -98,7 +99,12 @@ class AddToCartItem extends StatelessWidget {
                           borderRadius: new BorderRadius.circular(100)),
                       color: BrandColors.colorAccent,
                       textColor: Colors.black,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PaymentSummary()));
+                      },
                       child: Container(
                           height: 40,
                           child: Center(
