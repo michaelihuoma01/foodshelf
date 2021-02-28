@@ -108,70 +108,96 @@ class _DetailsPageState extends State<DetailsPage> {
                   ))
                 ]))),
         body: SingleChildScrollView(
-                  child: Padding(
+          child: Padding(
             padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 250),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(children: [
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Brown Rice (Long Grain)',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontFamily: 'Bold')),
-                            Icon(Icons.favorite, color: Colors.red),
-                          ]),
-                      SizedBox(height: 10),
-                      Row(children: [
-                        Text('Quantity: 1kg',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontFamily: 'Bold')),
-                        SizedBox(width: 30),
-                        Text('Price: 59 AED',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontFamily: 'Bold')),
-                      ]),
-                    ]),
-                  ),
-                ),
-                SizedBox(height: 10),
-
-              Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Text('Delivery: 2 days',
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(children: [
+                    Text('Brown Rice (Long Grain)',
                         style: TextStyle(
-                            color: BrandColors.colorAccent,
+                            color: Colors.black,
                             fontSize: 18,
                             fontFamily: 'Bold')),
+                    Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 30),
+                      child: Icon(Icons.favorite, color: Colors.red),
+                    ),
+                  ]),
+                  SizedBox(height: 5),
+                  Row(children: [
+                    Text('Quantity: 1kg',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontFamily: 'Medium')),
+                    SizedBox(width: 30),
+                    Text('Price: 59 AED',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontFamily: 'Medium')),
+                  ]),
+                  SizedBox(height: 15),
+                  Text('Product Description',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontFamily: 'Medium')),
+                  Text(
+                      'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have'),
+                  SizedBox(height: 10),
+                  Text('Advantages:',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontFamily: 'Medium')),
+                  Text(
+                      'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs'),
+                  SizedBox(height: 10),
+                  Text('Reviews',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontFamily: 'Medium')),
+                  SizedBox(height: 5),
+                  Row(children: [
+                    Icon(Icons.star, color: Colors.orange, size: 17),
+                    SizedBox(width: 5),
+                    Text('4.5/5',
+                        style: TextStyle(color: Colors.black, fontSize: 15))
+                  ]),
+                  SizedBox(height: 5),
+                  Row(
+                    children: [
+                      Icon(Icons.account_circle),
+                      SizedBox(width: 5),
+                      Expanded(
+                                              child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Anonymous',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                    fontFamily: 'Medium')),
+                            Text(
+                                'Lorem ipsum, or lipsum as it is sometimes known',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                    fontFamily: 'Medium')),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                
-                SizedBox(height: 5),
-                Text('Product Description',
-                    style: TextStyle(
-                        color: Colors.black, fontSize: 18, fontFamily: 'Bold')),
-                Text(
-                    'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have'),
-                SizedBox(height: 10),
-                Text('Advantages',
-                    style: TextStyle(
-                        color: Colors.black, fontSize: 18, fontFamily: 'Bold')),
-                Text(
-                    'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs'),
-              ],
+                ],
+              ),
             ),
           ),
         ),
