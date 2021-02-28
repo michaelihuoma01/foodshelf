@@ -18,10 +18,14 @@ class NotificationsTile extends StatelessWidget {
           children: [
             Column(
               children: [
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.asset('assets/images/png/ricebag.png',
-                        height: 70)),
+                Container(
+                  height: 70,
+                  width: 70,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset('assets/images/png/ricebag.png',
+                          height: 70)),
+                ),
               ],
             ),
             SizedBox(width: 10),

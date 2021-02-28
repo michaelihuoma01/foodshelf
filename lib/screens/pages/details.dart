@@ -148,8 +148,9 @@ class _DetailsPageState extends State<DetailsPage> {
                     ]),
                   ),
                 ),
-                Expanded(
-                  child: Align(
+                SizedBox(height: 10),
+
+              Align(
                     alignment: Alignment.bottomLeft,
                     child: Text('Delivery: 2 days',
                         style: TextStyle(
@@ -157,7 +158,7 @@ class _DetailsPageState extends State<DetailsPage> {
                             fontSize: 18,
                             fontFamily: 'Bold')),
                   ),
-                ),
+                
                 SizedBox(height: 5),
                 Text('Product Description',
                     style: TextStyle(
