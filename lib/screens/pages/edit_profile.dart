@@ -5,6 +5,8 @@ import 'package:foodshelf/widgets/button_widget.dart';
 import 'package:foodshelf/widgets/country_state_city_picker.dart';
 
 class EditProfile extends StatefulWidget {
+  static const routeName = '/EditProfile';
+
   @override
   _EditProfileState createState() => _EditProfileState();
 }

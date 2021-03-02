@@ -6,6 +6,8 @@ import 'package:foodshelf/widgets/button_widget.dart';
 import 'package:foodshelf/widgets/counter_button.dart';
 
 class DetailsPage extends StatefulWidget {
+  static const routeName = '/Details';
+
   @override
   _DetailsPageState createState() => _DetailsPageState();
 }

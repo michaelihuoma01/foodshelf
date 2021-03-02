@@ -4,6 +4,8 @@ import 'package:foodshelf/widgets/appbar_widget.dart';
 import 'package:foodshelf/widgets/button_widget.dart';
 
 class TandC extends StatefulWidget {
+  static const routeName = '/TandC';
+
   @override
   _TandCState createState() => _TandCState();
 }
@@ -42,8 +44,7 @@ class _TandCState extends State<TandC> {
                 'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have',
               ),
               SizedBox(height: 20),
-
-               Text('Regulations', style: TextStyle(fontFamily: 'Bold')),
+              Text('Regulations', style: TextStyle(fontFamily: 'Bold')),
               SizedBox(height: 10),
               Text(
                 'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have Lorem ipsum',

@@ -4,6 +4,8 @@ import 'package:foodshelf/widgets/appbar_widget.dart';
 import 'package:foodshelf/widgets/button_widget.dart';
 
 class ContactUs extends StatefulWidget {
+  static const routeName = '/ContactUs';
+
   @override
   _ContactUsState createState() => _ContactUsState();
 }

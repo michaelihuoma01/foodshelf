@@ -5,6 +5,8 @@ import 'package:foodshelf/widgets/appbar_widget.dart';
 import 'package:foodshelf/widgets/button_widget.dart';
 
 class ForgotPassword extends StatefulWidget {
+  static const routeName = '/FogotPassword';
+
   @override
   _ForgotPasswordState createState() => _ForgotPasswordState();
 }
@@ -44,7 +46,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   decoration: InputDecoration(
                       hintText: 'Please enter your email',
                       hintStyle: TextStyle(
-                        color: Colors.black,
+                        color: Colors.grey,
                         fontSize: 16.0,
                       )),
                   style: TextStyle(fontSize: 16)),

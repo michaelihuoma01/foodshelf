@@ -5,6 +5,8 @@ import 'package:foodshelf/widgets/appbar_widget.dart';
 import 'package:foodshelf/widgets/button_widget.dart';
 
 class VerificationPage extends StatefulWidget {
+  static const routeName = '/Verification';
+
   @override
   _VerificationPageState createState() => _VerificationPageState();
 }
@@ -43,10 +45,10 @@ class _VerificationPageState extends State<VerificationPage> {
                   obscureText: true,
                   cursorColor: BrandColors.colorAccent,
                   decoration: InputDecoration(
-                      hintText: '.............',
+                      hintText: 'o o o o',
                       hintStyle: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
+                        color: Colors.grey,
+                        fontSize: 26,
                       )),
                   style: TextStyle(fontSize: 16)),
               SizedBox(height: 30),

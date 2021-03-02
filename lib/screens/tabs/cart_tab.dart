@@ -4,6 +4,8 @@ import 'package:foodshelf/widgets/add_to_cart_item.dart';
 import 'package:foodshelf/widgets/button_widget.dart';
 
 class CartTab extends StatefulWidget {
+  static const routeName = '/CartTab';
+
   @override
   _CartTabState createState() => _CartTabState();
 }

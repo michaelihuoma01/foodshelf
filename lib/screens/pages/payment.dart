@@ -6,6 +6,8 @@ import 'package:foodshelf/widgets/button_widget.dart';
 import 'package:foodshelf/widgets/country_state_city_picker.dart';
 
 class PaymentScreen extends StatefulWidget {
+  static const routeName = '/Payment';
+
   @override
   _PaymentScreenState createState() => _PaymentScreenState();
 }

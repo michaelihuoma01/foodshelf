@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "172246573412",
+    "project_id": "foodshelf-dc69e",
+    "storage_bucket": "foodshelf-dc69e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:172246573412:android:63102bd487e8306aa51a71",
+        "android_client_info": {
+          "package_name": "com.example.foodshelf"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "172246573412-7tiskv9m13btvrvbjn749tt6tp58vphj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBd5_nrZWOLxkKVKK2bWMV0SLMFElaeeqU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "172246573412-7tiskv9m13btvrvbjn749tt6tp58vphj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,6 +4,8 @@ import 'package:foodshelf/widgets/appbar_widget.dart';
 import 'package:foodshelf/widgets/button_widget.dart';
 
 class AboutUs extends StatefulWidget {
+  static const routeName = '/AboutUs';
+
   @override
   _AboutUsState createState() => _AboutUsState();
 }

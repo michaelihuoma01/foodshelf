@@ -1,16 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:foodshelf/controllers/user_controller.dart';
+import 'package:foodshelf/helpers/utility.dart';
 import 'package:foodshelf/screens/auth/forgot_password.dart';
 import 'package:foodshelf/screens/main_page.dart';
 import 'package:foodshelf/utility/brand_colors.dart';
 import 'package:foodshelf/screens/auth/signup.dart';
 import 'package:foodshelf/widgets/button_widget.dart';
+import 'package:mvc_pattern/mvc_pattern.dart';
 
 class LoginPage extends StatefulWidget {
+  static const routeName = '/Login';
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends StateMVC<LoginPage> {
+  UserController _con = new UserController();
+
+  _LoginPageState() : super(UserController()) {
+    _con = controller;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,6 +34,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
+        key: _con.scaffoldKey,
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
           child: Column(
@@ -38,11 +50,12 @@ class _LoginPageState extends State<LoginPage> {
                   cursorColor: BrandColors.colorAccent,
                   keyboardType: TextInputType.number,
                   enableSuggestions: true,
+                  onChanged: (String input) => _con.user.phone = input,
                   decoration: InputDecoration(
                       hintText: '+971 55 92 55555',
                       hintStyle: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
+                        color: Colors.grey,
+                        fontSize: 14,
                       )),
                   style: TextStyle(fontSize: 16)),
               SizedBox(height: 20),
@@ -51,13 +64,20 @@ class _LoginPageState extends State<LoginPage> {
               TextField(
                   cursorColor: BrandColors.colorAccent,
                   keyboardType: TextInputType.visiblePassword,
-                  obscureText: true,
+                  obscureText: _con.hidePassword,
                   enableSuggestions: true,
+                  onChanged: (String input) => _con.user.password = input,
                   decoration: InputDecoration(
+                      suffixIcon: InkWell(
+                        onTap: () => _con.togglePasswordVisibility(),
+                        child: Icon(_con.hidePassword
+                            ? Icons.visibility
+                            : Icons.visibility_off),
+                      ),
                       hintText: '**********',
                       hintStyle: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
+                        color: Colors.grey,
+                        fontSize: 14,
                       )),
                   style: TextStyle(fontSize: 16)),
               SizedBox(height: 20),
@@ -77,8 +97,19 @@ class _LoginPageState extends State<LoginPage> {
               ButtonWidget(
                   color: BrandColors.colorAccent,
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MainPage()));
+                    if (_con.user.phone.length < 10) {
+                      Utility.showMessage(_con.scaffoldKey?.currentContext,
+                          message: 'Please enter a valid phone number');
+                      return;
+                    }
+
+                    if (_con.user.password.length < 8) {
+                      Utility.showMessage(_con.scaffoldKey?.currentContext,
+                          message: 'Password is too short');
+                      return;
+                    }
+
+                    _con.login();
                   },
                   title: 'Sign In'),
               SizedBox(height: 10),

@@ -5,6 +5,8 @@ import 'package:foodshelf/widgets/myorders_tile.dart';
 import 'package:foodshelf/widgets/notifications_tile.dart';
 
 class MyOrders extends StatefulWidget {
+  static const routeName = '/MyOrders';
+
   @override
   _MyOrdersState createState() => _MyOrdersState();
 }
