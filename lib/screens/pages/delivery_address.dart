@@ -5,6 +5,8 @@ import 'package:foodshelf/widgets/button_widget.dart';
 import 'package:foodshelf/widgets/country_state_city_picker.dart';
 
 class DeliveryAddress extends StatefulWidget {
+  static const routeName = '/DeliveryAddress';
+
   @override
   _DeliveryAddressState createState() => _DeliveryAddressState();
 }

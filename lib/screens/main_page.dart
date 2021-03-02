@@ -7,6 +7,8 @@ import 'package:foodshelf/utility/brand_colors.dart';
 import 'package:foodshelf/widgets/rolling_nav_bar.dart';
 
 class MainPage extends StatefulWidget {
+  static const routeName = '/MainPage';
+
   @override
   _MainPageState createState() => _MainPageState();
 }

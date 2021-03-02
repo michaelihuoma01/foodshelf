@@ -2,19 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:foodshelf/screens/pages/about_us.dart';
 import 'package:foodshelf/screens/pages/change_language.dart';
 import 'package:foodshelf/screens/pages/change_password.dart';
-import 'package:foodshelf/screens/pages/checkout.dart';
 import 'package:foodshelf/screens/pages/contact_us.dart';
 import 'package:foodshelf/screens/pages/delivery_address.dart';
 import 'package:foodshelf/screens/pages/edit_profile.dart';
 import 'package:foodshelf/screens/pages/faqs.dart';
 import 'package:foodshelf/screens/pages/my_orders.dart';
-import 'package:foodshelf/screens/pages/order_summary.dart';
-import 'package:foodshelf/screens/pages/payment.dart';
-import 'package:foodshelf/screens/pages/payment_summary.dart';
 import 'package:foodshelf/screens/pages/t_and_c.dart';
 import 'package:foodshelf/widgets/profile_tile.dart';
 
 class ProfileTab extends StatefulWidget {
+  static const routeName = '/ProfileTab';
+
   @override
   _ProfileTabState createState() => _ProfileTabState();
 }

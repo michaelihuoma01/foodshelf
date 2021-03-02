@@ -7,6 +7,8 @@ import 'package:foodshelf/widgets/button_widget.dart';
 import 'package:foodshelf/widgets/counter_button.dart';
 
 class PaymentSummary extends StatefulWidget {
+  static const routeName = '/PaymentSummary';
+
   @override
   _PaymentSummaryState createState() => _PaymentSummaryState();
 }

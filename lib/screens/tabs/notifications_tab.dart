@@ -4,6 +4,8 @@ import 'package:foodshelf/widgets/add_to_cart_item.dart';
 import 'package:foodshelf/widgets/notifications_tile.dart';
 
 class NotificationsTab extends StatefulWidget {
+  static const routeName = '/NotificationsTab';
+
   @override
   _NotificationsTabState createState() => _NotificationsTabState();
 }
@@ -11,7 +13,7 @@ class NotificationsTab extends StatefulWidget {
 class _NotificationsTabState extends State<NotificationsTab> {
   @override
   Widget build(BuildContext context) {
-   return Container(
+    return Container(
       decoration: BoxDecoration(
         color: Colors.grey[200],
         image: DecorationImage(
@@ -42,7 +44,7 @@ class _NotificationsTabState extends State<NotificationsTab> {
                 author:
                     'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have ',
                 price: '49.99',
-                context: context, 
+                context: context,
               ),
             ],
           ),
