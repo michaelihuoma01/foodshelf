@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:foodshelf/controllers/user_controller.dart';
 import 'package:foodshelf/helpers/utility.dart';
 import 'package:foodshelf/screens/auth/forgot_password.dart';
-import 'package:foodshelf/screens/main_page.dart';
 import 'package:foodshelf/utility/brand_colors.dart';
 import 'package:foodshelf/screens/auth/signup.dart';
 import 'package:foodshelf/widgets/button_widget.dart';
@@ -97,13 +96,13 @@ class _LoginPageState extends StateMVC<LoginPage> {
               ButtonWidget(
                   color: BrandColors.colorAccent,
                   onPressed: () {
-                    if (_con.user.phone.length < 10) {
+                    if ((_con.user.phone?.length ?? 0) < 10) {
                       Utility.showMessage(_con.scaffoldKey?.currentContext,
                           message: 'Please enter a valid phone number');
                       return;
                     }
 
-                    if (_con.user.password.length < 8) {
+                    if ((_con.user.password?.length ?? 0) < 8) {
                       Utility.showMessage(_con.scaffoldKey?.currentContext,
                           message: 'Password is too short');
                       return;
