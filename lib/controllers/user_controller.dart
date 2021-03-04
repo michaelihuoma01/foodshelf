@@ -99,9 +99,9 @@ class UserController extends ControllerMVC {
       storage.write(key: "email", value: res.data.email);
       storage.write(key: "password", value: res.data.password);
       setUserDetails(res.data);
-      Navigator.of(scaffoldKey?.currentContext).pushReplacementNamed(
+      Navigator.of(scaffoldKey?.currentContext).pushNamedAndRemoveUntil(
         MainPage.routeName,
-        arguments: 0,
+        (route) => false,
       );
       loader.remove();
     } else {

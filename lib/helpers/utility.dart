@@ -5,6 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:foodshelf/elements/overlay_widget.dart';
 import 'package:foodshelf/helpers/constants.dart';
 import 'package:foodshelf/helpers/remote_config.dart';
+import 'package:foodshelf/screens/auth/login.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,10 +24,10 @@ class Utility {
     storage.write(key: "token", value: null);
     loader.remove();
 
-    // Navigator.of(context).pushNamedAndRemoveUntil(
-    //   PreLoginPage.routeName,
-    //   (Route<dynamic> route) => false,
-    // );
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      LoginPage.routeName,
+      (Route<dynamic> route) => false,
+    );
   }
 
   static Future<Map<String, dynamic>> getUserDetails() async {
