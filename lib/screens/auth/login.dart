@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:foodshelf/controllers/user_controller.dart';
 import 'package:foodshelf/helpers/utility.dart';
 import 'package:foodshelf/screens/auth/forgot_password.dart';
@@ -19,6 +20,30 @@ class _LoginPageState extends StateMVC<LoginPage> {
 
   _LoginPageState() : super(UserController()) {
     _con = controller;
+  }
+
+  FlutterSecureStorage storage = FlutterSecureStorage();
+  String userToken;
+
+  getToken() async {
+    userToken = await storage.read(key: 'token');
+    print(userToken);
+
+    if (userToken != null) {
+      Navigator.of(_con.scaffoldKey?.currentContext).pushReplacementNamed(
+        MainPage.routeName,
+        arguments: 0,
+      );
+    } else {
+      return;
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getToken();
   }
 
   @override
