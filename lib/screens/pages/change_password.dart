@@ -4,6 +4,8 @@ import 'package:foodshelf/widgets/appbar_widget.dart';
 import 'package:foodshelf/widgets/button_widget.dart';
 
 class ChangePassword extends StatefulWidget {
+  static const routeName = '/ChangePassword';
+
   @override
   _ChangePasswordState createState() => _ChangePasswordState();
 }

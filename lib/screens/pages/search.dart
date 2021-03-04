@@ -3,6 +3,8 @@ import 'package:foodshelf/utility/brand_colors.dart';
 import 'package:foodshelf/widgets/appbar_widget.dart';
 
 class SearchPage extends StatefulWidget {
+  static const routeName = '/Search';
+
   @override
   _SearchPageState createState() => _SearchPageState();
 }
@@ -28,7 +30,7 @@ class _SearchPageState extends State<SearchPage> {
             children: [
               Text('Search',
                   style: TextStyle(fontSize: 30, fontFamily: 'Bold')),
-                  SizedBox(height: 20),
+              SizedBox(height: 20),
               TextField(
                   keyboardType: TextInputType.text,
                   enableSuggestions: true,
@@ -36,7 +38,6 @@ class _SearchPageState extends State<SearchPage> {
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(50),
-                         
                       ),
                       hintText: 'Look for anything...',
                       contentPadding: EdgeInsets.all(20),

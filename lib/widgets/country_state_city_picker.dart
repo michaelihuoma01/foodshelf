@@ -34,8 +34,7 @@ class _SelectStateState extends State<SelectState> {
   }
 
   Future getResponse() async {
-    var res = await rootBundle.loadString(
-        'packages/country_state_city_picker/lib/assets/country.json');
+    var res = await rootBundle.loadString('assets/country.json');
     // await DefaultAssetBundle.of(context).loadString('assets/country.json');
     return jsonDecode(res);
   }

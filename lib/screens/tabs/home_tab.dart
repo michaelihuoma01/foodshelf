@@ -9,6 +9,8 @@ import 'package:foodshelf/widgets/food_home.dart';
 import 'package:foodshelf/widgets/food_type.dart';
 
 class HomeTab extends StatefulWidget {
+  static const routeName = '/HomeTab';
+
   @override
   _HomeTabState createState() => _HomeTabState();
 }

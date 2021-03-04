@@ -6,6 +6,8 @@ import 'package:foodshelf/widgets/button_widget.dart';
 import 'package:foodshelf/widgets/counter_button.dart';
 
 class CheckoutScreen extends StatefulWidget {
+  static const routeName = '/Checkout';
+  
   @override
   _CheckoutScreenState createState() => _CheckoutScreenState();
 }

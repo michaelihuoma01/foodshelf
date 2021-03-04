@@ -4,6 +4,8 @@ import 'package:foodshelf/widgets/appbar_widget.dart';
 import 'package:foodshelf/widgets/button_widget.dart';
 
 class ChangeLanguage extends StatefulWidget {
+  static const routeName = '/ChangeLanguage';
+
   @override
   _ChangeLanguageState createState() => _ChangeLanguageState();
 }
