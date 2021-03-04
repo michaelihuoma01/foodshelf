@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:foodshelf/helpers/remote_config.dart';
 import 'package:foodshelf/helpers/utility.dart';
 import 'package:foodshelf/models/iresponse.dart';
@@ -12,7 +13,6 @@ const headers = {
 };
 
 final RemoteConfigService _remoteConfigService = getIt<RemoteConfigService>();
-
 final String url = '${_remoteConfigService.getBaseUrl}';
 
 Future<IResponse<User>> login(User user) async {
@@ -22,7 +22,7 @@ Future<IResponse<User>> login(User user) async {
   };
 
   var res = await http.post(
-    "http://healthfoodshelf.com/api/login",
+    "$url/login",
     // body: json.encode(user.toMap()),
     body: json.encode(user.loginCredentials()),
     headers: headers,
@@ -57,7 +57,7 @@ Future<IResponse<User>> userSignUp(User user) async {
   };
 
   var res = await http.post(
-    "http://healthfoodshelf.com/api/signup",
+    "$url/signup",
     body: json.encode(user.toMap()),
     headers: headers,
   );
@@ -83,6 +83,32 @@ Future<IResponse<User>> userSignUp(User user) async {
   print(res.body);
 
   return alRes;
+}
+
+Future<IResponse<User>> logout(User user) async {
+  try {
+    final storage = getIt<FlutterSecureStorage>();
+    final token = await storage.read(key: 'token');
+
+    Map<String, String> headers = {
+      "content-type": "application/json",
+      "accept": "application/json",
+      "Authorization": "Bearer $token",
+    };
+
+    var res = await http.get(
+      "$url}/auth/logout",
+      headers: headers,
+    );
+    final resData = json.decode(res.body);
+    return resData['data'].map<User>((item) {
+      return User.fromJSON(item);
+    }).toList();
+  } catch (e) {
+    print('--- getUserAddress error');
+    print(e);
+    return null;
+  }
 }
 
 // Future<IResponse<VerifyToken>> verifyToken(
