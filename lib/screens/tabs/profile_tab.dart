@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodshelf/helpers/utility.dart';
 import 'package:foodshelf/screens/pages/about_us.dart';
 import 'package:foodshelf/screens/pages/change_language.dart';
 import 'package:foodshelf/screens/pages/change_password.dart';
@@ -36,89 +37,72 @@ class _ProfileTabState extends State<ProfileTab> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Profile Settings',
-                    style: TextStyle(fontSize: 30, fontFamily: 'Bold')),
+                Text('Profile Settings', style: TextStyle(fontSize: 30, fontFamily: 'Bold')),
                 SizedBox(height: 30),
                 InkWell(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => EditProfile()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfile()));
                     },
                     child: ProfieTile(icon: Icons.edit, title: 'Edit Profile')),
                 SizedBox(height: 30),
                 InkWell(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => MyOrders()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => MyOrders()));
                     },
                     child: ProfieTile(icon: Icons.list, title: 'My Orders')),
                 SizedBox(height: 30),
                 InkWell(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ChangePassword()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ChangePassword()));
                     },
-                    child:
-                        ProfieTile(icon: Icons.lock, title: 'Change Password')),
+                    child: ProfieTile(icon: Icons.lock, title: 'Change Password')),
                 SizedBox(height: 30),
                 InkWell(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => DeliveryAddress()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => DeliveryAddress()));
                     },
-                    child: ProfieTile(
-                        icon: Icons.location_on, title: 'Delivery Address')),
+                    child: ProfieTile(icon: Icons.location_on, title: 'Delivery Address')),
                 SizedBox(height: 30),
                 InkWell(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ChangeLanguage()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ChangeLanguage()));
                     },
-                    child:
-                        ProfieTile(icon: Icons.web, title: 'Change Language')),
+                    child: ProfieTile(icon: Icons.web, title: 'Change Language')),
                 SizedBox(height: 30),
                 InkWell(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => ContactUs()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ContactUs()));
                     },
                     child: ProfieTile(icon: Icons.call, title: 'Contact Us')),
                 SizedBox(height: 30),
                 InkWell(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Faqs()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Faqs()));
                     },
                     child: ProfieTile(icon: Icons.help, title: 'FAQs')),
                 SizedBox(height: 30),
                 InkWell(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => TandC()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => TandC()));
                     },
-                    child: ProfieTile(
-                        icon: Icons.list_alt, title: 'Terms & Conditions')),
+                    child: ProfieTile(icon: Icons.list_alt, title: 'Terms & Conditions')),
                 SizedBox(height: 30),
                 InkWell(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => AboutUs()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => AboutUs()));
                     },
                     child: ProfieTile(icon: Icons.info, title: 'About Us')),
                 SizedBox(height: 30),
-                Row(children: [
-                  Icon(Icons.power_settings_new, color: Colors.black, size: 16),
-                  SizedBox(width: 10),
-                  Text('Log out', style: TextStyle(fontSize: 17)),
-                ]),
+                InkWell(
+                  onTap: () => Utility.logout(context),
+                  child: Row(
+                    children: [
+                      Icon(Icons.power_settings_new, color: Colors.black, size: 16),
+                      SizedBox(width: 10),
+                      Text('Log out', style: TextStyle(fontSize: 17)),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

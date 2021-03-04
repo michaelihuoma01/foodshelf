@@ -161,12 +161,12 @@ class _SignUpPageState extends StateMVC<SignUpPage> {
                 ButtonWidget(
                     color: BrandColors.colorAccent,
                     onPressed: () {
-                      if (_con.user.name.length < 3) {
+                      if ((_con.user.name?.length ?? 0) < 3) {
                         Utility.showMessage(_con.scaffoldKey?.currentContext,
                             message: 'Name is too short');
                         return;
                       }
-                      if (_con.user.phone.length < 10) {
+                      if ((_con.user.phone?.length ?? 0) < 10) {
                         Utility.showMessage(_con.scaffoldKey?.currentContext,
                             message: 'Please enter a valid phone number');
                         return;
