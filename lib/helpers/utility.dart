@@ -21,7 +21,7 @@ class Utility {
     final prefs = await SharedPreferences.getInstance();
     prefs.clear();
     final storage = getIt<FlutterSecureStorage>();
-    storage.write(key: "token", value: null);
+    storage.deleteAll();
     loader.remove();
 
     Navigator.of(context).pushNamedAndRemoveUntil(
