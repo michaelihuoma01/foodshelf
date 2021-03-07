@@ -13,7 +13,7 @@ final RemoteConfigService _remoteConfigService = getIt<RemoteConfigService>();
 
 final String url = '${_remoteConfigService.getBaseUrl}';
 
-Future<IResponse<Category>> getCategory() async {
+Future<IResponse<List<Category>>> getCategory() async {
   FlutterSecureStorage storage = getIt<FlutterSecureStorage>();
 
   Map<String, String> headers = {
@@ -26,22 +26,22 @@ Future<IResponse<Category>> getCategory() async {
     "$url/categories",
     headers: headers,
   );
-
-  IResponse<Category> alRes = IResponse(
+  final Map resData = json.decode(res.body);
+  IResponse<List<Category>> alRes = IResponse(
     statusCode: res.statusCode,
-    message: json.decode(res.body),
+    message: resData,
   );
   switch (res.statusCode) {
     case 200:
     case 409:
-      alRes.data = Category.fromJSON(json.decode(res.body));
+      alRes.data = (resData['categories'] as List).map<Category>((item) => Category.fromJSON(item)).toList();
       break;
     default:
       break;
   }
   print(res.statusCode);
   print(json.decode(res.body));
-  print(alRes.data.title);
+  // print(alRes.data.title);
 
   return alRes;
 }

@@ -143,7 +143,7 @@ class _HomeTabState extends StateMVC<HomeTab> {
                             onTap: () async {
                               // here, i'm prinitng the title on tap of the empty space
                               // on the screen, but its returning null
-                              print(_ctrl.getCatList.value.title);
+                              print('---- ${_ctrl.getCatList.value.first.title}');
 
                               if (isVisible) {
                                 setState(() {

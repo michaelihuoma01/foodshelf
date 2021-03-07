@@ -19,7 +19,8 @@ class Category {
       //       ),
       //     )
       //     .toList();
-      id = json['id'];
+      print('--- $json');
+      id = json['id'].toString();
       title = json['title'];
       image = json['image'];
     } catch (e) {

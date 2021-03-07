@@ -7,13 +7,13 @@ import 'package:foodshelf/repository/category_repository.dart' as categoryRepo;
 
 class HomeTabController extends ControllerMVC {
   Category categoryList = new Category();
-  ValueNotifier<Category> getCatList;
+  ValueNotifier<List<Category>> getCatList;
 
   var fetchingAddresses = true;
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   HomeTabController() {
-    getCatList = ValueNotifier(Category());
+    getCatList = ValueNotifier(null);
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
 
     getCategoryList();
@@ -25,7 +25,7 @@ class HomeTabController extends ControllerMVC {
         fetchingAddresses = true;
       });
     }
-    IResponse<Category> res = await categoryRepo.getCategory();
+    IResponse<List<Category>> res = await categoryRepo.getCategory();
     if (res.statusCode == 200) {
       getCatList.value = res.data;
 
