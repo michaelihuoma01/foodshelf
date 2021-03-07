@@ -13,16 +13,14 @@ final RemoteConfigService _remoteConfigService = getIt<RemoteConfigService>();
 
 final String url = '${_remoteConfigService.getBaseUrl}';
 
-Future<IResponse<Category>> getConfig() async {
+Future<IResponse<Category>> getCategory() async {
   FlutterSecureStorage storage = getIt<FlutterSecureStorage>();
 
   Map<String, String> headers = {
     "content-type": "application/json",
     "accept": "application/json",
-    "authorization": '${await storage.read(key: 'token')}',
+    "authorization": 'Bearer ${await storage.read(key: 'token')}',
   };
-
-  print(headers.toString());
 
   var res = await http.get(
     "$url/categories",
@@ -31,18 +29,19 @@ Future<IResponse<Category>> getConfig() async {
 
   IResponse<Category> alRes = IResponse(
     statusCode: res.statusCode,
-    message: json.decode(res.body)['categories'],
+    message: json.decode(res.body),
   );
   switch (res.statusCode) {
     case 200:
     case 409:
-      alRes.data = Category.fromJSON(json.decode(res.body)['data']);
+      alRes.data = Category.fromJSON(json.decode(res.body));
       break;
     default:
       break;
   }
   print(res.statusCode);
-  print(res.body);
+  print(json.decode(res.body));
+  print(alRes.data.title);
 
   return alRes;
 }
