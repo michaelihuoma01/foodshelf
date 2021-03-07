@@ -30,7 +30,7 @@ Future<IResponse<User>> login(User user) async {
 
   IResponse<User> alRes = IResponse(
     statusCode: res.statusCode,
-    message: json.decode(res.body)['message'],
+    msg: json.decode(res.body)['message'],
     token: json.decode(res.body)['access_token'],
   );
 

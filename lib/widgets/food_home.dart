@@ -29,11 +29,10 @@ class _FoodHomeState extends State<FoodHome> {
           borderRadius: BorderRadius.all(Radius.circular(18)),
         ),
         child: Column(children: [
-            ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular((18))),
-              child: Image.asset(widget.url),
-            ),
-          
+          ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular((18))),
+            child: Image.asset(widget.url),
+          ),
           SizedBox(height: 3),
           Expanded(
               child: Text(widget.title,

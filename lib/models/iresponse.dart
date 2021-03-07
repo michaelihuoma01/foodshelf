@@ -1,6 +1,6 @@
 class IResponse<T> {
   int statusCode;
-  String token;
+  String token, msg;
   T data;
   bool status;
   Map<String, String> error;
@@ -12,6 +12,7 @@ class IResponse<T> {
     this.data,
     this.token,
     this.message,
+    this.msg,
     this.statusCode,
     this.status,
   });

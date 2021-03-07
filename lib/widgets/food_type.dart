@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:foodshelf/utility/brand_colors.dart';
 
 class FoodType extends StatefulWidget {
   final String url, title;
@@ -18,7 +17,7 @@ class _FoodTypeState extends State<FoodType> {
     return Padding(
       padding: const EdgeInsets.only(right: 10, bottom: 10),
       child: Container(
-        width: 83,
+        width: 80,
         decoration: BoxDecoration(
           color: widget.bgColor,
           borderRadius: BorderRadius.all(Radius.circular(18)),
@@ -34,14 +33,14 @@ class _FoodTypeState extends State<FoodType> {
                     color: Colors.white,
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(15),
+                    padding: const EdgeInsets.all(10),
                     child: SvgPicture.asset(widget.url,
-                        color: widget.color, height: widget.height),
+                        color: widget.color, height: 20,),
                   )),
               SizedBox(height: 6),
               Expanded(
                   child: Text(widget.title,
-                      style: TextStyle(fontSize: 11),
+                      style: TextStyle(fontSize: 12),
                       textAlign: TextAlign.center)),
             ],
           ),

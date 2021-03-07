@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:foodshelf/controllers/hometab_controller.dart';
 import 'package:foodshelf/helpers/utility.dart';
 import 'package:foodshelf/models/al_type.dart';
+import 'package:foodshelf/models/category.dart';
 import 'package:foodshelf/screens/pages/details.dart';
 import 'package:foodshelf/screens/pages/search.dart';
 import 'package:foodshelf/utility/brand_colors.dart';
@@ -47,6 +48,17 @@ class _HomeTabState extends StateMVC<HomeTab> {
         ],
         builder: (context, child) {
           _ctrl.getCatList.addListener(
+            () => Future.delayed(
+              Duration(seconds: 1),
+              () => setState(
+                () {
+                  _ctrl.fetchingAddresses = false;
+                },
+              ),
+            ),
+          );
+
+          _ctrl.getProdList.addListener(
             () => Future.delayed(
               Duration(seconds: 1),
               () => setState(
@@ -143,7 +155,8 @@ class _HomeTabState extends StateMVC<HomeTab> {
                             onTap: () async {
                               // here, i'm prinitng the title on tap of the empty space
                               // on the screen, but its returning null
-                              print('---- ${_ctrl.getCatList.value.first.title}');
+                              print(
+                                  '---- ${_ctrl.getCatList.value.first.title}');
 
                               if (isVisible) {
                                 setState(() {
@@ -156,63 +169,30 @@ class _HomeTabState extends StateMVC<HomeTab> {
                               }
                             },
                             child: Container(
-                              height: MediaQuery.of(context).size.height * .15,
+                              height: MediaQuery.of(context).size.height * .16,
                               // Here, I'm trying to display the widgets, just like it is on alraad but
                               // it returns null also.
 
-                              // child: ListView(
-                              //   scrollDirection: Axis.horizontal,
-                              //   children: _ctrl != null
-                              //       ? _ctrl.getCatList.value.cat
-                              //           .map(
-                              //             (AlType category) => GestureDetector(
-                              //               onTap: () {},
-                              //               child: FoodType(
-                              //                   url:
-                              //                       'assets/images/svg/rice.svg',
-                              //                   title: category.title,
-                              //                   color: BrandColors.colorAccent,
-                              //                   bgColor:
-                              //                       BrandColors.colorAccent),
-                              //             ),
-                              //           )
-                              //           .toList()
-                              //       : [],
-                              // ),
-
-                              // This is the dummy contents
-
-                              // child: ListView(
-                              //   scrollDirection: Axis.horizontal,
-                              //   children: [
-                              //     FoodType(
-                              //         url: 'assets/images/svg/rice.svg',
-                              //         title: 'Rice',
-                              //         color: BrandColors.colorAccent,
-                              //         bgColor: BrandColors.colorAccent),
-                              //     FoodType(
-                              //         url: 'assets/images/svg/cereal.svg',
-                              //         title: 'Cereal and Seeds',
-                              //         bgColor: Colors.grey[300]),
-                              //     FoodType(
-                              //         url: 'assets/images/svg/breakfast.svg',
-                              //         title: 'Breakfast Cereals',
-                              //         bgColor: Colors.grey[300]),
-                              //     FoodType(
-                              //         url: 'assets/images/svg/snacks.svg',
-                              //         height: 35,
-                              //         title: 'Snacks',
-                              //         bgColor: Colors.grey[300]),
-                              //     FoodType(
-                              //         url: 'assets/images/svg/pasta.svg',
-                              //         title: 'Pasta and Sauces',
-                              //         bgColor: Colors.grey[300]),
-                              //     FoodType(
-                              //         url: 'assets/images/svg/coffee.svg',
-                              //         title: 'Coffee and Tea',
-                              //         bgColor: Colors.grey[300]),
-                              //   ],
-                              // ),
+                              child: ListView(
+                                scrollDirection: Axis.horizontal,
+                                children: _ctrl?.getCatList?.value != null
+                                    ? _ctrl.getCatList.value
+                                        .map(
+                                          (Category category) =>
+                                              GestureDetector(
+                                            onTap: () {},
+                                            child: FoodType(
+                                                url:
+                                                    'assets/images/svg/rice.svg',
+                                                title: category.title,
+                                                color: BrandColors.colorAccent,
+                                                bgColor:
+                                                    BrandColors.colorAccent),
+                                          ),
+                                        )
+                                        .toList()
+                                    : [],
+                              ),
                             ),
                           ),
                           (isVisible)
@@ -222,76 +202,24 @@ class _HomeTabState extends StateMVC<HomeTab> {
                                       crossAxisCount: 4,
                                       childAspectRatio:
                                           (itemWidth / itemHeight),
-                                      children: [
-                                        // FoodType(
-                                        //     url: 'assets/images/svg/rice.svg',
-                                        //     title: 'Rice',
-                                        //     color: BrandColors.colorAccent,
-                                        //     bgColor: BrandColors.colorAccent),
-                                        // FoodType(
-                                        //     url: 'assets/images/svg/cereal.svg',
-                                        //     title: 'Cereal and Seeds',
-                                        //     bgColor: Colors.grey[300]),
-                                        // FoodType(
-                                        //     url: 'assets/images/svg/breakfast.svg',
-                                        //     title: 'Breakfast Cereals',
-                                        //     bgColor: Colors.grey[300]),
-                                        // FoodType(
-                                        //     url: 'assets/images/svg/snacks.svg',
-                                        //     height: 35,
-                                        //     title: 'Snacks',
-                                        //     bgColor: Colors.grey[300]),
-                                        FoodType(
-                                            url: 'assets/images/svg/pasta.svg',
-                                            title: 'Pasta and Sauces',
-                                            bgColor: Colors.grey[300]),
-                                        FoodType(
-                                            url: 'assets/images/svg/coffee.svg',
-                                            title: 'Coffee and Tea',
-                                            bgColor: Colors.grey[300]),
-                                        FoodType(
-                                            url: 'assets/images/svg/oil.svg',
-                                            title: 'Oil and Vinegar',
-                                            bgColor: Colors.grey[300]),
-                                        FoodType(
-                                            url: 'assets/images/svg/flour.svg',
-                                            title: 'Flour and mixes',
-                                            bgColor: Colors.grey[300]),
-                                        FoodType(
-                                            url: 'assets/images/svg/baking.svg',
-                                            title: 'Baking Ingredients',
-                                            bgColor: Colors.grey[300]),
-                                        FoodType(
-                                            url:
-                                                'assets/images/svg/cooking_ingredients.svg',
-                                            title: 'Cooking Ingredients',
-                                            bgColor: Colors.grey[300]),
-                                        FoodType(
-                                            url: 'assets/images/svg/jam.svg',
-                                            title: 'Jam and Spread',
-                                            bgColor: Colors.grey[300]),
-                                        FoodType(
-                                            url: 'assets/images/svg/sugar.svg',
-                                            title: 'Sugar and Sweetners',
-                                            bgColor: Colors.grey[300]),
-                                        FoodType(
-                                            url: 'assets/images/svg/spices.svg',
-                                            title: 'Spices',
-                                            bgColor: Colors.grey[300]),
-                                        FoodType(
-                                            url: 'assets/images/svg/nuts.svg',
-                                            title: 'Nuts and Dried Fruits',
-                                            bgColor: Colors.grey[300]),
-                                        FoodType(
-                                            url:
-                                                'assets/images/svg/quick_meals.svg',
-                                            title: 'Quick Meals',
-                                            bgColor: Colors.grey[300]),
-                                        FoodType(
-                                            url: 'assets/images/svg/bread.svg',
-                                            title: 'Bread',
-                                            bgColor: Colors.grey[300]),
-                                      ],
+                                      children: _ctrl?.getCatList?.value != null
+                                          ? _ctrl.getCatList.value
+                                              .map(
+                                                (Category category) =>
+                                                    GestureDetector(
+                                                  onTap: () {},
+                                                  child: FoodType(
+                                                      url:
+                                                          'assets/images/svg/rice.svg',
+                                                      title: category.title,
+                                                      color: BrandColors
+                                                          .colorAccent,
+                                                      bgColor: BrandColors
+                                                          .colorAccent),
+                                                ),
+                                              )
+                                              .toList()
+                                          : [],
                                     ),
                                   ),
                                 )
@@ -307,34 +235,51 @@ class _HomeTabState extends StateMVC<HomeTab> {
                                       },
                                       child: GridView.count(
                                         crossAxisCount: 2,
-                                        childAspectRatio:
-                                            (itemWidth / itemHomeHeight),
-                                        children: [
-                                          FoodHome(
-                                              url:
-                                                  'assets/images/png/ricebag.png',
-                                              title: 'Brown rice',
-                                              subtitle: 'Price: 50 AED',
-                                              bgColor: Colors.grey[400]),
-                                          FoodHome(
-                                              url:
-                                                  'assets/images/png/ricebag.png',
-                                              title: 'Medium grain rice',
-                                              subtitle: 'Price: 55 AED',
-                                              bgColor: Colors.grey[400]),
-                                          FoodHome(
-                                              url:
-                                                  'assets/images/png/ricebag.png',
-                                              title: 'Long grain rice',
-                                              subtitle: 'Price: 40 AED',
-                                              bgColor: Colors.grey[400]),
-                                          FoodHome(
-                                              url:
-                                                  'assets/images/png/ricebag.png',
-                                              title: 'Short grain rice',
-                                              subtitle: 'Price: 45 AED',
-                                              bgColor: Colors.grey[400]),
-                                        ],
+
+                                        children: _ctrl?.getProdList?.value !=
+                                                null
+                                            ? _ctrl.getProdList.value
+                                                .map(
+                                                  (Category category) =>
+                                                      GestureDetector(
+                                                    onTap: () {},
+                                                    child: FoodHome(
+                                                        url:
+                                                            'assets/images/png/ricebag.png',
+                                                        title: category.title,
+                                                        subtitle:
+                                                            '${category.price} AED',
+                                                        bgColor:
+                                                            Colors.grey[400]),
+                                                  ),
+                                                )
+                                                .toList()
+                                            : [],
+                                        // FoodHome(
+                                        //     url:
+                                        //         'assets/images/png/ricebag.png',
+                                        //     title: 'Brown rice',
+                                        //     subtitle: 'Price: 50 AED',
+                                        //     bgColor: Colors.grey[400]),
+                                        // FoodHome(
+                                        //     url:
+                                        //         'assets/images/png/ricebag.png',
+                                        //     title: 'Medium grain rice',
+                                        //     subtitle: 'Price: 55 AED',
+                                        //     bgColor: Colors.grey[400]),
+                                        // FoodHome(
+                                        //     url:
+                                        //         'assets/images/png/ricebag.png',
+                                        //     title: 'Long grain rice',
+                                        //     subtitle: 'Price: 40 AED',
+                                        //     bgColor: Colors.grey[400]),
+                                        // FoodHome(
+                                        //     url:
+                                        //         'assets/images/png/ricebag.png',
+                                        //     title: 'Short grain rice',
+                                        //     subtitle: 'Price: 45 AED',
+                                        //     bgColor: Colors.grey[400]),
+                                        // ],
                                       ),
                                     ),
                                   ),

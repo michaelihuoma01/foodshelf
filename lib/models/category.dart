@@ -1,28 +1,20 @@
-import 'package:foodshelf/helpers/custom_trace.dart';
-import 'package:foodshelf/models/al_type.dart';
-
 class Category {
-  String id, title, image;
-  // List<AlType> cat, prod;
+  String id, title, image, price, qty, categoryID, sku, description, status;
 
-  Category() {
-    // cat = prod = [];
-  }
+  Category();
 
   Category.fromJSON(Map<String, dynamic> json) {
     try {
-      // cat = (jsonMap['categories'] as List)
-      //     .map(
-      //       (method) => AlType(
-      //         id: method['id'],
-      //         title: method['title'],
-      //       ),
-      //     )
-      //     .toList();
       print('--- $json');
       id = json['id'].toString();
       title = json['title'];
       image = json['image'];
+      price = json['price'];
+      qty = json['qty'];
+      categoryID = json['category_id'];
+      description = json['description'];
+      status = json['status'];
+      sku = json['sku'];
     } catch (e) {
       print(e);
     }
@@ -34,8 +26,12 @@ class Category {
     map["id"] = id;
     map["title"] = title;
     map["image"] = image;
-
-    // map['categories'] = cat;
+    map["price"] = price;
+    map["qty"] = qty;
+    map["category_id"] = categoryID;
+    map["description"] = description;
+    map["status"] = status;
+    map["sku"] = sku;
 
     return map;
   }
