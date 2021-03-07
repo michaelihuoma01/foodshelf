@@ -5,6 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:foodshelf/controllers/hometab_controller.dart';
 import 'package:foodshelf/helpers/utility.dart';
+import 'package:foodshelf/models/al_type.dart';
 import 'package:foodshelf/screens/pages/details.dart';
 import 'package:foodshelf/screens/pages/search.dart';
 import 'package:foodshelf/utility/brand_colors.dart';
@@ -45,7 +46,7 @@ class _HomeTabState extends StateMVC<HomeTab> {
           ),
         ],
         builder: (context, child) {
-          _ctrl.categoryList.addListener(
+          _ctrl.getCatList.addListener(
             () => Future.delayed(
               Duration(seconds: 1),
               () => setState(
@@ -140,7 +141,10 @@ class _HomeTabState extends StateMVC<HomeTab> {
                           ),
                           InkWell(
                             onTap: () async {
-                              print(await storage.read(key: 'token'));
+                              // here, i'm prinitng the title on tap of the empty space
+                              // on the screen, but its returning null
+                              print(_ctrl.getCatList.value.title);
+
                               if (isVisible) {
                                 setState(() {
                                   isVisible = false;
@@ -153,37 +157,62 @@ class _HomeTabState extends StateMVC<HomeTab> {
                             },
                             child: Container(
                               height: MediaQuery.of(context).size.height * .15,
-                              child: ListView(
-                                scrollDirection: Axis.horizontal,
-                                children: [
-                                  FoodType(
-                                      url: 'assets/images/svg/rice.svg',
-                                      title: 'Rice',
-                                      color: BrandColors.colorAccent,
-                                      bgColor: BrandColors.colorAccent),
-                                  FoodType(
-                                      url: 'assets/images/svg/cereal.svg',
-                                      title: 'Cereal and Seeds',
-                                      bgColor: Colors.grey[300]),
-                                  FoodType(
-                                      url: 'assets/images/svg/breakfast.svg',
-                                      title: 'Breakfast Cereals',
-                                      bgColor: Colors.grey[300]),
-                                  FoodType(
-                                      url: 'assets/images/svg/snacks.svg',
-                                      height: 35,
-                                      title: 'Snacks',
-                                      bgColor: Colors.grey[300]),
-                                  FoodType(
-                                      url: 'assets/images/svg/pasta.svg',
-                                      title: 'Pasta and Sauces',
-                                      bgColor: Colors.grey[300]),
-                                  FoodType(
-                                      url: 'assets/images/svg/coffee.svg',
-                                      title: 'Coffee and Tea',
-                                      bgColor: Colors.grey[300]),
-                                ],
-                              ),
+                              // Here, I'm trying to display the widgets, just like it is on alraad but
+                              // it returns null also.
+
+                              // child: ListView(
+                              //   scrollDirection: Axis.horizontal,
+                              //   children: _ctrl != null
+                              //       ? _ctrl.getCatList.value.cat
+                              //           .map(
+                              //             (AlType category) => GestureDetector(
+                              //               onTap: () {},
+                              //               child: FoodType(
+                              //                   url:
+                              //                       'assets/images/svg/rice.svg',
+                              //                   title: category.title,
+                              //                   color: BrandColors.colorAccent,
+                              //                   bgColor:
+                              //                       BrandColors.colorAccent),
+                              //             ),
+                              //           )
+                              //           .toList()
+                              //       : [],
+                              // ),
+
+                              // This is the dummy contents
+
+                              // child: ListView(
+                              //   scrollDirection: Axis.horizontal,
+                              //   children: [
+                              //     FoodType(
+                              //         url: 'assets/images/svg/rice.svg',
+                              //         title: 'Rice',
+                              //         color: BrandColors.colorAccent,
+                              //         bgColor: BrandColors.colorAccent),
+                              //     FoodType(
+                              //         url: 'assets/images/svg/cereal.svg',
+                              //         title: 'Cereal and Seeds',
+                              //         bgColor: Colors.grey[300]),
+                              //     FoodType(
+                              //         url: 'assets/images/svg/breakfast.svg',
+                              //         title: 'Breakfast Cereals',
+                              //         bgColor: Colors.grey[300]),
+                              //     FoodType(
+                              //         url: 'assets/images/svg/snacks.svg',
+                              //         height: 35,
+                              //         title: 'Snacks',
+                              //         bgColor: Colors.grey[300]),
+                              //     FoodType(
+                              //         url: 'assets/images/svg/pasta.svg',
+                              //         title: 'Pasta and Sauces',
+                              //         bgColor: Colors.grey[300]),
+                              //     FoodType(
+                              //         url: 'assets/images/svg/coffee.svg',
+                              //         title: 'Coffee and Tea',
+                              //         bgColor: Colors.grey[300]),
+                              //   ],
+                              // ),
                             ),
                           ),
                           (isVisible)

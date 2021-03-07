@@ -1,9 +1,11 @@
 class IResponse<T> {
   int statusCode;
-  String message, token;
+  String token;
   T data;
   bool status;
   Map<String, String> error;
+  Map<String, dynamic> message;
+
   Meta meta;
 
   IResponse({

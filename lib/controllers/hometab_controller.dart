@@ -6,12 +6,14 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:foodshelf/repository/category_repository.dart' as categoryRepo;
 
 class HomeTabController extends ControllerMVC {
-  ValueNotifier<Category> categoryList;
+  Category categoryList = new Category();
+  ValueNotifier<Category> getCatList;
+
   var fetchingAddresses = true;
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   HomeTabController() {
-    categoryList = ValueNotifier(Category());
+    getCatList = ValueNotifier(Category());
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
 
     getCategoryList();
@@ -23,13 +25,13 @@ class HomeTabController extends ControllerMVC {
         fetchingAddresses = true;
       });
     }
-    IResponse<Category> res = await categoryRepo.getConfig();
-    if (res.statusCode < 300 || res.statusCode == 409) {
-      categoryList.value = res.data;
+    IResponse<Category> res = await categoryRepo.getCategory();
+    if (res.statusCode == 200) {
+      getCatList.value = res.data;
 
       // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
-      categoryList.notifyListeners();
-      print(res.data.toString());
+      getCatList.notifyListeners();
+      print(res.data);
 
       setState(() {
         fetchingAddresses = false;

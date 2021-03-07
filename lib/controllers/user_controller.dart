@@ -52,7 +52,7 @@ class UserController extends ControllerMVC {
     } else {
       Utility.showMessage(
         scaffoldKey?.currentContext,
-        message: res.message,
+        message: res.message.toString(),
       );
       loader.remove();
     }
@@ -107,7 +107,7 @@ class UserController extends ControllerMVC {
     } else {
       Utility.showMessage(
         scaffoldKey?.currentContext,
-        message: res.message,
+        message: res.message.toString(),
         type: MessageTypes.error,
       );
       loader.remove();
