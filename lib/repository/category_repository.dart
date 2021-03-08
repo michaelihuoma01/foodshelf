@@ -75,7 +75,7 @@ Future<IResponse<List<Category>>> getProducts() async {
       break;
   }
   print(res.statusCode);
-  print(json.decode(res.body));
+  // print(json.decode(res.body));
   // print(alRes.data.title);
 
   return alRes;
