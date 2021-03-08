@@ -37,7 +37,7 @@ class _HomeTabState extends StateMVC<HomeTab> {
     var size = MediaQuery.of(context).size;
     double itemHeight = size.height / 3;
     double itemWidth = size.width / 2;
-    double itemHomeHeight = size.height / 3.9;
+    double itemHomeHeight = size.height / 3.5;
 
     return MultiProvider(
         providers: [
@@ -151,48 +151,32 @@ class _HomeTabState extends StateMVC<HomeTab> {
                               ],
                             ),
                           ),
-                          InkWell(
-                            onTap: () async {
-                              // here, i'm prinitng the title on tap of the empty space
-                              // on the screen, but its returning null
-                              print(
-                                  '---- ${_ctrl.getCatList.value.first.title}');
-
-                              if (isVisible) {
-                                setState(() {
-                                  isVisible = false;
-                                });
-                              } else {
-                                setState(() {
-                                  isVisible = true;
-                                });
-                              }
-                            },
-                            child: Container(
-                              height: MediaQuery.of(context).size.height * .16,
-                              // Here, I'm trying to display the widgets, just like it is on alraad but
-                              // it returns null also.
-
-                              child: ListView(
-                                scrollDirection: Axis.horizontal,
-                                children: _ctrl?.getCatList?.value != null
-                                    ? _ctrl.getCatList.value
-                                        .map(
-                                          (Category category) =>
-                                              GestureDetector(
-                                            onTap: () {},
-                                            child: FoodType(
-                                                url:
-                                                    'assets/images/svg/rice.svg',
-                                                title: category.title,
-                                                color: BrandColors.colorAccent,
-                                                bgColor:
-                                                    BrandColors.colorAccent),
-                                          ),
-                                        )
-                                        .toList()
-                                    : [],
-                              ),
+                          Container(
+                            height: MediaQuery.of(context).size.height * .16,
+                            child: ListView(
+                              scrollDirection: Axis.horizontal,
+                              children: _ctrl?.getCatList?.value != null
+                                  ? _ctrl.getCatList.value
+                                      .map(
+                                        (Category category) => FoodType(
+                                          onTap: () {
+                                            if (isVisible) {
+                                              setState(() {
+                                                isVisible = false;
+                                              });
+                                            } else {
+                                              setState(() {
+                                                isVisible = true;
+                                              });
+                                            }
+                                          },
+                                          url: 'assets/images/svg/rice.svg',
+                                          title: category.title,
+                                          isSelected: isVisible,
+                                        ),
+                                      )
+                                      .toList()
+                                  : [],
                             ),
                           ),
                           (isVisible)
@@ -205,20 +189,14 @@ class _HomeTabState extends StateMVC<HomeTab> {
                                       children: _ctrl?.getCatList?.value != null
                                           ? _ctrl.getCatList.value
                                               .map(
-                                                (Category category) =>
-                                                    GestureDetector(
-                                                  onTap: () {},
-                                                  child: FoodType(
-                                                      url:
-                                                          'assets/images/svg/rice.svg',
-                                                      title: category.title,
-                                                      color: BrandColors
-                                                          .colorAccent,
-                                                      bgColor: BrandColors
-                                                          .colorAccent),
+                                                (Category category) => FoodType(
+                                                  url:
+                                                      'assets/images/svg/rice.svg',
+                                                  title: category.title,
+                                                  isSelected: isVisible,
                                                 ),
                                               )
-                                              .toList()
+                                              .toList().sublist(0,3)
                                           : [],
                                     ),
                                   ),
@@ -235,7 +213,8 @@ class _HomeTabState extends StateMVC<HomeTab> {
                                       },
                                       child: GridView.count(
                                         crossAxisCount: 2,
-
+                                        childAspectRatio:
+                                            (itemWidth / itemHomeHeight),
                                         children: _ctrl?.getProdList?.value !=
                                                 null
                                             ? _ctrl.getProdList.value
@@ -244,13 +223,12 @@ class _HomeTabState extends StateMVC<HomeTab> {
                                                       GestureDetector(
                                                     onTap: () {},
                                                     child: FoodHome(
-                                                        url:
-                                                            'assets/images/png/ricebag.png',
+                                                        url: category.image,
                                                         title: category.title,
                                                         subtitle:
                                                             '${category.price} AED',
                                                         bgColor:
-                                                            Colors.grey[400]),
+                                                            Colors.black12),
                                                   ),
                                                 )
                                                 .toList()
