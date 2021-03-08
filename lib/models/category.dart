@@ -5,7 +5,6 @@ class Category {
 
   Category.fromJSON(Map<String, dynamic> json) {
     try {
-      print('--- $json');
       id = json['id'].toString();
       title = json['title'];
       image = json['image'];

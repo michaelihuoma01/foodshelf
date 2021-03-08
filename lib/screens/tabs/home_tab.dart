@@ -5,7 +5,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:foodshelf/controllers/hometab_controller.dart';
 import 'package:foodshelf/helpers/utility.dart';
-import 'package:foodshelf/models/al_type.dart';
 import 'package:foodshelf/models/category.dart';
 import 'package:foodshelf/screens/pages/details.dart';
 import 'package:foodshelf/screens/pages/search.dart';
@@ -37,7 +36,25 @@ class _HomeTabState extends StateMVC<HomeTab> {
     var size = MediaQuery.of(context).size;
     double itemHeight = size.height / 3;
     double itemWidth = size.width / 2;
-    double itemHomeHeight = size.height / 3.9;
+    double itemHomeHeight = size.height / 3.5;
+
+    final categoriesListLength = 3;
+    var categoriesList = <Widget>[];
+    if (_ctrl?.getCatList?.value != null) {
+      categoriesList = _ctrl.getCatList.value
+          .sublist(0, categoriesListLength)
+          .map(
+            (Category category) => GestureDetector(
+              onTap: () {},
+              child: FoodType(url: 'assets/images/svg/rice.svg', title: category.title, color: BrandColors.colorAccent, bgColor: BrandColors.colorAccent),
+            ),
+          )
+          .toList();
+    }
+    categoriesList.add(GestureDetector(
+      onTap: () {},
+      child: FoodType(url: 'assets/images/svg/rice.svg', title: 'See All', color: BrandColors.colorAccent, bgColor: BrandColors.colorAccent),
+    ));
 
     return MultiProvider(
         providers: [
@@ -141,7 +158,6 @@ class _HomeTabState extends StateMVC<HomeTab> {
                                 onTap: () async {
                                   // here, i'm prinitng the title on tap of the empty space
                                   // on the screen, but its returning null
-                                  print('---- ${_ctrl.getCatList.value.first.title}');
 
                                   if (isVisible) {
                                     setState(() {
@@ -158,19 +174,7 @@ class _HomeTabState extends StateMVC<HomeTab> {
                                   // Here, I'm trying to display the widgets, just like it is on alraad but
                                   // it returns null also.
 
-                                  child: ListView(
-                                    scrollDirection: Axis.horizontal,
-                                    children: _ctrl?.getCatList?.value != null
-                                        ? _ctrl.getCatList.value
-                                            .map(
-                                              (Category category) => GestureDetector(
-                                                onTap: () {},
-                                                child: FoodType(url: 'assets/images/svg/rice.svg', title: category.title, color: BrandColors.colorAccent, bgColor: BrandColors.colorAccent),
-                                              ),
-                                            )
-                                            .toList()
-                                        : [],
-                                  ),
+                                  child: ListView(scrollDirection: Axis.horizontal, children: categoriesList),
                                 ),
                               ),
                               (isVisible)
