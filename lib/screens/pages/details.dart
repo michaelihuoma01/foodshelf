@@ -147,6 +147,8 @@ class _DetailsPageState extends StateMVC<DetailsPage> {
                               //         builder: (context) => CartTab()));
 
                               // print(prodCat);
+                              // _getProdDetails();
+
                               print(await _ctrl.getProductDetails(widget.id));
                             },
                             title: 'Add To Cart'),

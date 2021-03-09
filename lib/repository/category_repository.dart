@@ -105,12 +105,14 @@ Future<IResponse<List<Category>>> getProductDetails({
   switch (res.statusCode) {
     case 200:
     case 409:
-      alRes.data = (resData as List)
-          .map<Category>((item) => Category.fromJSON(item))
-          .toList();
+      // alRes.data = (resData as List)
+      //     .map<Category>((item) => Category.fromJSON(item))
+      //     .toList();
 
-      // Map<String, dynamic> map = json.decode(res.body);
-    
+      Map<String, dynamic> map = json.decode(res.body);
+
+      alRes.data = map.entries.map((entry) => Category()).toList();
+
       // List<dynamic> data = map["product"];
       print('-------///////--------${alRes.data}');
       break;
