@@ -30,7 +30,7 @@ class _HomeTabState extends StateMVC<HomeTab> {
 
   List<Category> filteredList;
 
-  bool isVisible = false, isFiltered = false;
+  bool isVisible = false, isFiltered = true;
   FlutterSecureStorage storage = getIt<FlutterSecureStorage>();
 
   @override
@@ -56,10 +56,10 @@ class _HomeTabState extends StateMVC<HomeTab> {
                       .where((i) => i.categoryID == _ctrl.categoryList.id)
                       .toList();
 
-                  if (isFiltered) {
-                    isFiltered = true;
-                  } else {
+                  if (isFiltered == true) {
                     isFiltered = false;
+                  } else {
+                    isFiltered = true;
                   }
                 });
               },
@@ -121,223 +121,217 @@ class _HomeTabState extends StateMVC<HomeTab> {
             ),
           );
 
-          return Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              // image: DecorationImage(
-              //   alignment: Alignment.topCenter,
-              //   image: Image.asset('assets/images/png/background.png').image,
-              // ),
-            ),
-            child: Stack(
-              children: [
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  child: Image.asset(
-                    'assets/images/png/background.png',
-                    width: double.infinity,
-                    height: 300,
-                    fit: BoxFit.cover,
-                  ),
+          return Stack(
+            children: [
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: Image.asset(
+                  'assets/images/png/background.png',
+                  width: double.infinity,
+                  height: 300,
+                  fit: BoxFit.cover,
                 ),
-                Scaffold(
-                  backgroundColor: Colors.transparent,
-                  body: (_ctrl.fetchingAddresses)
-                      ? Center(child: CircularProgressIndicator())
-                      : Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 60, bottom: 10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Container(
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Colors.white,
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(15),
-                                              child: SvgPicture.asset(
-                                                  'assets/images/svg/hello.svg'),
-                                            )),
-                                        SizedBox(width: 10),
-                                        Column(
-                                          children: [
-                                            RichText(
-                                              // textAlign: TextAlign.center,
-                                              text: TextSpan(
-                                                children: <TextSpan>[
-                                                  new TextSpan(
-                                                      text: 'Hello! \n',
-                                                      style: TextStyle(
-                                                          color: Colors.white)),
-                                                  new TextSpan(
-                                                      text: '-- \n',
-                                                      style: TextStyle(
-                                                          color: BrandColors
-                                                              .colorAccent)),
-                                                  new TextSpan(
-                                                      text:
-                                                          'A simple way for you to find \n',
-                                                      style: TextStyle(
-                                                          color: Colors.white)),
-                                                  new TextSpan(
-                                                      text: 'Healthy Food ',
-                                                      style: TextStyle(
-                                                          color: BrandColors
-                                                              .colorAccent)),
-                                                  new TextSpan(
-                                                      text: 'everyday',
-                                                      style: TextStyle(
-                                                          color: Colors.white)),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    InkWell(
-                                        onTap: () => Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    SearchPage())),
-                                        child: Icon(Icons.search,
-                                            color: Colors.white))
-                                  ],
-                                ),
-                              ),
-                              SizedBox(height: 100),
-                              Container(
-                                height:
-                                    MediaQuery.of(context).size.height * .16,
-                                child: ListView(
-                                    scrollDirection: Axis.horizontal,
-                                    children: categoriesList),
-                              ),
-                              (isVisible)
-                                  ? Expanded(
-                                      child: Container(
-                                        child: GridView.count(
-                                          crossAxisCount: 4,
-                                          childAspectRatio:
-                                              (itemWidth / itemHeight),
-                                          children: _ctrl?.getCatList?.value !=
-                                                  null
-                                              ? _ctrl.getCatList.value
-                                                  .map(
-                                                    (Category category) =>
-                                                        GestureDetector(
-                                                      onTap: () {
-                                                        setState(() {
-                                                          _ctrl.categoryList
-                                                                  .title =
-                                                              category.title;
-                                                        });
-                                                      },
-                                                      child: FoodType(
-                                                        url:
-                                                            'assets/images/svg/rice.svg',
-                                                        title: category.title,
-                                                        isSelected: (category
-                                                                .title ==
-                                                            _ctrl.categoryList
-                                                                .title),
-                                                      ),
-                                                    ),
-                                                  )
-                                                  .toList()
-                                                  .sublist(
-                                                      4,
-                                                      _ctrl.getCatList.value
-                                                          .length)
-                                              : [],
-                                        ),
-                                      ),
-                                    )
-                                  : Expanded(
-                                      child: Container(
-                                        child: InkWell(
-                                          onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        DetailsPage()));
-                                          },
-                                          child: GridView.count(
-                                            crossAxisCount: 2,
-                                            children: (isFiltered)
-                                                ? _ctrl?.getProdList?.value !=
-                                                        null
-                                                    ? _ctrl.getProdList.value
-                                                        .map(
-                                                          (Category category) =>
-                                                              GestureDetector(
-                                                            onTap: () {
-                                                              _ctrl.productsList
-                                                                      .categoryID =
-                                                                  category
-                                                                      .categoryID;
-                                                            },
-                                                            child: FoodHome(
-                                                                url: category
-                                                                    .image,
-                                                                title: category
-                                                                    .title,
-                                                                subtitle:
-                                                                    '${category.price} AED',
-                                                                bgColor: Colors
-                                                                    .grey[400]),
-                                                          ),
-                                                        )
-                                                        .toList()
-                                                    : []
-                                                : filteredList != null
-                                                    ? filteredList
-                                                        .map(
-                                                          (Category category) =>
-                                                              GestureDetector(
-                                                            onTap: () {
-                                                              _ctrl.productsList
-                                                                      .categoryID =
-                                                                  category
-                                                                      .categoryID;
-                                                            },
-                                                            child: FoodHome(
-                                                                url: category
-                                                                    .image,
-                                                                title: category
-                                                                    .title,
-                                                                subtitle:
-                                                                    '${category.price} AED',
-                                                                bgColor: Colors
-                                                                    .grey[400]),
-                                                          ),
-                                                        )
-                                                        .toList()
-                                                    : [],
+              ),
+              Scaffold(
+                backgroundColor: Colors.transparent,
+                body: (_ctrl.fetchingAddresses)
+                    ? Center(child: CircularProgressIndicator())
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 60, bottom: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Container(
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.white,
                                           ),
-                                        ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(15),
+                                            child: SvgPicture.asset(
+                                                'assets/images/svg/hello.svg'),
+                                          )),
+                                      SizedBox(width: 10),
+                                      Column(
+                                        children: [
+                                          RichText(
+                                            // textAlign: TextAlign.center,
+                                            text: TextSpan(
+                                              children: <TextSpan>[
+                                                new TextSpan(
+                                                    text: 'Hello! \n',
+                                                    style: TextStyle(
+                                                        color: Colors.white)),
+                                                new TextSpan(
+                                                    text: '-- \n',
+                                                    style: TextStyle(
+                                                        color: BrandColors
+                                                            .colorAccent)),
+                                                new TextSpan(
+                                                    text:
+                                                        'A simple way for you to find \n',
+                                                    style: TextStyle(
+                                                        color: Colors.white)),
+                                                new TextSpan(
+                                                    text: 'Healthy Food ',
+                                                    style: TextStyle(
+                                                        color: BrandColors
+                                                            .colorAccent)),
+                                                new TextSpan(
+                                                    text: 'everyday',
+                                                    style: TextStyle(
+                                                        color: Colors.white)),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  InkWell(
+                                      onTap: () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SearchPage())),
+                                      child: Icon(Icons.search,
+                                          color: Colors.white))
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 100),
+                            Container(
+                              height: MediaQuery.of(context).size.height * .16,
+                              child: ListView(
+                                  scrollDirection: Axis.horizontal,
+                                  children: categoriesList),
+                            ),
+                            (isVisible)
+                                ? Expanded(
+                                    child: Container(
+                                      child: GridView.count(
+                                        crossAxisCount: 4,
+                                        childAspectRatio:
+                                            (itemWidth / itemHeight),
+                                        children: _ctrl?.getCatList?.value !=
+                                                null
+                                            ? _ctrl.getCatList.value
+                                                .map(
+                                                  (Category category) =>
+                                                      GestureDetector(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        _ctrl.categoryList
+                                                                .title =
+                                                            category.title;
+                                                      });
+                                                    },
+                                                    child: FoodType(
+                                                      url:
+                                                          'assets/images/svg/rice.svg',
+                                                      title: category.title,
+                                                      isSelected:
+                                                          (category.title ==
+                                                              _ctrl.categoryList
+                                                                  .title),
+                                                    ),
+                                                  ),
+                                                )
+                                                .toList()
+                                                .sublist(
+                                                    4,
+                                                    _ctrl.getCatList.value
+                                                        .length)
+                                            : [],
                                       ),
                                     ),
-                            ],
-                          ),
+                                  )
+                                : Expanded(
+                                    child: Container(
+                                      child: GridView.count(
+                                        crossAxisCount: 2,
+                                        children: (isFiltered)
+                                            ? _ctrl?.getProdList?.value != null
+                                                ? _ctrl.getProdList.value
+                                                    .map(
+                                                      (Category category) =>
+                                                          InkWell(
+                                                        onTap: () {
+                                                          _ctrl.productsList
+                                                                  .categoryID =
+                                                              category
+                                                                  .categoryID;
+
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (context) =>
+                                                                      DetailsPage(
+                                                                          id: category
+                                                                              .id)));
+                                                        },
+                                                        child: FoodHome(
+                                                            url: category.image,
+                                                            title:
+                                                                category.title,
+                                                            subtitle:
+                                                                '${category.price} AED',
+                                                            bgColor: Colors
+                                                                .grey[400]),
+                                                      ),
+                                                    )
+                                                    .toList()
+                                                : []
+                                            : filteredList != null
+                                                ? filteredList
+                                                    .map(
+                                                      (Category category) =>
+                                                          InkWell(
+                                                        onTap: () {
+                                                          _ctrl.productsList
+                                                                  .categoryID =
+                                                              category
+                                                                  .categoryID;
+
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (context) =>
+                                                                      DetailsPage(
+                                                                          id: category
+                                                                              .id)));
+                                                        },
+                                                        child: FoodHome(
+                                                            url: category.image,
+                                                            title:
+                                                                category.title,
+                                                            subtitle:
+                                                                '${category.price} AED',
+                                                            bgColor: Colors
+                                                                .grey[400]),
+                                                      ),
+                                                    )
+                                                    .toList()
+                                                : [],
+                                      ),
+                                    ),
+                                  ),
+                          ],
                         ),
-                ),
-              ],
-            ),
+                      ),
+              ),
+            ],
           );
         });
   }

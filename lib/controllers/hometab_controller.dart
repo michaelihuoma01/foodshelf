@@ -76,4 +76,31 @@ class HomeTabController extends ControllerMVC {
       });
     }
   }
+
+  Future getProductDetails(String id) async {
+    if (!fetchingAddresses) {
+      setState(() {
+        fetchingAddresses = true;
+      });
+    }
+    IResponse<List<Category>> res =
+        await categoryRepo.getProductDetails(id: id);
+    if (res.statusCode == 200) {
+      getProdList.value = res.data;
+
+      // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+      getProdList.notifyListeners();
+      print(res.data);
+
+      setState(() {
+        fetchingAddresses = false;
+      });
+    } else {
+      print(res.toString());
+
+      setState(() {
+        fetchingAddresses = false;
+      });
+    }
+  }
 }
