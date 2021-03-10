@@ -32,20 +32,20 @@ Future<IResponse<User>> login(User user) async {
     statusCode: res.statusCode,
     msg: json.decode(res.body)['message'],
     token: json.decode(res.body)['access_token'],
+    uuid: json.decode(res.body)['user_id'],
   );
 
   // TODO: Remove, Inherit from Interceptor
   switch (res.statusCode) {
     case 200:
     case 409:
-      alRes.data = User.fromJSON(json.decode(res.body)['data']);
+      alRes.data = User.fromJSON(json.decode(res.body));
       break;
     default:
       break;
   }
 
   print(res.statusCode);
-  print(res.body);
 
   return alRes;
 }

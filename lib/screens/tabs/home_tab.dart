@@ -200,11 +200,13 @@ class _HomeTabState extends StateMVC<HomeTab> {
                                     ],
                                   ),
                                   InkWell(
-                                      onTap: () => Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  SearchPage())),
+                                      onTap: () async {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SearchPage()));
+                                      },
                                       child: Icon(Icons.search,
                                           color: Colors.white))
                                 ],

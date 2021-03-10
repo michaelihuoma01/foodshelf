@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:foodshelf/controllers/cart_controller.dart';
 import 'package:foodshelf/controllers/hometab_controller.dart';
 import 'package:foodshelf/models/category.dart';
 import 'package:foodshelf/models/iresponse.dart';
@@ -30,9 +32,11 @@ class _DetailsPageState extends StateMVC<DetailsPage> {
   }
 
   TextEditingController numController = new TextEditingController();
+  int count = 1;
+  String uuid, deviceID;
   var focusKeyboard = FocusNode();
-
   bool keyboardVisible = true;
+  FlutterSecureStorage storage = FlutterSecureStorage();
 
   void setFocus() {
     if (!keyboardVisible) {
@@ -49,16 +53,22 @@ class _DetailsPageState extends StateMVC<DetailsPage> {
     final IResponse<Category> productResponse = res.first;
     prodCat = productResponse.data;
     setState(() {});
+  }
 
-    print('----------------$prodCat');
+  getID() async {
+    deviceID = await storage.read(key: 'deviceID');
+    print(deviceID);
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    getID();
+
     _getProdDetails();
-    numController.text = '1';
+    numController.text = count.toString();
+    getID();
   }
 
   @override
@@ -102,16 +112,22 @@ class _DetailsPageState extends StateMVC<DetailsPage> {
                             children: [
                               CounterButton(
                                   iconData: Icons.remove,
-                                  onTap: () {},
+                                  onTap: () {
+                                    setState(() {
+                                      count--;
+                                      numController.text = count.toString();
+                                    });
+                                    print(count);
+                                  },
                                   color: Colors.red),
                               Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 1, right: 1, top: 4),
+                                  padding: const EdgeInsets.only(top: 4),
                                   child: Container(
-                                      width: 20,
+                                      width: 30,
                                       height: 20,
                                       color: Colors.transparent,
                                       child: TextFormField(
+                                        enabled: false,
                                         decoration: InputDecoration(
                                             enabledBorder: UnderlineInputBorder(
                                                 borderSide: BorderSide.none),
@@ -126,11 +142,16 @@ class _DetailsPageState extends StateMVC<DetailsPage> {
                                             fontFamily: 'Helvetica',
                                             color: Colors.red),
                                         keyboardType: TextInputType.number,
-                                        onFieldSubmitted: (value) {},
                                       ))),
                               CounterButton(
                                   iconData: Icons.add,
-                                  onTap: () {},
+                                  onTap: () {
+                                    setState(() {
+                                      count++;
+                                      numController.text = count.toString();
+                                    });
+                                    print(count);
+                                  },
                                   color: Colors.red)
                             ])
                       ]),
@@ -146,106 +167,111 @@ class _DetailsPageState extends StateMVC<DetailsPage> {
                               //     MaterialPageRoute(
                               //         builder: (context) => CartTab()));
 
-                              // print(prodCat);
-                              // _getProdDetails();
-
-                              print(await _ctrl.getProductDetails(widget.id));
+                              // _ctrl.addToCart(
+                              //   int.parse(uuid),
+                              //   deviceID,
+                              //   prodCat.id,
+                              //   count,
+                              //   double.parse(prodCat.price) * count,
+                              // );
                             },
                             title: 'Add To Cart'),
                       ))
                     ]))),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset('assets/images/png/ricebag.png'),
-                    Row(children: [
-                      Text('Brown Rice (Long Grain)',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                              fontFamily: 'Bold')),
-                      Spacer(),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 30),
-                        child: Icon(Icons.favorite, color: Colors.red),
-                      ),
-                    ]),
-                    SizedBox(height: 5),
-                    Row(children: [
-                      Text('Quantity: 1kg',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontFamily: 'Medium')),
-                      SizedBox(width: 30),
-                      Text('Price: 59 AED',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontFamily: 'Medium')),
-                    ]),
-                    SizedBox(height: 15),
-                    Text('Product Description',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontFamily: 'Medium')),
-                    Text(
-                        'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have'),
-                    SizedBox(height: 10),
-                    Text('Advantages:',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontFamily: 'Medium')),
-                    Text(
-                        'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs'),
-                    SizedBox(height: 10),
-                    Text('Reviews',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontFamily: 'Medium')),
-                    SizedBox(height: 5),
-                    Row(children: [
-                      Icon(Icons.star, color: Colors.orange, size: 17),
-                      SizedBox(width: 5),
-                      Text('4.5/5',
-                          style: TextStyle(color: Colors.black, fontSize: 15))
-                    ]),
-                    SizedBox(height: 5),
-                    Row(
-                      children: [
-                        Icon(Icons.account_circle),
-                        SizedBox(width: 5),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+            body: (_ctrl.fetchingAddresses || prodCat == null)
+                ? Center(child: CircularProgressIndicator())
+                : SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.network(prodCat.image, width: double.infinity),
+                          Row(children: [
+                            Text(prodCat.title,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontFamily: 'Bold')),
+                            Spacer(),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 30),
+                              child: Icon(Icons.favorite, color: Colors.red),
+                            ),
+                          ]),
+                          SizedBox(height: 5),
+                          Row(children: [
+                            Text('Quantity: ${prodCat.qty}kg',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontFamily: 'Medium')),
+                            SizedBox(width: 30),
+                            Text('Price: ${prodCat.price} AED',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontFamily: 'Medium')),
+                          ]),
+                          SizedBox(height: 15),
+                          Text('Product Description',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                  fontFamily: 'Medium')),
+                          Text(prodCat.description),
+                          SizedBox(height: 10),
+                          Text('Advantages:',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                  fontFamily: 'Medium')),
+                          Text(
+                              'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs'),
+                          SizedBox(height: 10),
+                          Text('Reviews',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                  fontFamily: 'Medium')),
+                          SizedBox(height: 5),
+                          Row(children: [
+                            Icon(Icons.star, color: Colors.orange, size: 17),
+                            SizedBox(width: 5),
+                            Text('4.5/5',
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 15))
+                          ]),
+                          SizedBox(height: 5),
+                          Row(
                             children: [
-                              Text('Anonymous',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14,
-                                      fontFamily: 'Medium')),
-                              Text(
-                                  'Lorem ipsum, or lipsum as it is sometimes known',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14,
-                                      fontFamily: 'Medium')),
+                              Icon(Icons.account_circle),
+                              SizedBox(width: 5),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Anonymous',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontFamily: 'Medium')),
+                                    Text(
+                                        'Lorem ipsum, or lipsum as it is sometimes known',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontFamily: 'Medium')),
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ],
-                ),
-              ),
-            ),
+                  ),
           );
         });
   }

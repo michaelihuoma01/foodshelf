@@ -14,6 +14,12 @@ class Category {
       description = json['description'];
       status = json['status'];
       sku = json['sku'];
+
+      if (json['product'] != null) {
+        title = json['product']['title'];
+        image = json['product']['image'];
+        description = json['product']['description'];
+      }
     } catch (e) {
       print(e);
     }
@@ -31,6 +37,12 @@ class Category {
     map["description"] = description;
     map["status"] = status;
     map["sku"] = sku;
+
+    if (map['product'] != null) {
+      map['product']['title'] = title;
+      map['product']['image'] = image;
+      map['product']['description'] = description;
+    }
 
     return map;
   }

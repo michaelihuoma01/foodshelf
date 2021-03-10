@@ -1,5 +1,5 @@
 class IResponse<T> {
-  int statusCode;
+  int statusCode, uuid;
   String token, msg;
   T data;
   bool status;
@@ -12,6 +12,7 @@ class IResponse<T> {
     this.data,
     this.token,
     this.message,
+    this.uuid,
     this.msg,
     this.statusCode,
     this.status,
@@ -41,6 +42,7 @@ class IResponse<T> {
     map["data"] = data;
     map["token"] = token;
     map["message"] = message;
+    map["user_id"] = uuid;
     map["status_code"] = statusCode;
     return map;
   }

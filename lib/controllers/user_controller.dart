@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:foodshelf/helpers/constants.dart';
@@ -33,6 +35,19 @@ class UserController extends ControllerMVC {
     storage = getIt<FlutterSecureStorage>();
   }
 
+  Future<String> _getDeviceId() async {
+    final deviceInfo = DeviceInfoPlugin();
+    if (Platform.isIOS) {
+      IosDeviceInfo iosDeviceInfo = await deviceInfo.iosInfo;
+      storage.write(key: "deviceID", value: iosDeviceInfo.identifierForVendor);
+      return iosDeviceInfo.identifierForVendor; // unique ID on iOS
+    } else {
+      AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
+      storage.write(key: "deviceID", value: androidDeviceInfo.androidId);
+      return androidDeviceInfo.androidId; // unique ID on Android
+    }
+  }
+
   login() async {
     // if (loginFormKey.currentState.validate()) {
     loader = Utility.load(scaffoldKey?.currentContext);
@@ -41,9 +56,11 @@ class UserController extends ControllerMVC {
 
     if (res.statusCode == 200) {
       storage.write(key: "token", value: res.token);
+      storage.write(key: "uid", value: res.uuid.toString());
       storage.write(key: "name", value: res.data.name);
       storage.write(key: "phoneNumber", value: res.data.phone);
       setUserDetails(res.data);
+      _getDeviceId();
       Navigator.of(scaffoldKey?.currentContext).pushReplacementNamed(
         MainPage.routeName,
         arguments: 0,
@@ -98,6 +115,7 @@ class UserController extends ControllerMVC {
       storage.write(key: "name", value: res.data.name);
       storage.write(key: "email", value: res.data.email);
       storage.write(key: "password", value: res.data.password);
+      _getDeviceId();
       setUserDetails(res.data);
       Navigator.of(scaffoldKey?.currentContext).pushNamedAndRemoveUntil(
         MainPage.routeName,
