@@ -164,12 +164,11 @@ Future<IResponse<Cart>> addCart(
       msg: json.decode(res.body)['message'],
       token: json.decode(res.body)['access_token'],
     );
-    print('//--//--==-///${res.statusCode}');
     // TODO: Remove, Inherit from Interceptor
     switch (res.statusCode) {
       case 200:
       case 409:
-        alRes.data = Cart.fromJSON(json.decode(res.body)['message']);
+        alRes.data = Cart.fromJSON(json.decode(res.body));
         break;
       default:
         break;
@@ -180,6 +179,7 @@ Future<IResponse<Cart>> addCart(
     return alRes;
   } catch (e) {
     print(e);
+    return null;
   }
 }
 
@@ -260,7 +260,7 @@ Future<IResponse<Cart>> deleteCartItem(String deviceID, productID) async {
     switch (res.statusCode) {
       case 200:
       case 409:
-        alRes.data = Cart.fromJSON(json.decode(res.body)['message']);
+        alRes.data = Cart.fromJSON(json.decode(res.body));
         break;
       default:
         break;
@@ -271,6 +271,7 @@ Future<IResponse<Cart>> deleteCartItem(String deviceID, productID) async {
     return alRes;
   } catch (e) {
     print(e);
+    return null;
   }
 }
 

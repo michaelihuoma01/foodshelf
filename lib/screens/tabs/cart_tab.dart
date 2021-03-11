@@ -59,7 +59,7 @@ class _CartTabState extends StateMVC<CartTab> {
             (Category cart) => GestureDetector(
               onTap: () {},
               child: AddToCartItem(
-                title: cart?.title ?? '',
+                title: cart.title,
                 author:
                     'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have ',
                 price: '49.99',
@@ -73,8 +73,6 @@ class _CartTabState extends StateMVC<CartTab> {
             ),
           )
           .toList();
-    } else {
-      Text('NOOOOO');
     }
 
     return MultiProvider(
@@ -103,48 +101,53 @@ class _CartTabState extends StateMVC<CartTab> {
                 image: Image.asset('assets/images/png/background.png').image,
               ),
             ),
-            child: Scaffold(
-              key: _ctrl.scaffoldKey,
-              backgroundColor: Colors.transparent,
-              body: Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 200),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('My Cart',
-                            style: TextStyle(fontSize: 30, fontFamily: 'Bold')),
-                        InkWell(
-                          onTap: () => _ctrl.emptyCart(deviceID),
-                          child: Text('Empty Cart',
-                              style: TextStyle(
-                                  color: BrandColors.colorAccent,
-                                  fontFamily: 'Regular')),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 20),
-                    Expanded(
-                      child: Container(
-                        child: ListView(
-                            scrollDirection: Axis.vertical, children: cartList),
+            child: (_ctrl.fetchingAddresses)
+                ? Center(child: CircularProgressIndicator())
+                : Scaffold(
+                    key: _ctrl.scaffoldKey,
+                    backgroundColor: Colors.transparent,
+                    body: Padding(
+                      padding:
+                          const EdgeInsets.only(left: 20, right: 20, top: 200),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('My Cart',
+                                  style: TextStyle(
+                                      fontSize: 30, fontFamily: 'Bold')),
+                              InkWell(
+                                onTap: () => _ctrl.emptyCart(deviceID),
+                                child: Text('Empty Cart',
+                                    style: TextStyle(
+                                        color: BrandColors.colorAccent,
+                                        fontFamily: 'Regular')),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20),
+                          Expanded(
+                            child: Container(
+                              child: ListView(
+                                  scrollDirection: Axis.vertical,
+                                  children: cartList),
+                            ),
+                          ),
+                          // AddToCartItem(
+                          //   title: 'Brown Rice (Long Grain)',
+                          //   author:
+                          //       'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have ',
+                          //   price: '49.99',
+                          //   context: context,
+                          //   focusKeyboard: focusKeyboard,
+                          //   keyboardVisible: true,
+                          //   numController: numController,
+                          // ),
+                        ],
                       ),
                     ),
-                    // AddToCartItem(
-                    //   title: 'Brown Rice (Long Grain)',
-                    //   author:
-                    //       'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have ',
-                    //   price: '49.99',
-                    //   context: context,
-                    //   focusKeyboard: focusKeyboard,
-                    //   keyboardVisible: true,
-                    //   numController: numController,
-                    // ),
-                  ],
-                ),
-              ),
-            ),
+                  ),
           );
         });
   }

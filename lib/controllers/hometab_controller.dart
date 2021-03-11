@@ -5,6 +5,7 @@ import 'package:foodshelf/helpers/utility.dart';
 import 'package:foodshelf/models/cart.dart';
 import 'package:foodshelf/models/category.dart';
 import 'package:foodshelf/models/iresponse.dart';
+import 'package:foodshelf/screens/main_page.dart';
 import 'package:foodshelf/screens/tabs/cart_tab.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:foodshelf/repository/category_repository.dart' as categoryRepo;
@@ -33,7 +34,7 @@ class HomeTabController extends ControllerMVC {
     getID();
     getCategoryList();
     getProductList();
-    getCartItems(deviceID);
+    getCartItems();
   }
 
   getID() async {
@@ -169,13 +170,16 @@ class HomeTabController extends ControllerMVC {
     }
   }
 
-  Future getCartItems(String deviceId) async {
+  Future getCartItems() async {
     if (!fetchingAddresses) {
       setState(() {
         fetchingAddresses = true;
       });
     }
-    IResponse<List<Category>> res = await categoryRepo.getCart(deviceId);
+    await getID();
+    print('>>>>>>>>>>>>>>$deviceID');
+
+    IResponse<List<Category>> res = await categoryRepo.getCart(deviceID);
     if (res.statusCode == 200) {
       getCartList.value = res.data;
 
@@ -212,9 +216,10 @@ class HomeTabController extends ControllerMVC {
       );
       setState(() {
         fetchingAddresses = false;
+        getCartList.value.removeWhere((element) => element.id == productID);
       });
-      Navigator.push(scaffoldKey?.currentContext,
-          MaterialPageRoute(builder: (context) => CartTab()));
+      // Navigator.push(scaffoldKey?.currentContext,
+      //     MaterialPageRoute(builder: (context) => MainPage()));
     } else {
       Utility.showMessage(
         scaffoldKey?.currentContext,
@@ -243,9 +248,12 @@ class HomeTabController extends ControllerMVC {
       );
       setState(() {
         fetchingAddresses = false;
+        getCartList.value = null;
       });
-      Navigator.push(scaffoldKey?.currentContext,
-          MaterialPageRoute(builder: (context) => CartTab()));
+      // getCartList.notifyListeners();
+
+      // Navigator.push(scaffoldKey?.currentContext,
+      //     MaterialPageRoute(builder: (context) => CartTab()));
     } else {
       Utility.showMessage(
         scaffoldKey?.currentContext,

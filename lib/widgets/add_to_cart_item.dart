@@ -102,11 +102,12 @@ class AddToCartItem extends StatelessWidget {
                               color: Colors.grey,
                               fontSize: 12)),
                     ),
-                    FlatButton(
-                        shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(100)),
-                        color: BrandColors.colorAccent,
-                        textColor: Colors.black,
+                    // ignore: deprecated_member_use
+                    TextButton(
+                        // shape: new RoundedRectangleBorder(
+                        //     borderRadius: new BorderRadius.circular(100)),
+                        // color: BrandColors.colorAccent,
+                        // textColor: Colors.black,
                         onPressed: onPressed,
                         child: Container(
                             height: 40,

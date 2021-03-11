@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:foodshelf/controllers/hometab_controller.dart';
 import 'package:foodshelf/screens/tabs/cart_tab.dart';
 import 'package:foodshelf/screens/tabs/home_tab.dart';
 import 'package:foodshelf/screens/tabs/notifications_tab.dart';
 import 'package:foodshelf/screens/tabs/profile_tab.dart';
 import 'package:foodshelf/utility/brand_colors.dart';
 import 'package:foodshelf/widgets/rolling_nav_bar.dart';
+import 'package:mvc_pattern/mvc_pattern.dart';
 
 class MainPage extends StatefulWidget {
   static const routeName = '/MainPage';
@@ -13,8 +15,13 @@ class MainPage extends StatefulWidget {
   _MainPageState createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage>
+class _MainPageState extends StateMVC<MainPage>
     with SingleTickerProviderStateMixin {
+  HomeTabController _ctrl;
+
+  _MainPageState() : super(HomeTabController()) {
+    _ctrl = controller;
+  }
   int currentPage;
   Color currentColor = Colors.deepPurple;
   Color inactiveColor = Colors.black;
@@ -44,6 +51,7 @@ class _MainPageState extends State<MainPage>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
+      key: _ctrl.scaffoldKey,
       body: PageView(
           controller: tabBarController,
           physics: NeverScrollableScrollPhysics(),
