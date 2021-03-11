@@ -127,11 +127,8 @@ class _CartTabState extends StateMVC<CartTab> {
                     SizedBox(height: 20),
                     Expanded(
                       child: Container(
-                        child: (_ctrl.getCartList.value == null)
-                            ? Text('Your cart is empty')
-                            : ListView(
-                                scrollDirection: Axis.vertical,
-                                children: cartList),
+                        child: ListView(
+                            scrollDirection: Axis.vertical, children: cartList),
                       ),
                     ),
                     // AddToCartItem(

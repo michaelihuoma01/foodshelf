@@ -106,15 +106,14 @@ class HomeTabController extends ControllerMVC {
     return res;
   }
 
-  addToCart(
-      int uid, String deviceID, productID, qty, total, Map products) async {
+  addToCart(int uid, String deviceID, productID, qty, total) async {
     if (!fetchingAddresses) {
       setState(() {
         fetchingAddresses = true;
       });
     }
-    IResponse<Cart> res = await categoryRepo.addCart(
-        uid, deviceID, productID, qty, total, products);
+    IResponse<Cart> res =
+        await categoryRepo.addCart(uid, deviceID, productID, qty, total);
 
     if (res.statusCode == 200) {
       Utility.showMessage(
@@ -129,7 +128,7 @@ class HomeTabController extends ControllerMVC {
     } else {
       Utility.showMessage(
         scaffoldKey?.currentContext,
-        message: 'res.msg.toString()',
+        message: res.msg.toString(),
       );
       setState(() {
         fetchingAddresses = false;
@@ -235,6 +234,7 @@ class HomeTabController extends ControllerMVC {
       });
     }
     IResponse<Cart> res = await categoryRepo.clearCart(deviceID);
+    print(res.message.toString());
 
     if (res.statusCode == 200) {
       Utility.showMessage(

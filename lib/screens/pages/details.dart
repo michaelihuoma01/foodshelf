@@ -162,18 +162,14 @@ class _DetailsPageState extends StateMVC<DetailsPage> {
                         child: ButtonWidget(
                             color: BrandColors.colorAccent,
                             onPressed: () async {
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => CartTab()));
-
-                              // _ctrl.addToCart(
-                              //   int.parse(uuid),
-                              //   deviceID,
-                              //   prodCat.id,
-                              //   count,
-                              //   double.parse(prodCat.price) * count,
-                              // );
+                              uuid = await storage.read(key: 'uid');
+                              _ctrl.addToCart(
+                                int.parse(uuid),
+                                deviceID,
+                                prodCat.id,
+                                count,
+                                double.parse(prodCat.price) * count,
+                              );
                             },
                             title: 'Add To Cart'),
                       ))

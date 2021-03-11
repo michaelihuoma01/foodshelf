@@ -137,7 +137,7 @@ Future<IResponse<Category>> getProductDetails({
 }
 
 Future<IResponse<Cart>> addCart(
-    int uid, String deviceID, productID, qty, total, Map products) async {
+    int uid, String deviceID, productID, qty, total) async {
   try {
     FlutterSecureStorage storage = getIt<FlutterSecureStorage>();
 
@@ -155,7 +155,6 @@ Future<IResponse<Cart>> addCart(
         'product_id': productID,
         'qty': qty,
         'total': total,
-        'product': products
       }),
       headers: headers,
     );
@@ -165,7 +164,7 @@ Future<IResponse<Cart>> addCart(
       msg: json.decode(res.body)['message'],
       token: json.decode(res.body)['access_token'],
     );
-
+    print('//--//--==-///${res.statusCode}');
     // TODO: Remove, Inherit from Interceptor
     switch (res.statusCode) {
       case 200:
