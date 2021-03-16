@@ -12,6 +12,8 @@ class User {
       passwordConfirmation,
       uuid,
       name,
+      fname,
+      lname,
       country,
       city;
 
@@ -23,12 +25,14 @@ class User {
       phone = jsonMap['phone'];
       uuid = jsonMap['user_id'].toString();
       name = jsonMap['name'];
+      fname = jsonMap['first_name'];
+      lname = jsonMap['last_name'];
       country = jsonMap['country'];
       city = jsonMap['city'];
       password = jsonMap['password'];
       passwordConfirmation = jsonMap['password_confirmation'];
     } catch (e) {
-      print(CustomTrace(StackTrace.current, message: e.toString()));
+      // print(CustomTrace(StackTrace.current, message: e.toString()));
     }
   }
 
@@ -41,6 +45,8 @@ class User {
     map["phone"] = phone;
     map["user_id"] = uuid.toString();
     map["name"] = name;
+    map["first_name"] = fname;
+    map["last_name"] = fname;
     map["city"] = city;
     map["country"] = country;
 

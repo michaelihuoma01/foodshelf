@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:foodshelf/controllers/user_controller.dart';
 import 'package:foodshelf/screens/auth/new_password.dart';
 import 'package:foodshelf/utility/brand_colors.dart';
 import 'package:foodshelf/widgets/appbar_widget.dart';
 import 'package:foodshelf/widgets/button_widget.dart';
+import 'package:mvc_pattern/mvc_pattern.dart';
 
 class VerificationPage extends StatefulWidget {
   static const routeName = '/Verification';
@@ -11,7 +13,12 @@ class VerificationPage extends StatefulWidget {
   _VerificationPageState createState() => _VerificationPageState();
 }
 
-class _VerificationPageState extends State<VerificationPage> {
+class _VerificationPageState extends StateMVC<VerificationPage> {
+  UserController _con = new UserController();
+
+  _VerificationPageState() : super(UserController()) {
+    _con = controller;
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,6 +31,7 @@ class _VerificationPageState extends State<VerificationPage> {
       ),
       child: Scaffold(
         appBar: AppBarWidget(),
+        key: _con.scaffoldKey,
         backgroundColor: Colors.transparent,
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -42,8 +50,8 @@ class _VerificationPageState extends State<VerificationPage> {
               TextField(
                   keyboardType: TextInputType.text,
                   enableSuggestions: true,
-                  obscureText: true,
                   cursorColor: BrandColors.colorAccent,
+                  onChanged: (String input) => _con.token = input,
                   decoration: InputDecoration(
                       hintText: 'o o o o',
                       hintStyle: TextStyle(
@@ -55,10 +63,13 @@ class _VerificationPageState extends State<VerificationPage> {
               ButtonWidget(
                   color: BrandColors.colorAccent,
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => NewPasswordPage()));
+                    print(_con.token);
+                    _con.verify(_con.token);
+
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => NewPasswordPage()));
                   },
                   title: 'Next'),
             ],

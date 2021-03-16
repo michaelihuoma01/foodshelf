@@ -19,7 +19,7 @@ class IResponse<T> {
   });
 
   IResponse.fromJson(Map<String, dynamic> json, {T data}) {
-    status = json['status'];
+    // status = json['status'];
     if (json['error'] != null && json['error'] is Map) {
       error = {};
       print(json['error']);

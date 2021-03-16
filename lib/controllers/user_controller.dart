@@ -8,6 +8,9 @@ import 'package:foodshelf/helpers/constants.dart';
 import 'package:foodshelf/helpers/utility.dart';
 import 'package:foodshelf/models/iresponse.dart';
 import 'package:foodshelf/models/user.dart';
+import 'package:foodshelf/screens/auth/login.dart';
+import 'package:foodshelf/screens/auth/new_password.dart';
+import 'package:foodshelf/screens/auth/verification.dart';
 import 'package:foodshelf/screens/main_page.dart';
 import 'package:foodshelf/repository/user_repository.dart' as user_repo;
 import 'package:mvc_pattern/mvc_pattern.dart';
@@ -17,11 +20,15 @@ class UserController extends ControllerMVC {
   User user = new User();
   // VerifyToken verify = new VerifyToken();
   String confirmedPassword;
+  String token;
 
   GlobalKey<ScaffoldState> scaffoldKey;
   GlobalKey<FormState> loginFormKey, registerFormKey;
   OverlayEntry verificationOverlay, loader;
   FlutterSecureStorage storage;
+  var fetchingAddresses = true;
+  ValueNotifier<User> getDetails;
+
   TextEditingController addressField = TextEditingController();
 
   bool verificationActive = false, autoValidate = false, hidePassword = true;
@@ -33,6 +40,10 @@ class UserController extends ControllerMVC {
     registerFormKey = new GlobalKey<FormState>();
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
     storage = getIt<FlutterSecureStorage>();
+
+    getDetails = ValueNotifier(null);
+
+    getUserProfile();
   }
 
   Future<String> _getDeviceId() async {
@@ -49,59 +60,32 @@ class UserController extends ControllerMVC {
   }
 
   login() async {
-    // if (loginFormKey.currentState.validate()) {
-    loader = Utility.load(scaffoldKey?.currentContext);
+    try {
+      loader = Utility.load(scaffoldKey?.currentContext);
 
-    IResponse<User> res = await user_repo.login(user);
+      IResponse<User> res = await user_repo.login(user);
 
-    if (res.statusCode == 200) {
-      storage.write(key: "token", value: res.token);
-      storage.write(key: "uid", value: res.uuid.toString());
-      storage.write(key: "name", value: res.data.name);
-      storage.write(key: "phoneNumber", value: res.data.phone);
-      setUserDetails(res.data);
-      _getDeviceId();
-      Navigator.of(scaffoldKey?.currentContext).pushReplacementNamed(
-        MainPage.routeName,
-        arguments: 0,
-      );
-      loader.remove();
-    } else {
-      Utility.showMessage(
-        scaffoldKey?.currentContext,
-        message: res.message.toString(),
-      );
-      loader.remove();
+      if (res.statusCode == 200) {
+        storage.write(key: "token", value: res.token);
+        storage.write(key: "uid", value: res.data.uuid);
+        setUserDetails(res.data);
+        _getDeviceId();
+        Navigator.of(scaffoldKey?.currentContext).pushReplacementNamed(
+          MainPage.routeName,
+          arguments: 0,
+        );
+        loader.remove();
+      } else {
+        Utility.showMessage(
+          scaffoldKey?.currentContext,
+          message: res.message.toString(),
+        );
+        loader.remove();
+      }
+    } catch (e) {
+      print(e);
     }
-    // } else {
-    //   setState(() => autoValidate = true);
-    // }
   }
-
-  // void verifyToken() async {
-  //   loader = Utility.load(scaffoldKey?.currentContext);
-  //   // dismissVerification();
-
-  //   IResponse<VerifyToken> vRes =
-  //       await user_repo.verifyToken(verify, scaffoldKey?.currentContext);
-  //   if (vRes.status == true) {
-  //     // Navigator.push(scaffoldKey?.currentContext,
-  //     //     MaterialPageRoute(builder: (context) => LoginScreen()));
-  //     pageController.nextPage(
-  //         duration: Duration(milliseconds: 300), curve: Curves.easeIn);
-  //     Utility.showMessage(
-  //       scaffoldKey?.currentContext,
-  //       message: 'OTP Verified!',
-  //     );
-  //     loader.remove();
-  //   } else {
-  //     Utility.showMessage(
-  //       scaffoldKey?.currentContext,
-  //       message: vRes.message,
-  //     );
-  //     loader.remove();
-  //   }
-  // }
 
   void register() async {
     loader = Utility.load(scaffoldKey?.currentContext);
@@ -132,11 +116,6 @@ class UserController extends ControllerMVC {
     }
   }
 
-  void toNextPage() {
-    pageController.nextPage(
-        duration: Duration(milliseconds: 300), curve: Curves.easeIn);
-  }
-
   void setUserDetails(User user) async {
     final userDetails = {
       'name': user.name,
@@ -161,5 +140,116 @@ class UserController extends ControllerMVC {
 
   void togglePasswordVisibility() {
     setState(() => hidePassword = !hidePassword);
+  }
+
+  verify(String code) async {
+    try {
+      loader = Utility.load(scaffoldKey?.currentContext);
+      IResponse<User> res = await user_repo.verifyToken(code);
+
+      if (res.statusCode == 200) {
+        Navigator.push(scaffoldKey?.currentContext,
+            MaterialPageRoute(builder: (context) => NewPasswordPage()));
+        loader.remove();
+      } else {
+        Utility.showMessage(
+          scaffoldKey?.currentContext,
+          message: res.message.toString(),
+        );
+        loader.remove();
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  forgotPass(String phone) async {
+    try {
+      loader = Utility.load(scaffoldKey?.currentContext);
+
+      IResponse<User> res = await user_repo.forgotPassword(phone);
+
+      if (res.statusCode == 200) {
+        Utility.showMessage(
+          scaffoldKey?.currentContext,
+          message: res.msg.toString(),
+        );
+        Navigator.push(scaffoldKey?.currentContext,
+            MaterialPageRoute(builder: (context) => VerificationPage()));
+        loader.remove();
+      } else {
+        Utility.showMessage(
+          scaffoldKey?.currentContext,
+          message: res.message.toString(),
+        );
+        loader.remove();
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  resetPass(String password, passwordConfirmation, uid) async {
+    try {
+      loader = Utility.load(scaffoldKey?.currentContext);
+
+      IResponse<User> res =
+          await user_repo.resetPassword(password, passwordConfirmation, uid);
+
+      if (res.statusCode == 200) {
+        Navigator.push(scaffoldKey?.currentContext,
+            MaterialPageRoute(builder: (context) => LoginPage()));
+        loader.remove();
+      } else {
+        Utility.showMessage(
+          scaffoldKey?.currentContext,
+          message: res.message.toString(),
+        );
+        loader.remove();
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  // Future getUserProfile() async {
+  //   if (!fetchingAddresses) {
+  //     setState(() {
+  //       fetchingAddresses = true;
+  //     });
+  //   }
+
+  //   IResponse<User> res = await user_repo.getUser();
+  //   if (res.statusCode == 200) {
+  //     getDetails.value = res.data;
+
+  //     // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+  //     getDetails.notifyListeners();
+  //     print('///---//-/- ${res.message}');
+  //     print('///---//-/- ${res.statusCode}');
+
+  //     setState(() {
+  //       fetchingAddresses = false;
+  //     });
+  //   } else {
+  //     print(res.toString());
+
+  //     setState(() {
+  //       fetchingAddresses = false;
+  //     });
+  //   }
+  // }
+  Future getUserProfile() async {
+    if (!fetchingAddresses) {
+      setState(() {
+        fetchingAddresses = true;
+      });
+    }
+
+    final res = await user_repo.getUser();
+    setState(() {
+      fetchingAddresses = true;
+    });
+    return res;
   }
 }

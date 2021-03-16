@@ -32,6 +32,12 @@ class _HomeTabState extends StateMVC<HomeTab> {
 
   bool isVisible = false, isFiltered = true;
   FlutterSecureStorage storage = getIt<FlutterSecureStorage>();
+  String uuid;
+  
+  getID() async {
+    uuid = await storage.read(key: 'uid');
+    print(uuid);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -201,11 +207,12 @@ class _HomeTabState extends StateMVC<HomeTab> {
                                   ),
                                   InkWell(
                                       onTap: () async {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    SearchPage()));
+                                        // Navigator.push(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //         builder: (context) =>
+                                        //             SearchPage()));
+                                        getID();
                                       },
                                       child: Icon(Icons.search,
                                           color: Colors.white))

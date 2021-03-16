@@ -249,9 +249,7 @@ class HomeTabController extends ControllerMVC {
       setState(() {
         fetchingAddresses = false;
         getCartList.value = null;
-      });
-      // getCartList.notifyListeners();
-
+      }); 
       // Navigator.push(scaffoldKey?.currentContext,
       //     MaterialPageRoute(builder: (context) => CartTab()));
     } else {
