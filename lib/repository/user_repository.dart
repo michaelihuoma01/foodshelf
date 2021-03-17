@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:foodshelf/helpers/remote_config.dart';
 import 'package:foodshelf/helpers/utility.dart';
+import 'package:foodshelf/models/contact.dart';
 import 'package:foodshelf/models/iresponse.dart';
 import 'package:foodshelf/models/user.dart';
 import 'package:http/http.dart' as http;
@@ -73,6 +74,47 @@ Future<IResponse<User>> userSignUp(User user) async {
     case 200:
     case 409:
       alRes.data = User.fromJSON(data['data']);
+      // alRes.token = data['access_token'];
+      break;
+    default:
+      break;
+  }
+
+  print(res.statusCode);
+  print(res.body);
+
+  return alRes;
+}
+
+Future<IResponse<ContactModel>> contact(ContactModel contactModel) async {
+  // String message, fname, lname, subject, email) async {
+  Map<String, String> headers = {
+    "content-type": "application/json",
+    "accept": "application/json",
+  };
+
+  var res = await http.post(
+    "$url/contact-us",
+    body: json.encode({
+      // 'message': message,
+      // 'first_name': fname,
+      // 'last_name': lname,
+      // 'subject': subject,
+      // 'email': email
+      contactModel.toMap()
+    }),
+    headers: headers,
+  );
+
+  final Map data = json.decode(res.body);
+  IResponse<ContactModel> alRes = IResponse(
+      statusCode: res.statusCode, message: json.decode(res.body)['message']);
+
+  // TODO: Remove, Inherit from Interceptor
+  switch (res.statusCode) {
+    case 200:
+    case 409:
+      alRes.data = ContactModel.fromJSON(data['data']);
       // alRes.token = data['access_token'];
       break;
     default:
@@ -223,34 +265,53 @@ Future<IResponse<User>> resetPassword(
   return alRes;
 }
 
-// Future<IResponse<User>> getUser() async {
-//   // try {
-//   FlutterSecureStorage storage = getIt<FlutterSecureStorage>();
+Future<IResponse<User>> updateProfile(
+    int uid, String deviceID, productID, qty, total) async {
+  try {
+    FlutterSecureStorage storage = getIt<FlutterSecureStorage>();
 
-//   Map<String, String> headers = {
-//     "content-type": "application/json",
-//     "accept": "application/json",
-//     "authorization": 'Bearer ${await storage.read(key: 'token')}',
-//   };
+    Map<String, String> headers = {
+      "content-type": "application/json",
+      "accept": "application/json",
+      "authorization": 'Bearer ${await storage.read(key: 'token')}',
+    };
 
-//   var res = await http.get(
-//     "$url/user",
-//     headers: headers,
-//   );
-//   final Map data = json.decode(res.body);
-//   final alRespose = IResponse<User>.fromJson(data);
-//   if (data != null && data is Map) {
-//     alRespose.data = User.fromJSON(data);
-//   }
-//   print('--- $data');
+    var res = await http.post(
+      "$url/add-to-cart",
+      body: json.encode({
+        'user_id': uid,
+        'device_id': deviceID,
+        'product_id': productID,
+        'qty': qty,
+        'total': total,
+      }),
+      headers: headers,
+    );
 
-//   return alRespose;
-//   // } catch (e) {
-//   //   print('--- getProductDetails error');
-//   //   print(e);
-//   //   return null;
-//   // }
-// }
+    IResponse<User> alRes = IResponse(
+      statusCode: res.statusCode,
+      msg: json.decode(res.body)['message'],
+      token: json.decode(res.body)['access_token'],
+    );
+    // TODO: Remove, Inherit from Interceptor
+    switch (res.statusCode) {
+      case 200:
+      case 409:
+        alRes.data = User.fromJSON(json.decode(res.body));
+        break;
+      default:
+        break;
+    }
+
+    print(res.statusCode);
+    print(res.body);
+    return alRes;
+  } catch (e) {
+    print(e);
+    return null;
+  }
+}
+
 Future<IResponse<User>> getUser() async {
   try {
     FlutterSecureStorage storage = getIt<FlutterSecureStorage>();

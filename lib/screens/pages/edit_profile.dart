@@ -77,6 +77,7 @@ class _EditProfileState extends StateMVC<EditProfile> {
                 : Scaffold(
                     appBar: AppBarWidget(),
                     backgroundColor: Colors.transparent,
+                    key: _ctrl.scaffoldKey,
                     body: SingleChildScrollView(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(

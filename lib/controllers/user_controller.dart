@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:foodshelf/helpers/constants.dart';
 import 'package:foodshelf/helpers/utility.dart';
+import 'package:foodshelf/models/contact.dart';
 import 'package:foodshelf/models/iresponse.dart';
 import 'package:foodshelf/models/user.dart';
 import 'package:foodshelf/screens/auth/login.dart';
@@ -18,6 +19,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class UserController extends ControllerMVC {
   User user = new User();
+  ContactModel contact = new ContactModel();
   // VerifyToken verify = new VerifyToken();
   String confirmedPassword;
   String token;
@@ -35,7 +37,7 @@ class UserController extends ControllerMVC {
 
   PageController pageController = PageController(initialPage: 0);
 
-  UserController({bool withFileCtrl = false}) {
+  UserController() {
     loginFormKey = new GlobalKey<FormState>();
     registerFormKey = new GlobalKey<FormState>();
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -251,5 +253,55 @@ class UserController extends ControllerMVC {
       fetchingAddresses = true;
     });
     return res;
+  }
+
+  updateProfile(int uid, String deviceID, productID, qty, total) async {
+    if (!fetchingAddresses) {
+      setState(() {
+        fetchingAddresses = true;
+      });
+    }
+    IResponse<User> res =
+        await user_repo.updateProfile(uid, deviceID, productID, qty, total);
+
+    if (res.statusCode == 200) {
+      Utility.showMessage(
+        scaffoldKey?.currentContext,
+        message: res.msg.toString(),
+      );
+      setState(() {
+        fetchingAddresses = false;
+      });
+    } else {
+      Utility.showMessage(
+        scaffoldKey?.currentContext,
+        message: res.msg.toString(),
+      );
+      setState(() {
+        fetchingAddresses = false;
+      });
+      print(res.message.toString());
+    }
+  }
+
+  void contactUs() async {
+    loader = Utility.load(scaffoldKey?.currentContext);
+
+    IResponse<ContactModel> res = await user_repo.contact(contact);
+
+    if (res.statusCode == 200) {
+      Navigator.of(scaffoldKey?.currentContext).pushNamedAndRemoveUntil(
+        MainPage.routeName,
+        (route) => false,
+      );
+      loader.remove();
+    } else {
+      Utility.showMessage(
+        scaffoldKey?.currentContext,
+        message: res.message.toString(),
+        type: MessageTypes.error,
+      );
+      loader.remove();
+    }
   }
 }

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:foodshelf/controllers/user_controller.dart';
+import 'package:foodshelf/models/iresponse.dart';
+import 'package:foodshelf/models/user.dart';
 import 'package:foodshelf/utility/brand_colors.dart';
 import 'package:foodshelf/widgets/appbar_widget.dart';
 import 'package:foodshelf/widgets/button_widget.dart';
+import 'package:mvc_pattern/mvc_pattern.dart';
 
 class ContactUs extends StatefulWidget {
   static const routeName = '/ContactUs';
@@ -10,7 +14,41 @@ class ContactUs extends StatefulWidget {
   _ContactUsState createState() => _ContactUsState();
 }
 
-class _ContactUsState extends State<ContactUs> {
+class _ContactUsState extends StateMVC<ContactUs> {
+  UserController _ctrl;
+
+  _ContactUsState() : super(UserController()) {
+    _ctrl = controller;
+  }
+
+  User _user;
+  final _messageField = TextEditingController();
+
+  void _getUserProfile() async {
+    final res = await Future.wait<dynamic>([
+      _ctrl.getUserProfile(),
+    ]);
+    print('?????<<<<<>>>>>???????${res.first}');
+    final IResponse<User> profileResponse = res.first;
+    _user = profileResponse.data;
+    setState(() {});
+
+    _ctrl.contact.fname = _user?.fname;
+    _ctrl.contact.lname = _user?.lname;
+    _ctrl.contact.email = _user?.email;
+    setState(() {});
+
+    print(_user?.email);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    _getUserProfile();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,13 +62,16 @@ class _ContactUsState extends State<ContactUs> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBarWidget(),
+        key: _ctrl.scaffoldKey,
         bottomSheet: Container(
           color: Colors.white,
           child: Padding(
             padding: const EdgeInsets.all(30),
             child: ButtonWidget(
                 color: BrandColors.colorAccent,
-                onPressed: () {},
+                onPressed: () {
+                  _ctrl.contactUs();
+                },
                 title: 'Submit Request'),
           ),
         ),
@@ -52,6 +93,8 @@ class _ContactUsState extends State<ContactUs> {
                       border: Border.all(width: 1, color: Colors.black),
                       borderRadius: BorderRadius.circular(15)),
                   child: TextField(
+                      controller: _messageField,
+                      onChanged: (value) => _ctrl.contact.message = value,
                       keyboardType: TextInputType.text,
                       enableSuggestions: true,
                       cursorColor: BrandColors.colorAccent,
