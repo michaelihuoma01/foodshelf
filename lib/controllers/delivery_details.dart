@@ -22,14 +22,14 @@ class DeliveryDetailsCtrl extends ControllerMVC {
   }
 
   dlvryDetails(
-      String area, building, apartment, country, city, userID, floor) async {
+      String area, building, country, city, userID, floor, apartment) async {
     if (!fetchingAddresses) {
       setState(() {
         fetchingAddresses = true;
       });
     }
     IResponse<Delivery> res = await delivery_repo.deliveryDetails(
-        area, building, apartment, country, city, userID, floor);
+        area, building, country, city, userID, floor, apartment);
 
     if (res.statusCode == 200) {
       Utility.showMessage(

@@ -16,7 +16,7 @@ final RemoteConfigService _remoteConfigService = getIt<RemoteConfigService>();
 final String url = '${_remoteConfigService.getBaseUrl}';
 
 Future<IResponse<Delivery>> deliveryDetails(
-    String uid, area, building, apartment, country, city, floor) async {
+    String area, building, country, city, uid, floor, apartment) async {
   try {
     FlutterSecureStorage storage = getIt<FlutterSecureStorage>();
 
@@ -29,13 +29,13 @@ Future<IResponse<Delivery>> deliveryDetails(
     var res = await http.post(
       "$url/delivery-details",
       body: json.encode({
-        'user_id': uid,
         'area': area,
         'building': building,
-        'floor': floor,
-        'apartment_no': apartment,
         'country': country,
         'city': city,
+        'user_id': uid,
+        'floor': floor,
+        'apartment_no': apartment,
       }),
       headers: headers,
     );
