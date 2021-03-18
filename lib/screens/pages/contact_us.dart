@@ -33,8 +33,7 @@ class _ContactUsState extends StateMVC<ContactUs> {
     _user = profileResponse.data;
     setState(() {});
 
-    _ctrl.contact.fname = _user?.fname;
-    _ctrl.contact.lname = _user?.lname;
+    _ctrl.contact.name = _user?.name;
     _ctrl.contact.email = _user?.email;
     setState(() {});
 

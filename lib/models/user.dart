@@ -11,9 +11,7 @@ class User {
       password,
       passwordConfirmation,
       uuid,
-      name,
-      fname,
-      lname,
+      name, 
       country,
       city;
 
@@ -23,10 +21,8 @@ class User {
     try {
       email = jsonMap['email'];
       phone = jsonMap['phone'];
-      uuid = jsonMap['user_id'].toString();
-      name = jsonMap['name'];
-      fname = jsonMap['first_name'];
-      lname = jsonMap['last_name'];
+      uuid = jsonMap['id'].toString();
+      name = jsonMap['name']; 
       country = jsonMap['country'];
       city = jsonMap['city'];
       password = jsonMap['password'];
@@ -43,10 +39,8 @@ class User {
     map["password"] = password;
     map["password_confirmation"] = passwordConfirmation;
     map["phone"] = phone;
-    map["user_id"] = uuid.toString();
-    map["name"] = name;
-    map["first_name"] = fname;
-    map["last_name"] = fname;
+    map["id"] = uuid.toString();
+    map["name"] = name; 
     map["city"] = city;
     map["country"] = country;
 

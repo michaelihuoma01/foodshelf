@@ -255,14 +255,14 @@ class UserController extends ControllerMVC {
     return res;
   }
 
-  updateProfile(int uid, String deviceID, productID, qty, total) async {
+  updateProfile(String uid, name, phone, email, country, city) async {
     if (!fetchingAddresses) {
       setState(() {
         fetchingAddresses = true;
       });
     }
     IResponse<User> res =
-        await user_repo.updateProfile(uid, deviceID, productID, qty, total);
+        await user_repo.updateProfile(uid, name, phone, email, country, city);
 
     if (res.statusCode == 200) {
       Utility.showMessage(
@@ -302,6 +302,31 @@ class UserController extends ControllerMVC {
         type: MessageTypes.error,
       );
       loader.remove();
+    }
+  }
+
+  changePass(String oldPassword, newPassword, confirmPassword, uid) async {
+    try {
+      loader = Utility.load(scaffoldKey?.currentContext);
+
+      IResponse<User> res = await user_repo.changePassword(
+          oldPassword, newPassword, confirmPassword, uid);
+
+      if (res.statusCode == 200) {
+        Utility.showMessage(
+          scaffoldKey?.currentContext,
+          message: res.msg.toString(),
+        );
+        loader.remove();
+      } else {
+        Utility.showMessage(
+          scaffoldKey?.currentContext,
+          message: res.msg.toString(),
+        );
+        loader.remove();
+      }
+    } catch (e) {
+      print(e);
     }
   }
 }

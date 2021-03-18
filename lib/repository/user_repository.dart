@@ -266,7 +266,7 @@ Future<IResponse<User>> resetPassword(
 }
 
 Future<IResponse<User>> updateProfile(
-    int uid, String deviceID, productID, qty, total) async {
+    String uid, name, phone, email, country, city) async {
   try {
     FlutterSecureStorage storage = getIt<FlutterSecureStorage>();
 
@@ -277,13 +277,13 @@ Future<IResponse<User>> updateProfile(
     };
 
     var res = await http.post(
-      "$url/add-to-cart",
+      "$url/update",
       body: json.encode({
         'user_id': uid,
-        'device_id': deviceID,
-        'product_id': productID,
-        'qty': qty,
-        'total': total,
+        'name': name,
+        'phone': phone,
+        'country': country,
+        'city': city,
       }),
       headers: headers,
     );
@@ -323,7 +323,7 @@ Future<IResponse<User>> getUser() async {
     };
 
     var res = await http.get(
-      "$url/user/",
+      "$url/user",
       headers: headers,
     );
     final Map data = json.decode(res.body);
@@ -337,4 +337,47 @@ Future<IResponse<User>> getUser() async {
     print(e);
     return null;
   }
+}
+
+Future<IResponse<User>> changePassword(
+    String oldPassword, newPassword, confirmPassword, uid) async {
+  final storage = getIt<FlutterSecureStorage>();
+  final token = await storage.read(key: 'token');
+
+  Map<String, String> headers = {
+    "content-type": "application/json",
+    "accept": "application/json",
+    "Authorization": "Bearer $token",
+  };
+
+  var res = await http.post(
+    "$url/change-password",
+    body: json.encode({
+      'old_password': oldPassword,
+      'new_password': newPassword,
+      'confirm_password': confirmPassword,
+      'user_id': uid
+    }),
+    headers: headers,
+  );
+
+  IResponse<User> alRes = IResponse(
+    statusCode: res.statusCode,
+    msg: json.decode(res.body)['message'],
+  );
+
+  // TODO: Remove, Inherit from Interceptor
+  switch (res.statusCode) {
+    case 200:
+    case 409:
+      alRes.data = User.fromJSON(json.decode(res.body));
+      break;
+    default:
+      break;
+  }
+
+  print(res.statusCode);
+  print(res.body);
+
+  return alRes;
 }

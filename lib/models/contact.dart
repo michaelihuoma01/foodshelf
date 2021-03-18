@@ -6,15 +6,14 @@ class ContactModel {
   // used to indicate if client is logged in or not
   // bool auth;
   // String email, phone, password, uuid, city, username, fullName;
-  String email, subject, fname, lname, message;
+  String email, subject, name, message;
 
   ContactModel();
 
   ContactModel.fromJSON(Map<String, dynamic> jsonMap) {
     try {
       email = jsonMap['email'];
-      fname = jsonMap['first_name'];
-      lname = jsonMap['last_name'];
+      name = jsonMap['name'];
       subject = jsonMap['subject'];
       message = jsonMap['message'];
     } catch (e) {
@@ -28,8 +27,7 @@ class ContactModel {
     map["email"] = email;
     map["subject"] = subject;
     map["message"] = message;
-    map["first_name"] = fname;
-    map["last_name"] = lname;
+    map["name"] = name;
 
     return map;
   }

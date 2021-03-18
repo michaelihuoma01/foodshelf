@@ -28,7 +28,7 @@ class _CartTabState extends StateMVC<CartTab> {
   String deviceID;
   bool keyboardVisible = true;
   FlutterSecureStorage storage = getIt<FlutterSecureStorage>();
-
+  Category cart;
   void setFocus() {
     if (!keyboardVisible) {
       FocusScope.of(context).unfocus();
@@ -46,7 +46,6 @@ class _CartTabState extends StateMVC<CartTab> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    numController.text = '1';
     getID();
   }
 
@@ -54,20 +53,22 @@ class _CartTabState extends StateMVC<CartTab> {
   Widget build(BuildContext context) {
     var cartList = <Widget>[];
     if (_ctrl?.getCartList?.value != null) {
+      numController.text = _ctrl.cartList.qty;
       cartList = _ctrl.getCartList.value
           .map(
-            (Category cart) => GestureDetector(
-              onTap: () {},
+            (cart) => GestureDetector(
+              onTap: () { 
+              },
               child: AddToCartItem(
                 title: cart.title,
-                author:
-                    'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have ',
-                price: '49.99',
+                author: cart.description,
+                price: cart.price,
                 context: context,
+                qty: cart.qty,
                 focusKeyboard: focusKeyboard,
                 keyboardVisible: true,
                 numController: numController,
-                onTap: () => _ctrl.deleteCartItem(deviceID, cart.id),
+                onTap: () => _ctrl.deleteCartItem(deviceID, cart.productID),
                 // onPressed: () => _ctrl.updateCartItem(),
               ),
             ),
@@ -118,7 +119,9 @@ class _CartTabState extends StateMVC<CartTab> {
                                   style: TextStyle(
                                       fontSize: 30, fontFamily: 'Bold')),
                               InkWell(
-                                onTap: () => _ctrl.emptyCart(deviceID),
+                                onTap: () {
+                                  _ctrl.emptyCart(deviceID);
+                                },
                                 child: Text('Empty Cart',
                                     style: TextStyle(
                                         color: BrandColors.colorAccent,
@@ -129,21 +132,13 @@ class _CartTabState extends StateMVC<CartTab> {
                           SizedBox(height: 20),
                           Expanded(
                             child: Container(
-                              child: ListView(
-                                  scrollDirection: Axis.vertical,
-                                  children: cartList),
+                              child: (_ctrl.getCartList.value.length != 0)
+                                  ? ListView(
+                                      scrollDirection: Axis.vertical,
+                                      children: cartList)
+                                  : Center(child: Text('Cart is empty')),
                             ),
                           ),
-                          // AddToCartItem(
-                          //   title: 'Brown Rice (Long Grain)',
-                          //   author:
-                          //       'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have ',
-                          //   price: '49.99',
-                          //   context: context,
-                          //   focusKeyboard: focusKeyboard,
-                          //   keyboardVisible: true,
-                          //   numController: numController,
-                          // ),
                         ],
                       ),
                     ),

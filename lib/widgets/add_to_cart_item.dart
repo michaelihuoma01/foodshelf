@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:foodshelf/screens/pages/payment_summary.dart';
 import 'package:foodshelf/utility/brand_colors.dart';
 import 'package:foodshelf/widgets/counter_button.dart';
 
 class AddToCartItem extends StatelessWidget {
-  final String title, author, price;
+  final String title, author, price, qty;
   final BuildContext context;
   final TextEditingController numController;
   final Function onTap, onPressed;
@@ -18,6 +17,7 @@ class AddToCartItem extends StatelessWidget {
       this.onPressed,
       this.title,
       this.context,
+      this.qty,
       this.price,
       this.numController,
       this.focusKeyboard,
@@ -51,7 +51,7 @@ class AddToCartItem extends StatelessWidget {
                           color: Colors.red),
                       Padding(
                         padding:
-                            const EdgeInsets.only(left: 1, right: 1, top: 4),
+                            const EdgeInsets.only(left: 10, right: 1, top: 4),
                         child: Container(
                           width: 20,
                           height: 20,
@@ -65,6 +65,7 @@ class AddToCartItem extends StatelessWidget {
                                   borderSide: BorderSide.none),
                               border: UnderlineInputBorder(
                                   borderSide: BorderSide.none),
+                              labelText: qty,
                             ),
                             focusNode: focusKeyboard,
                             controller: numController,
@@ -78,7 +79,7 @@ class AddToCartItem extends StatelessWidget {
                       CounterButton(
                         iconData: Icons.add,
                         onTap: () {},
-                        color: Colors.grey,
+                        color: Colors.black,
                       ),
                     ],
                   ),
@@ -97,24 +98,27 @@ class AddToCartItem extends StatelessWidget {
                     ),
                     Container(
                       child: Text(author,
+                          maxLines: 7,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               fontFamily: 'Regular',
                               color: Colors.grey,
                               fontSize: 12)),
                     ),
-                    // ignore: deprecated_member_use
                     TextButton(
-                        // shape: new RoundedRectangleBorder(
-                        //     borderRadius: new BorderRadius.circular(100)),
-                        // color: BrandColors.colorAccent,
-                        // textColor: Colors.black,
                         onPressed: onPressed,
                         child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: new BorderRadius.circular(100),
+                              color: BrandColors.colorAccent,
+                            ),
                             height: 40,
                             child: Center(
                                 child: Text('Place Order',
                                     style: TextStyle(
-                                        fontSize: 20, fontFamily: 'Bold'))))),
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontFamily: 'Bold'))))),
                   ],
                 ),
               ),

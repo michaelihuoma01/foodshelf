@@ -1,5 +1,14 @@
 class Category {
-  String id, title, image, price, qty, categoryID, sku, description, status;
+  String id,
+      productID,
+      title,
+      image,
+      price,
+      qty,
+      categoryID,
+      sku,
+      description,
+      status;
 
   Category();
 
@@ -18,6 +27,7 @@ class Category {
       if (json['product'] != null) {
         title = json['product']['title'];
         image = json['product']['image'];
+        productID = json['product']['id'].toString();
         description = json['product']['description'];
       }
     } catch (e) {
@@ -41,6 +51,7 @@ class Category {
     if (map['product'] != null) {
       map['product']['title'] = title;
       map['product']['image'] = image;
+      map['product']['id'] = productID;
       map['product']['description'] = description;
     }
 

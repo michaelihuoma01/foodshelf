@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:foodshelf/controllers/general_details_ctrl.dart';
+import 'package:foodshelf/models/general_details.dart';
+import 'package:foodshelf/models/iresponse.dart';
 import 'package:foodshelf/utility/brand_colors.dart';
 import 'package:foodshelf/widgets/appbar_widget.dart';
 import 'package:foodshelf/widgets/button_widget.dart';
+import 'package:mvc_pattern/mvc_pattern.dart';
 
 class Faqs extends StatefulWidget {
   static const routeName = '/FAQs';
@@ -10,7 +14,35 @@ class Faqs extends StatefulWidget {
   _FaqsState createState() => _FaqsState();
 }
 
-class _FaqsState extends State<Faqs> {
+class _FaqsState extends StateMVC<Faqs> {
+  GeneralDetailsCtrl _ctrl;
+
+  _FaqsState() : super(GeneralDetailsCtrl()) {
+    _ctrl = controller;
+  }
+
+  GeneralDetails _data;
+  String data;
+
+  void _getData() async {
+    final res = await Future.wait<dynamic>([
+      _ctrl.getGeneralDetails(),
+    ]);
+    final IResponse<GeneralDetails> profileResponse = res.first;
+    _data = profileResponse.data;
+
+    setState(() {});
+    data = _data.question;
+    print('------------///////////$data');
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(

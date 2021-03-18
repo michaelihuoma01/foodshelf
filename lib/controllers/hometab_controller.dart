@@ -216,7 +216,8 @@ class HomeTabController extends ControllerMVC {
       );
       setState(() {
         fetchingAddresses = false;
-        getCartList.value.removeWhere((element) => element.id == productID);
+        getCartList.value
+            .removeWhere((element) => element.productID == productID);
       });
       // Navigator.push(scaffoldKey?.currentContext,
       //     MaterialPageRoute(builder: (context) => MainPage()));
@@ -233,34 +234,38 @@ class HomeTabController extends ControllerMVC {
   }
 
   emptyCart(String deviceID) async {
-    if (!fetchingAddresses) {
-      setState(() {
-        fetchingAddresses = true;
-      });
-    }
-    IResponse<Cart> res = await categoryRepo.clearCart(deviceID);
-    print(res.message.toString());
-
-    if (res.statusCode == 200) {
-      Utility.showMessage(
-        scaffoldKey?.currentContext,
-        message: res.msg.toString(),
-      );
-      setState(() {
-        fetchingAddresses = false;
-        getCartList.value = null;
-      }); 
-      // Navigator.push(scaffoldKey?.currentContext,
-      //     MaterialPageRoute(builder: (context) => CartTab()));
-    } else {
-      Utility.showMessage(
-        scaffoldKey?.currentContext,
-        message: res.msg.toString(),
-      );
-      setState(() {
-        fetchingAddresses = false;
-      });
+    try {
+      if (!fetchingAddresses) {
+        setState(() {
+          fetchingAddresses = true;
+        });
+      }
+      IResponse<Cart> res = await categoryRepo.clearCart(deviceID);
       print(res.message.toString());
+
+      if (res.statusCode == 200) {
+        Utility.showMessage(
+          scaffoldKey?.currentContext,
+          message: res.msg.toString(),
+        );
+        setState(() {
+          fetchingAddresses = false;
+          getCartList.value = null;
+        });
+        // Navigator.push(scaffoldKey?.currentContext,
+        //     MaterialPageRoute(builder: (context) => CartTab()));
+      } else {
+        Utility.showMessage(
+          scaffoldKey?.currentContext,
+          message: res.msg.toString(),
+        );
+        setState(() {
+          fetchingAddresses = false;
+        });
+        print('/>/>/>>>>>>>>>>//////${res.msg.toString()}');
+      }
+    } catch (e) {
+      print(e);
     }
   }
 }
