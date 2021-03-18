@@ -284,21 +284,23 @@ class UserController extends ControllerMVC {
     }
   }
 
-  void contactUs() async {
+  void contactUs(String message, name, subject, email) async {
     loader = Utility.load(scaffoldKey?.currentContext);
 
-    IResponse<ContactModel> res = await user_repo.contact(contact);
+    IResponse<ContactModel> res =
+        await user_repo.contact(message, name, subject, email);
 
     if (res.statusCode == 200) {
-      Navigator.of(scaffoldKey?.currentContext).pushNamedAndRemoveUntil(
-        MainPage.routeName,
-        (route) => false,
+      Utility.showMessage(
+        scaffoldKey?.currentContext,
+        message: res.msg,
+        type: MessageTypes.error,
       );
       loader.remove();
     } else {
       Utility.showMessage(
         scaffoldKey?.currentContext,
-        message: res.message.toString(),
+        message: res.msg,
         type: MessageTypes.error,
       );
       loader.remove();

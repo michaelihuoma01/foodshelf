@@ -86,29 +86,26 @@ Future<IResponse<User>> userSignUp(User user) async {
   return alRes;
 }
 
-Future<IResponse<ContactModel>> contact(ContactModel contactModel) async {
-  // String message, fname, lname, subject, email) async {
+Future<IResponse<ContactModel>> contact(
+    String message, name, subject, email) async {
+  FlutterSecureStorage storage = getIt<FlutterSecureStorage>();
+
   Map<String, String> headers = {
     "content-type": "application/json",
     "accept": "application/json",
+    "authorization": 'Bearer ${await storage.read(key: 'token')}',
   };
 
   var res = await http.post(
     "$url/contact-us",
-    body: json.encode({
-      // 'message': message,
-      // 'first_name': fname,
-      // 'last_name': lname,
-      // 'subject': subject,
-      // 'email': email
-      contactModel.toMap()
-    }),
+    body: json.encode(
+        {'message': message, 'name': name, 'subject': subject, 'email': email}),
     headers: headers,
   );
 
   final Map data = json.decode(res.body);
   IResponse<ContactModel> alRes = IResponse(
-      statusCode: res.statusCode, message: json.decode(res.body)['message']);
+      statusCode: res.statusCode, msg: json.decode(res.body)['message']);
 
   // TODO: Remove, Inherit from Interceptor
   switch (res.statusCode) {

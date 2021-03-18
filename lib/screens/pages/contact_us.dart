@@ -37,7 +37,7 @@ class _ContactUsState extends StateMVC<ContactUs> {
     _ctrl.contact.email = _user?.email;
     setState(() {});
 
-    print(_user?.email);
+    print('/////>>>>>>>>>>${_user?.name}');
   }
 
   @override
@@ -69,7 +69,9 @@ class _ContactUsState extends StateMVC<ContactUs> {
             child: ButtonWidget(
                 color: BrandColors.colorAccent,
                 onPressed: () {
-                  _ctrl.contactUs();
+                  _ctrl.contact.subject = 'Message from ${_ctrl.contact.name}';
+                  _ctrl.contactUs(_ctrl.contact.message, _ctrl.contact.name,
+                      _ctrl.contact.subject, _ctrl.contact.email);
                 },
                 title: 'Submit Request'),
           ),

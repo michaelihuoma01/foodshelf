@@ -63,3 +63,33 @@ Future<IResponse<Delivery>> deliveryDetails(
     return null;
   }
 }
+
+Future<IResponse<Delivery>> getDelivryAddress() async {
+  try {
+    FlutterSecureStorage storage = getIt<FlutterSecureStorage>();
+
+    Map<String, String> headers = {
+      "content-type": "application/json",
+      "accept": "application/json",
+      "authorization": 'Bearer ${await storage.read(key: 'token')}',
+    };
+
+    String uuid = await storage.read(key: 'uid');
+
+    var res = await http.get(
+      "$url/delivery-details/$uuid",
+      headers: headers,
+    );
+    final Map data = json.decode(res.body);
+    final alRespose = IResponse<Delivery>.fromJson(data);
+    if (data['details'] != null && data['details'] is Map) {
+      alRespose.data = Delivery.fromJSON(data['details']);
+    }
+
+    return alRespose;
+  } catch (e) {
+    print('--- getDeliveryDetails error');
+    print(e);
+    return null;
+  }
+}

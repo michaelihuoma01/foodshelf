@@ -18,7 +18,21 @@ class DeliveryDetailsCtrl extends ControllerMVC {
   DeliveryDetailsCtrl() {
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
     storage = getIt<FlutterSecureStorage>();
-    // getUserProfile();
+    getDlvryAddress();
+  }
+
+  Future getDlvryAddress() async {
+    if (!fetchingAddresses) {
+      setState(() {
+        fetchingAddresses = true;
+      });
+    }
+    final res = await delivery_repo.getDelivryAddress();
+    setState(() {
+      fetchingAddresses = false;
+    });
+
+    return res;
   }
 
   dlvryDetails(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:foodshelf/controllers/delivery_details.dart';
+import 'package:foodshelf/models/delivery.dart';
+import 'package:foodshelf/models/iresponse.dart';
 import 'package:foodshelf/utility/brand_colors.dart';
 import 'package:foodshelf/widgets/appbar_widget.dart';
 import 'package:foodshelf/widgets/button_widget.dart';
@@ -21,8 +23,37 @@ class _DeliveryAddressState extends StateMVC<DeliveryAddress> {
     _ctrl = controller;
   }
 
+  Delivery dlvry;
   String countryValue, stateValue, cityValue;
   FlutterSecureStorage storage = FlutterSecureStorage();
+
+  final _areaField = TextEditingController();
+  final _buildingField = TextEditingController();
+  final _floorField = TextEditingController();
+  final _apartmentField = TextEditingController();
+
+  void _getDeliveryAddress() async {
+    final res = await Future.wait<dynamic>([
+      _ctrl.getDlvryAddress(),
+    ]);
+    final IResponse<Delivery> profileResponse = res.first;
+    dlvry = profileResponse.data;
+    setState(() {});
+
+    _areaField.text = dlvry?.area;
+    _buildingField.text = dlvry?.building;
+    _floorField.text = dlvry?.floor;
+    _apartmentField.text = dlvry?.apartment;
+    setState(() {});
+    print('////////////------//////${dlvry.area}');
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getDeliveryAddress();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +72,11 @@ class _DeliveryAddressState extends StateMVC<DeliveryAddress> {
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 80),
-            child: (_ctrl.fetchingAddresses)
+            child:
+             (_ctrl.fetchingAddresses)
                 ? Center(child: CircularProgressIndicator())
-                : Container(
+                : 
+                Container(
                     height: MediaQuery.of(context).size.height,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,6 +111,7 @@ class _DeliveryAddressState extends StateMVC<DeliveryAddress> {
                         TextFormField(
                             keyboardType: TextInputType.text,
                             enableSuggestions: true,
+                            controller: _areaField,
                             onChanged: (value) => _ctrl.dlvry.area = value,
                             decoration: InputDecoration(
                                 hintText: 'JLT',
@@ -94,6 +128,7 @@ class _DeliveryAddressState extends StateMVC<DeliveryAddress> {
                             cursorColor: BrandColors.colorAccent,
                             keyboardType: TextInputType.number,
                             enableSuggestions: true,
+                            controller: _buildingField,
                             onChanged: (value) => _ctrl.dlvry.building = value,
                             decoration: InputDecoration(
                                 hintText: 'Blu Bay Tower',
@@ -108,6 +143,7 @@ class _DeliveryAddressState extends StateMVC<DeliveryAddress> {
                                 TextStyle(fontSize: 16, fontFamily: 'Medium')),
                         TextField(
                             enableSuggestions: true,
+                            controller: _floorField,
                             onChanged: (value) => _ctrl.dlvry.floor = value,
                             cursorColor: BrandColors.colorAccent,
                             decoration: InputDecoration(
@@ -124,6 +160,7 @@ class _DeliveryAddressState extends StateMVC<DeliveryAddress> {
                         TextField(
                             enableSuggestions: true,
                             cursorColor: BrandColors.colorAccent,
+                            controller: _apartmentField,
                             onChanged: (value) => _ctrl.dlvry.apartment = value,
                             decoration: InputDecoration(
                                 hintText: '1102',
