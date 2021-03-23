@@ -1,15 +1,16 @@
 class NotificationsModel {
-  String uid, deviceID, title, qty, total;
+  String uid, id, image, description, source, title;
 
   NotificationsModel();
 
   NotificationsModel.fromJSON(Map<String, dynamic> json) {
     try {
-      uid = json['user_id'].toString();
-      deviceID = json['device_id'];
+      id = json['id'].toString();
+      uid = json['user_id'];
       title = json['title'];
-      qty = json['qty'];
-      total = json['total'];
+      description = json['description'];
+      image = json['image'];
+      source = json['source'];
     } catch (e) {
       print(e);
     }
@@ -17,13 +18,12 @@ class NotificationsModel {
 
   Map toMap() {
     var map = new Map<String, dynamic>();
-
+    map["id"] = id;
     map["user_id"] = uid;
-    map["device_id"] = deviceID;
-    map["product_id"] = title;
-    map["qty"] = qty;
-    map["total"] = total;
-
+    map["title"] = title;
+    map["description"] = description;
+    map["image"] = image;
+    map["source"] = source;
     return map;
   }
 }

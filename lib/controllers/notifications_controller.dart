@@ -12,7 +12,6 @@ class NotificationsController extends ControllerMVC {
   NotificationsModel notificationsList = new NotificationsModel();
 
   ValueNotifier<List<NotificationsModel>> getNotificationsList;
-  String deviceID;
 
   var fetchingAddresses = true;
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -32,17 +31,17 @@ class NotificationsController extends ControllerMVC {
         fetchingAddresses = true;
       });
     }
-    print('>>>>>>>>>>>>>>$deviceID');
+
+    String uid = await storage.read(key: 'uid');
 
     IResponse<List<NotificationsModel>> res =
-        await notifyRepo.getNotification();
+        await notifyRepo.getNotification(uid);
     if (res.statusCode == 200) {
       getNotificationsList.value = res.data;
 
       // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
       getNotificationsList.notifyListeners();
       print('///---//-/- ${res.message}');
-      print('///---//-/- ${res.statusCode}');
 
       setState(() {
         fetchingAddresses = false;
@@ -73,7 +72,7 @@ class NotificationsController extends ControllerMVC {
       setState(() {
         fetchingAddresses = false;
         getNotificationsList.value = null;
-      }); 
+      });
       // Navigator.push(scaffoldKey?.currentContext,
       //     MaterialPageRoute(builder: (context) => CartTab()));
     } else {

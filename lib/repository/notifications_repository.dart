@@ -12,7 +12,7 @@ final RemoteConfigService _remoteConfigService = getIt<RemoteConfigService>();
 
 final String url = '${_remoteConfigService.getBaseUrl}';
 
-Future<IResponse<List<NotificationsModel>>> getNotification() async {
+Future<IResponse<List<NotificationsModel>>> getNotification(String id) async {
   FlutterSecureStorage storage = getIt<FlutterSecureStorage>();
 
   Map<String, String> headers = {
@@ -22,7 +22,7 @@ Future<IResponse<List<NotificationsModel>>> getNotification() async {
   };
 
   var res = await http.get(
-    "$url/notifications",
+    "$url/notifications?user_id=$id",
     headers: headers,
   );
   final Map resData = json.decode(res.body);

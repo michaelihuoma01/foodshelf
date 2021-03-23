@@ -31,16 +31,22 @@ Future<IResponse<GeneralDetails>> getDetails() async {
       token: json.decode(res.body)['access_token'],
     );
 
-    // TODO: Remove, Inherit from Interceptor
-    switch (res.statusCode) {
-      case 200:
-      case 409:
-        alRes.data = GeneralDetails.fromJSON(json.decode(res.body)['faq']);
-
-        break;
-      default:
-        break;
+    final Map data = json.decode(res.body);
+    final alRespose = IResponse<GeneralDetails>.fromJson(data);
+    if (data['faq'] != null && data['faq'] is Map) {
+      alRespose.data = GeneralDetails.fromJSON(data['faq']);
     }
+
+    // TODO: Remove, Inherit from Interceptor
+    // switch (res.statusCode) {
+    //   case 200:
+    //   case 409:
+    //     alRes.data = GeneralDetails.fromJSON(json.decode(res.body));
+
+    //     break;
+    //   default:
+    //     break;
+    // }
 
     print(res.statusCode);
     print(res.body);
@@ -50,4 +56,36 @@ Future<IResponse<GeneralDetails>> getDetails() async {
     print(e);
     return null;
   }
+}
+
+Future<IResponse<List<GeneralDetails>>> getFaqs() async {
+  FlutterSecureStorage storage = getIt<FlutterSecureStorage>();
+
+  Map<String, String> headers = {
+    "content-type": "application/json",
+    "accept": "application/json",
+    "authorization": 'Bearer ${await storage.read(key: 'token')}',
+  };
+
+  var res = await http.get(
+    "$url/home",
+    headers: headers,
+  );
+  final Map resData = json.decode(res.body);
+  IResponse<List<GeneralDetails>> alRes = IResponse(
+    statusCode: res.statusCode,
+    message: resData,
+  );
+
+  switch (res.statusCode) {
+    case 200:
+    case 409:
+      alRes.data = (resData['faq'] as List)
+          .map<GeneralDetails>((item) => GeneralDetails.fromJSON(item))
+      .toList();
+      break;
+    default:
+      break;
+  }
+  return alRes;
 }

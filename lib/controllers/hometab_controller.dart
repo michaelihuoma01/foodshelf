@@ -80,6 +80,7 @@ class HomeTabController extends ControllerMVC {
 
       // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
       getProdList.notifyListeners();
+      print('>>>>>>>>///////////////${res.data}');
 
       setState(() {
         fetchingAddresses = false;
@@ -177,7 +178,6 @@ class HomeTabController extends ControllerMVC {
       });
     }
     await getID();
-    print('>>>>>>>>>>>>>>$deviceID');
 
     IResponse<List<Category>> res = await categoryRepo.getCart(deviceID);
     if (res.statusCode == 200) {
@@ -185,8 +185,6 @@ class HomeTabController extends ControllerMVC {
 
       // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
       getCartList.notifyListeners();
-      print('///---//-/- ${res.message}');
-      print('///---//-/- ${res.statusCode}');
 
       setState(() {
         fetchingAddresses = false;
@@ -262,7 +260,6 @@ class HomeTabController extends ControllerMVC {
         setState(() {
           fetchingAddresses = false;
         });
-        print('/>/>/>>>>>>>>>>//////${res.msg.toString()}');
       }
     } catch (e) {
       print(e);
