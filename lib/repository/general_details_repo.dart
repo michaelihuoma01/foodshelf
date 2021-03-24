@@ -31,22 +31,16 @@ Future<IResponse<GeneralDetails>> getDetails() async {
       token: json.decode(res.body)['access_token'],
     );
 
-    final Map data = json.decode(res.body);
-    final alRespose = IResponse<GeneralDetails>.fromJson(data);
-    if (data['faq'] != null && data['faq'] is Map) {
-      alRespose.data = GeneralDetails.fromJSON(data['faq']);
-    }
-
     // TODO: Remove, Inherit from Interceptor
-    // switch (res.statusCode) {
-    //   case 200:
-    //   case 409:
-    //     alRes.data = GeneralDetails.fromJSON(json.decode(res.body));
+    switch (res.statusCode) {
+      case 200:
+      case 409:
+        alRes.data = GeneralDetails.fromJSON(json.decode(res.body));
 
-    //     break;
-    //   default:
-    //     break;
-    // }
+        break;
+      default:
+        break;
+    }
 
     print(res.statusCode);
     print(res.body);
@@ -82,7 +76,7 @@ Future<IResponse<List<GeneralDetails>>> getFaqs() async {
     case 409:
       alRes.data = (resData['faq'] as List)
           .map<GeneralDetails>((item) => GeneralDetails.fromJSON(item))
-      .toList();
+          .toList();
       break;
     default:
       break;

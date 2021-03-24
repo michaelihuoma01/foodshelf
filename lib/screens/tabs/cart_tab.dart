@@ -3,6 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:foodshelf/controllers/hometab_controller.dart';
 import 'package:foodshelf/helpers/utility.dart';
 import 'package:foodshelf/models/category.dart';
+import 'package:foodshelf/screens/pages/payment_summary.dart';
 import 'package:foodshelf/utility/brand_colors.dart';
 import 'package:foodshelf/widgets/add_to_cart_item.dart';
 import 'package:foodshelf/widgets/button_widget.dart';
@@ -57,15 +58,27 @@ class _CartTabState extends StateMVC<CartTab> {
       cartList = _ctrl.getCartList.value
           .map(
             (cart) => GestureDetector(
-              onTap: () { 
-              },
+              onTap: () {},
               child: AddToCartItem(
                 title: cart.title,
                 author: cart.description,
-                price: cart.price,
+                price: cart.total,
+                url: cart.image,
                 context: context,
                 qty: cart.qty,
                 focusKeyboard: focusKeyboard,
+                onPressed: () {
+                  print(cart.total);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PaymentSummary(
+                              url: cart.image,
+                              desc: cart.description,
+                              qty: cart.qty,
+                              title: cart.title,
+                              subtotal: cart.total)));
+                },
                 keyboardVisible: true,
                 numController: numController,
                 onTap: () => _ctrl.deleteCartItem(deviceID, cart.productID),
@@ -107,6 +120,23 @@ class _CartTabState extends StateMVC<CartTab> {
                 : Scaffold(
                     key: _ctrl.scaffoldKey,
                     backgroundColor: Colors.transparent,
+                    bottomSheet: Container(
+                      color: Colors.grey[200],
+                      child: Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: ButtonWidget(
+                            color: BrandColors.colorAccent,
+                            onPressed: () {
+                              print(_ctrl.cartList.image);
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) =>
+                              //             PaymentSummary(url: cart.image)));
+                            },
+                            title: 'Checkout'),
+                      ),
+                    ),
                     body: Padding(
                       padding:
                           const EdgeInsets.only(left: 20, right: 20, top: 200),
@@ -129,14 +159,13 @@ class _CartTabState extends StateMVC<CartTab> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 20),
                           Expanded(
                             child: Container(
                               child: (_ctrl.getCartList.value.length != 0)
                                   ? ListView(
                                       scrollDirection: Axis.vertical,
                                       children: cartList)
-                                  : Center(child: Text('Cart is empty')),
+                                  : Text('Cart is Empty'),
                             ),
                           ),
                         ],

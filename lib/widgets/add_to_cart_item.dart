@@ -3,7 +3,7 @@ import 'package:foodshelf/utility/brand_colors.dart';
 import 'package:foodshelf/widgets/counter_button.dart';
 
 class AddToCartItem extends StatelessWidget {
-  final String title, author, price, qty;
+  final String title, author, price, qty, url;
   final BuildContext context;
   final TextEditingController numController;
   final Function onTap, onPressed;
@@ -19,6 +19,7 @@ class AddToCartItem extends StatelessWidget {
       this.context,
       this.qty,
       this.price,
+      this.url,
       this.numController,
       this.focusKeyboard,
       this.keyboardVisible});
@@ -38,8 +39,7 @@ class AddToCartItem extends StatelessWidget {
                 children: [
                   ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.asset('assets/images/png/ricebag.png',
-                          height: 100)),
+                      child: Image.network(url, height: 100)),
                   SizedBox(height: 5),
                   Text('Quantity', style: TextStyle(fontFamily: 'Bold')),
                   Row(

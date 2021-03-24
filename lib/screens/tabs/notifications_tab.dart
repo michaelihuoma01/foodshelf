@@ -51,47 +51,57 @@ class _NotificationsTabState extends StateMVC<NotificationsTab> {
             child: Scaffold(
               key: _ctrl.scaffoldKey,
               backgroundColor: Colors.transparent,
-              body: Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 200),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Notifications',
-                            style: TextStyle(fontSize: 30, fontFamily: 'Bold')),
-                        Text('Clear notifications',
-                            style: TextStyle(
-                                color: BrandColors.colorAccent,
-                                fontFamily: 'Regular')),
-                      ],
-                    ),
-                    Expanded(
-                      child: ListView(
-                        children: _ctrl?.getNotificationsList?.value != null
-                            ? _ctrl.getNotificationsList.value
-                                .map(
-                                  (NotificationsModel notificationsModel) =>
-                                      Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      NotificationsTile(
-                                        title: notificationsModel.description,
-                                        price: '49.99',
-                                        context: context,
-                                      ),
-                                      SizedBox(height: 20)
-                                    ],
-                                  ),
-                                )
-                                .toList()
-                            : [],
+              body: (_ctrl.fetchingAddresses)
+                  ? Center(child: CircularProgressIndicator())
+                  : Padding(
+                      padding:
+                          const EdgeInsets.only(left: 20, right: 20, top: 200),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Notifications',
+                                  style: TextStyle(
+                                      fontSize: 30, fontFamily: 'Bold')),
+                              InkWell(
+                                onTap: () => _ctrl.emptyNotifications(),
+                                child: Text('Clear notifications',
+                                    style: TextStyle(
+                                        color: BrandColors.colorAccent,
+                                        fontFamily: 'Regular')),
+                              ),
+                            ],
+                          ),
+                          Expanded(
+                            child: ListView(
+                              children:
+                                  _ctrl?.getNotificationsList?.value != null
+                                      ? _ctrl.getNotificationsList.value
+                                          .map(
+                                            (NotificationsModel
+                                                    notificationsModel) =>
+                                                Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                NotificationsTile(
+                                                  title: notificationsModel
+                                                      .description,
+                                                  price: '49.99',
+                                                  context: context,
+                                                ),
+                                                SizedBox(height: 20)
+                                              ],
+                                            ),
+                                          )
+                                          .toList()
+                                      : [],
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
             ),
           );
         });

@@ -4,6 +4,7 @@ class Category {
       title,
       image,
       price,
+      total,
       qty,
       categoryID,
       sku,
@@ -18,6 +19,7 @@ class Category {
       title = json['title'];
       image = json['image'];
       price = json['price'];
+      total = json['total'];
       qty = json['qty'];
       categoryID = json['category_id'];
       description = json['description'];
@@ -42,6 +44,7 @@ class Category {
     map["title"] = title;
     map["image"] = image;
     map["price"] = price;
+    map["total"] = total;
     map["qty"] = qty;
     map["category_id"] = categoryID;
     map["description"] = description;
