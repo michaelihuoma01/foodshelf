@@ -1,21 +1,25 @@
 class IResponse<T> {
-  int statusCode;
-  String message, token;
+  int statusCode, uuid;
+  String token, msg;
   T data;
   bool status;
   Map<String, String> error;
+  Map<String, dynamic> message;
+
   Meta meta;
 
   IResponse({
     this.data,
     this.token,
     this.message,
+    this.uuid,
+    this.msg,
     this.statusCode,
     this.status,
   });
 
   IResponse.fromJson(Map<String, dynamic> json, {T data}) {
-    status = json['status'];
+    // status = json['status'];
     if (json['error'] != null && json['error'] is Map) {
       error = {};
       print(json['error']);
@@ -38,6 +42,7 @@ class IResponse<T> {
     map["data"] = data;
     map["token"] = token;
     map["message"] = message;
+    map["user_id"] = uuid;
     map["status_code"] = statusCode;
     return map;
   }

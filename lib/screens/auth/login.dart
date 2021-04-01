@@ -68,9 +68,11 @@ class _LoginPageState extends StateMVC<LoginPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Welcome!', style: TextStyle(fontSize: 30, fontFamily: 'Bold')),
+              Text('Welcome!',
+                  style: TextStyle(fontSize: 30, fontFamily: 'Bold')),
               SizedBox(height: 30),
-              Text('Phone Number', style: TextStyle(fontSize: 18, fontFamily: 'Medium')),
+              Text('Phone Number',
+                  style: TextStyle(fontSize: 18, fontFamily: 'Medium')),
               TextField(
                   cursorColor: BrandColors.colorAccent,
                   keyboardType: TextInputType.number,
@@ -84,7 +86,8 @@ class _LoginPageState extends StateMVC<LoginPage> {
                       )),
                   style: TextStyle(fontSize: 16)),
               SizedBox(height: 20),
-              Text('Password', style: TextStyle(fontSize: 18, fontFamily: 'Medium')),
+              Text('Password',
+                  style: TextStyle(fontSize: 18, fontFamily: 'Medium')),
               TextField(
                   cursorColor: BrandColors.colorAccent,
                   keyboardType: TextInputType.visiblePassword,
@@ -94,7 +97,9 @@ class _LoginPageState extends StateMVC<LoginPage> {
                   decoration: InputDecoration(
                       suffixIcon: InkWell(
                         onTap: () => _con.togglePasswordVisibility(),
-                        child: Icon(_con.hidePassword ? Icons.visibility : Icons.visibility_off),
+                        child: Icon(_con.hidePassword
+                            ? Icons.visibility
+                            : Icons.visibility_off),
                       ),
                       hintText: '**********',
                       hintStyle: TextStyle(
@@ -105,20 +110,29 @@ class _LoginPageState extends StateMVC<LoginPage> {
               SizedBox(height: 20),
               InkWell(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPassword()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ForgotPassword()));
                   },
-                  child: Text('Forgot Password?', style: TextStyle(fontSize: 16, fontFamily: 'Medium', color: BrandColors.colorAccent))),
+                  child: Text('Forgot Password?',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Medium',
+                          color: BrandColors.colorAccent))),
               SizedBox(height: 20),
               ButtonWidget(
                   color: BrandColors.colorAccent,
                   onPressed: () {
                     if ((_con.user.phone?.length ?? 0) < 10) {
-                      Utility.showMessage(_con.scaffoldKey?.currentContext, message: 'Please enter a valid phone number');
+                      Utility.showMessage(_con.scaffoldKey?.currentContext,
+                          message: 'Please enter a valid phone number');
                       return;
                     }
 
                     if ((_con.user.password?.length ?? 0) < 8) {
-                      Utility.showMessage(_con.scaffoldKey?.currentContext, message: 'Password is too short');
+                      Utility.showMessage(_con.scaffoldKey?.currentContext,
+                          message: 'Password is too short');
                       return;
                     }
 
@@ -127,12 +141,15 @@ class _LoginPageState extends StateMVC<LoginPage> {
                   title: 'Sign In'),
               SizedBox(height: 10),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text('New here? ', style: TextStyle(fontFamily: 'Regular', fontSize: 16)),
+                Text('New here? ',
+                    style: TextStyle(fontFamily: 'Regular', fontSize: 16)),
                 InkWell(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpPage()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SignUpPage()));
                   },
-                  child: Text(' Sign Up', style: TextStyle(fontFamily: 'Bold', fontSize: 16)),
+                  child: Text(' Sign Up',
+                      style: TextStyle(fontFamily: 'Bold', fontSize: 16)),
                 ),
               ]),
             ],

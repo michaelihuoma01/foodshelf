@@ -11,7 +11,7 @@ class User {
       password,
       passwordConfirmation,
       uuid,
-      name,
+      name, 
       country,
       city;
 
@@ -21,14 +21,14 @@ class User {
     try {
       email = jsonMap['email'];
       phone = jsonMap['phone'];
-      uuid = jsonMap['user_id'];
-      name = jsonMap['name'];
+      uuid = jsonMap['id'].toString();
+      name = jsonMap['name']; 
       country = jsonMap['country'];
       city = jsonMap['city'];
       password = jsonMap['password'];
       passwordConfirmation = jsonMap['password_confirmation'];
     } catch (e) {
-      print(CustomTrace(StackTrace.current, message: e.toString()));
+      // print(CustomTrace(StackTrace.current, message: e.toString()));
     }
   }
 
@@ -39,8 +39,8 @@ class User {
     map["password"] = password;
     map["password_confirmation"] = passwordConfirmation;
     map["phone"] = phone;
-    map["user_id"] = uuid;
-    map["name"] = name;
+    map["id"] = uuid.toString();
+    map["name"] = name; 
     map["city"] = city;
     map["country"] = country;
 

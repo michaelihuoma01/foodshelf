@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:foodshelf/controllers/user_controller.dart';
 import 'package:foodshelf/utility/brand_colors.dart';
 import 'package:foodshelf/widgets/appbar_widget.dart';
 import 'package:foodshelf/widgets/button_widget.dart';
+import 'package:mvc_pattern/mvc_pattern.dart';
 
 class ChangePassword extends StatefulWidget {
   static const routeName = '/ChangePassword';
@@ -10,7 +13,15 @@ class ChangePassword extends StatefulWidget {
   _ChangePasswordState createState() => _ChangePasswordState();
 }
 
-class _ChangePasswordState extends State<ChangePassword> {
+class _ChangePasswordState extends StateMVC<ChangePassword> {
+  UserController _ctrl;
+  _ChangePasswordState() : super(UserController()) {
+    _ctrl = controller;
+  }
+
+  String oldPass, newPass, confirmPass, uid;
+  FlutterSecureStorage storage = FlutterSecureStorage();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,6 +34,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       ),
       child: Scaffold(
         appBar: AppBarWidget(),
+        key: _ctrl.scaffoldKey,
         backgroundColor: Colors.transparent,
         bottomSheet: Container(
           color: Colors.white,
@@ -30,7 +42,11 @@ class _ChangePasswordState extends State<ChangePassword> {
             padding: const EdgeInsets.all(30),
             child: ButtonWidget(
                 color: BrandColors.colorAccent,
-                onPressed: () {},
+                onPressed: () async {
+                  uid = await storage.read(key: 'uid');
+
+                  _ctrl.changePass(oldPass, newPass, confirmPass, uid);
+                },
                 title: 'Save Changes'),
           ),
         ),
@@ -50,11 +66,12 @@ class _ChangePasswordState extends State<ChangePassword> {
                   enableSuggestions: true,
                   obscureText: true,
                   cursorColor: BrandColors.colorAccent,
+                  onChanged: (value) => oldPass = value,
                   decoration: InputDecoration(
-                      hintText: '..........',
+                      hintText: '*********',
                       hintStyle: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
+                        color: Colors.grey,
+                        fontSize: 14,
                       )),
                   style: TextStyle(fontSize: 16)),
               SizedBox(height: 20),
@@ -65,11 +82,12 @@ class _ChangePasswordState extends State<ChangePassword> {
                   enableSuggestions: true,
                   obscureText: true,
                   cursorColor: BrandColors.colorAccent,
+                  onChanged: (value) => newPass = value,
                   decoration: InputDecoration(
-                      hintText: '..........',
+                      hintText: '**********',
                       hintStyle: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
+                        color: Colors.grey,
+                        fontSize: 14,
                       )),
                   style: TextStyle(fontSize: 16)),
               SizedBox(height: 20),
@@ -80,11 +98,12 @@ class _ChangePasswordState extends State<ChangePassword> {
                   enableSuggestions: true,
                   obscureText: true,
                   cursorColor: BrandColors.colorAccent,
+                  onChanged: (value) => confirmPass = value,
                   decoration: InputDecoration(
-                      hintText: '..........',
+                      hintText: '***********',
                       hintStyle: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
+                        color: Colors.grey,
+                        fontSize: 14,
                       )),
                   style: TextStyle(fontSize: 16)),
               SizedBox(height: 30),

@@ -19,12 +19,12 @@ class SelectState extends StatefulWidget {
 }
 
 class _SelectStateState extends State<SelectState> {
-  List<String> _cities = ["Choose City"];
-  List<String> _country = ["Choose  Country"];
-  String _selectedCity = "Choose City";
-  String _selectedCountry = "Choose  Country";
-  String _selectedState = "Choose City";
-  List<String> _states = ["Choose City"];
+  List<String> _cities = ["City"];
+  List<String> _country = ["Country"];
+  String _selectedCity = "City";
+  String _selectedCountry = "Country";
+  String _selectedState = "City";
+  List<String> _states = ["City"];
   var responses;
 
   @override
