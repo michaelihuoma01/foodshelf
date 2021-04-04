@@ -262,8 +262,8 @@ Future<IResponse<User>> resetPassword(
   return alRes;
 }
 
-Future<IResponse<User>> updateProfile(
-    String uid, name, phone, email, country, city) async {
+Future<IResponse<User>> updateProfileDetails(
+    String name, phone, country, city, uid) async {
   try {
     FlutterSecureStorage storage = getIt<FlutterSecureStorage>();
 
@@ -276,11 +276,11 @@ Future<IResponse<User>> updateProfile(
     var res = await http.post(
       "$url/update",
       body: json.encode({
-        'user_id': uid,
         'name': name,
         'phone': phone,
         'country': country,
         'city': city,
+        'user_id': uid,
       }),
       headers: headers,
     );
@@ -330,7 +330,7 @@ Future<IResponse<User>> getUser() async {
     }
     return alRespose;
   } catch (e) {
-    print('--- getProductDetails error');
+    print('--- getUserDetails error');
     print(e);
     return null;
   }

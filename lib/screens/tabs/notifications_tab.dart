@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:foodshelf/controllers/notifications_controller.dart';
 import 'package:foodshelf/models/notifications.dart';
 import 'package:foodshelf/utility/brand_colors.dart';
@@ -19,6 +20,9 @@ class _NotificationsTabState extends StateMVC<NotificationsTab> {
   _NotificationsTabState() : super(NotificationsController()) {
     _ctrl = controller;
   }
+
+  FlutterSecureStorage storage = FlutterSecureStorage();
+  String uuid;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +59,7 @@ class _NotificationsTabState extends StateMVC<NotificationsTab> {
                   ? Center(child: CircularProgressIndicator())
                   : Padding(
                       padding:
-                          const EdgeInsets.only(left: 20, right: 20, top: 200),
+                          const EdgeInsets.only(left: 20, right: 20, top: 170),
                       child: Column(
                         children: [
                           Row(
@@ -65,7 +69,11 @@ class _NotificationsTabState extends StateMVC<NotificationsTab> {
                                   style: TextStyle(
                                       fontSize: 30, fontFamily: 'Bold')),
                               InkWell(
-                                onTap: () => _ctrl.emptyNotifications(),
+                                onTap: () async {
+                                  uuid = await storage.read(key: 'uid');
+                                  print(uuid);
+                                  _ctrl.emptyNotifications(uuid);
+                                },
                                 child: Text('Clear notifications',
                                     style: TextStyle(
                                         color: BrandColors.colorAccent,
@@ -73,32 +81,37 @@ class _NotificationsTabState extends StateMVC<NotificationsTab> {
                               ),
                             ],
                           ),
-                          Expanded(
-                            child: ListView(
-                              children:
-                                  _ctrl?.getNotificationsList?.value != null
-                                      ? _ctrl.getNotificationsList.value
-                                          .map(
-                                            (NotificationsModel
-                                                    notificationsModel) =>
-                                                Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                NotificationsTile(
-                                                  title: notificationsModel
-                                                      .description,
-                                                  price: '49.99',
-                                                  context: context,
+                          (_ctrl.getNotificationsList.value.length != 0)
+                              ? Expanded(
+                                  child: ListView(
+                                      children: _ctrl?.getNotificationsList
+                                                  ?.value !=
+                                              null
+                                          ? _ctrl.getNotificationsList.value
+                                              .map(
+                                                (NotificationsModel
+                                                        notificationsModel) =>
+                                                    Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    NotificationsTile(
+                                                      title: notificationsModel
+                                                          .description,
+                                                      price: '49.99',
+                                                      context: context,
+                                                    ),
+                                                    SizedBox(height: 20)
+                                                  ],
                                                 ),
-                                                SizedBox(height: 20)
-                                              ],
-                                            ),
-                                          )
-                                          .toList()
-                                      : [],
-                            ),
-                          ),
+                                              )
+                                              .toList()
+                                          : []),
+                                )
+                              : Padding(
+                                padding: const EdgeInsets.only(top: 30),
+                                child:   Text('No Notifications'),
+                              ),
                         ],
                       ),
                     ),

@@ -45,10 +45,10 @@ class _EditProfileState extends StateMVC<EditProfile> {
     _emailField.text = _user?.email;
     country = _user?.country;
     city = _user?.city;
-    _user.phone = '+123456788';
     setState(() {});
 
-    print(_user?.email);
+    print(_user?.uuid);
+    storage.write(key: "uid", value: _user.uuid);
   }
 
   @override
@@ -69,7 +69,7 @@ class _EditProfileState extends StateMVC<EditProfile> {
           image: Image.asset('assets/images/png/background.png').image,
         ),
       ),
-      child: (_user == null)
+      child: (_ctrl.fetchingAddresses && _user == null)
           ? Center(child: CircularProgressIndicator())
           : Scaffold(
               appBar: AppBarWidget(),
@@ -101,6 +101,7 @@ class _EditProfileState extends StateMVC<EditProfile> {
                                   color: Colors.grey,
                                   fontSize: 14.0,
                                 )),
+                            onChanged: (value) => _user.name = value,
                             style: TextStyle(fontSize: 16)),
                         SizedBox(height: 20),
                         Text('Change phone number',
@@ -111,6 +112,7 @@ class _EditProfileState extends StateMVC<EditProfile> {
                             cursorColor: BrandColors.colorAccent,
                             keyboardType: TextInputType.number,
                             enableSuggestions: true,
+                            onChanged: (value) => _user.phone = value,
                             decoration: InputDecoration(
                                 hintText: '+971 55 92 55555',
                                 hintStyle: TextStyle(
@@ -165,9 +167,14 @@ class _EditProfileState extends StateMVC<EditProfile> {
                   child: ButtonWidget(
                       color: BrandColors.colorAccent,
                       onPressed: () async {
-                        _ctrl.updateProfile(_user.uuid, _user.name, _user.phone,
-                            _user.country, _user.city, _user.email);
+                        print(_user.name);
                         print(_user.phone);
+                        print(countryValue);
+                        print(stateValue);
+                        print(_user.uuid);
+
+                        _ctrl.updateProfile(_user.name, _user.phone,
+                            countryValue, stateValue, _user.uuid);
                       },
                       title: 'Save'),
                 ),

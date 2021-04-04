@@ -55,35 +55,33 @@ class NotificationsController extends ControllerMVC {
     }
   }
 
-  emptyNotifications() async {
+  emptyNotifications(String uid) async {
     if (!fetchingAddresses) {
       setState(() {
         fetchingAddresses = true;
       });
     }
-    IResponse<NotificationsModel> res = await notifyRepo.clearNotifications();
-    print(res.message.toString());
+    IResponse<NotificationsModel> res = await notifyRepo.clearNotifications(uid);
 
     if (res.statusCode == 200) {
-      Utility.showMessage(
-        scaffoldKey?.currentContext,
-        message: res.msg.toString(),
-      );
       setState(() {
         fetchingAddresses = false;
         getNotificationsList.value = null;
       });
-      // Navigator.push(scaffoldKey?.currentContext,
-      //     MaterialPageRoute(builder: (context) => CartTab()));
-    } else {
+
       Utility.showMessage(
         scaffoldKey?.currentContext,
         message: res.msg.toString(),
       );
+    } else {
       setState(() {
         fetchingAddresses = false;
       });
-      print(res.message.toString());
+
+      Utility.showMessage(
+        scaffoldKey?.currentContext,
+        message: res.msg.toString(),
+      );
     }
   }
 }

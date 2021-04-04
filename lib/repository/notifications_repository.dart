@@ -45,7 +45,7 @@ Future<IResponse<List<NotificationsModel>>> getNotification(String id) async {
   return alRes;
 }
 
-Future<IResponse<NotificationsModel>> clearNotifications() async {
+Future<IResponse<NotificationsModel>> clearNotifications(String uid) async {
   try {
     FlutterSecureStorage storage = getIt<FlutterSecureStorage>();
 
@@ -56,7 +56,7 @@ Future<IResponse<NotificationsModel>> clearNotifications() async {
     };
 
     var res = await http.get(
-      "$url/clear-notifications/1",
+      "$url/clear-notifications/$uid",
       headers: headers,
     );
 
@@ -70,15 +70,12 @@ Future<IResponse<NotificationsModel>> clearNotifications() async {
     switch (res.statusCode) {
       case 200:
       case 409:
-        alRes.data =
-            NotificationsModel.fromJSON(json.decode(res.body)['message']);
+        alRes.data = NotificationsModel.fromJSON(json.decode(res.body));
         break;
       default:
         break;
     }
 
-    print(res.statusCode);
-    print(res.body);
     return alRes;
   } catch (e) {
     print(e);

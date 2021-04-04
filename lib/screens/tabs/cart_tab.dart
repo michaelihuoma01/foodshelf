@@ -139,7 +139,7 @@ class _CartTabState extends StateMVC<CartTab> {
                     ),
                     body: Padding(
                       padding:
-                          const EdgeInsets.only(left: 20, right: 20, top: 200),
+                          const EdgeInsets.only(left: 20, right: 20, top: 170),
                       child: Column(
                         children: [
                           Row(
@@ -161,11 +161,16 @@ class _CartTabState extends StateMVC<CartTab> {
                           ),
                           Expanded(
                             child: Container(
-                              child: (_ctrl.getCartList.value.length != 0)
-                                  ? ListView(
+                              child: 
+                              // (_ctrl.getCartList.value.length != 0)
+                              //     ? 
+                                  ListView(
                                       scrollDirection: Axis.vertical,
                                       children: cartList)
-                                  : Text('Cart is Empty'),
+                                  // : Padding(
+                                  //     padding: const EdgeInsets.only(top: 30),
+                                  //     child: Text('Cart is Empty'),
+                                  //   ),
                             ),
                           ),
                         ],

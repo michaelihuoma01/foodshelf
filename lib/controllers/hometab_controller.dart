@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -31,7 +34,7 @@ class HomeTabController extends ControllerMVC {
     getCartList = ValueNotifier(null);
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
 
-    getID();
+    _getDeviceId();
     getCategoryList();
     getProductList();
     getCartItems();
@@ -39,7 +42,22 @@ class HomeTabController extends ControllerMVC {
 
   getID() async {
     deviceID = await storage.read(key: 'deviceID');
-    print(deviceID);
+    print('???????????????????????$deviceID');
+  }
+
+  Future<String> _getDeviceId() async {
+    final deviceInfo = DeviceInfoPlugin();
+    getID();
+
+    if (Platform.isIOS) {
+      IosDeviceInfo iosDeviceInfo = await deviceInfo.iosInfo;
+      storage.write(key: "deviceID", value: iosDeviceInfo.identifierForVendor);
+      return iosDeviceInfo.identifierForVendor; // unique ID on iOS
+    } else {
+      AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
+      storage.write(key: "deviceID", value: androidDeviceInfo.androidId);
+      return androidDeviceInfo.androidId; // unique ID on Android
+    }
   }
 
   Future getCategoryList() async {
@@ -244,18 +262,19 @@ class HomeTabController extends ControllerMVC {
       if (res.statusCode == 200) {
         Utility.showMessage(
           scaffoldKey?.currentContext,
-          message: res.msg.toString(),
+          message: res.message.toString(),
         );
         setState(() {
           fetchingAddresses = false;
-          getCartList.value = null;
+          getCartList.value.length = null;
+          getCartList.value.length = 0;
         });
         // Navigator.push(scaffoldKey?.currentContext,
         //     MaterialPageRoute(builder: (context) => CartTab()));
       } else {
         Utility.showMessage(
           scaffoldKey?.currentContext,
-          message: res.msg.toString(),
+          message: res.message.toString(),
         );
         setState(() {
           fetchingAddresses = false;

@@ -80,7 +80,7 @@ class UserController extends ControllerMVC {
       } else {
         Utility.showMessage(
           scaffoldKey?.currentContext,
-          message: res.message.toString(),
+          message: res.msg,
         );
         loader.remove();
       }
@@ -255,14 +255,14 @@ class UserController extends ControllerMVC {
     return res;
   }
 
-  updateProfile(String uid, name, phone, email, country, city) async {
+  updateProfile(String name, phone, country, city, uid) async {
     if (!fetchingAddresses) {
       setState(() {
         fetchingAddresses = true;
       });
     }
     IResponse<User> res =
-        await user_repo.updateProfile(uid, name, phone, email, country, city);
+        await user_repo.updateProfileDetails(name, phone, country, city, uid);
 
     if (res.statusCode == 200) {
       Utility.showMessage(

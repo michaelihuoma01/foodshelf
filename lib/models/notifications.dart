@@ -1,5 +1,5 @@
 class NotificationsModel {
-  String uid, id, image, description, source, title;
+  String uid, id, image, description, source, title, message;
 
   NotificationsModel();
 
@@ -11,6 +11,7 @@ class NotificationsModel {
       description = json['description'];
       image = json['image'];
       source = json['source'];
+      message = json['message'];
     } catch (e) {
       print(e);
     }
@@ -24,6 +25,7 @@ class NotificationsModel {
     map["description"] = description;
     map["image"] = image;
     map["source"] = source;
+    map['message'] = message;
     return map;
   }
 }

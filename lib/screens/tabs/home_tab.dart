@@ -7,7 +7,6 @@ import 'package:foodshelf/controllers/hometab_controller.dart';
 import 'package:foodshelf/helpers/utility.dart';
 import 'package:foodshelf/models/category.dart';
 import 'package:foodshelf/screens/pages/details.dart';
-import 'package:foodshelf/screens/pages/search.dart';
 import 'package:foodshelf/utility/brand_colors.dart';
 import 'package:foodshelf/widgets/food_home.dart';
 import 'package:foodshelf/widgets/food_type.dart';
