@@ -8,7 +8,6 @@ import 'package:foodshelf/widgets/appbar_widget.dart';
 import 'package:foodshelf/widgets/button_widget.dart';
 import 'package:foodshelf/widgets/country_state_city_picker.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:provider/provider.dart';
 
 class EditProfile extends StatefulWidget {
   static const routeName = '/EditProfile';
@@ -33,10 +32,7 @@ class _EditProfileState extends StateMVC<EditProfile> {
   String country, city;
 
   void _getUserProfile() async {
-    final res = await Future.wait<dynamic>([
-      _ctrl.getUserProfile(),
-    ]);
-    final IResponse<User> profileResponse = res.first;
+    final IResponse<User> profileResponse = await _ctrl.getUserProfile();
     _user = profileResponse.data;
     setState(() {});
 
@@ -109,6 +105,7 @@ class _EditProfileState extends StateMVC<EditProfile> {
                                 TextStyle(fontSize: 16, fontFamily: 'Medium')),
                         TextField(
                             controller: _phoneField,
+                            enabled: false,
                             cursorColor: BrandColors.colorAccent,
                             keyboardType: TextInputType.number,
                             enableSuggestions: true,
