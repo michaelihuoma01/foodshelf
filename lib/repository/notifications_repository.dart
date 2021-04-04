@@ -66,6 +66,7 @@ Future<IResponse<NotificationsModel>> clearNotifications(String uid) async {
       token: resData['access_token'],
     );
 
+<<<<<<< HEAD
     // TODO: Remove, Inherit from Interceptor
     switch (res.statusCode) {
       case 200:
@@ -75,6 +76,18 @@ Future<IResponse<NotificationsModel>> clearNotifications(String uid) async {
       default:
         break;
     }
+=======
+    // switch (res.statusCode) {
+    //   case 200:
+    //   case 409:
+    //     alRes.data =
+    //         NotificationsModel.fromJSON(resData['message']);
+    //     break;
+    //   default:
+    //     break;
+    // }
+
+>>>>>>> 1b0a4e94c05b546974d443e4430c16249860c78d
     return alRes;
   } catch (e) {
     print(e);

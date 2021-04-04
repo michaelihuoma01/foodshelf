@@ -183,7 +183,7 @@ class _CartTabState extends StateMVC<CartTab> {
                           ),
                           Expanded(
                             child: Container(
-                              child: (_ctrl.getCartList.value.length != 0)
+                              child: (_ctrl.getCartList.value?.length != 0)
                                   ? ListView(
                                       scrollDirection: Axis.vertical,
                                       children: cartList)

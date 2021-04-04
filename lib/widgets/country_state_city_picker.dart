@@ -9,10 +9,17 @@ class SelectState extends StatefulWidget {
   final ValueChanged<String> onCountryChanged;
   final ValueChanged<String> onStateChanged;
   final ValueChanged<String> onCityChanged;
+  final String countryInitialValue;
+  final String cityInitialValue;
 
-  const SelectState(
-      {Key key, this.onCountryChanged, this.onStateChanged, this.onCityChanged})
-      : super(key: key);
+  const SelectState({
+    Key key,
+    this.onCountryChanged,
+    this.onStateChanged,
+    this.onCityChanged,
+    this.countryInitialValue,
+    this.cityInitialValue,
+  }) : super(key: key);
 
   @override
   _SelectStateState createState() => _SelectStateState();
@@ -24,19 +31,23 @@ class _SelectStateState extends State<SelectState> {
   String _selectedCity = "City";
   String _selectedCountry = "Country";
   String _selectedState = "City";
+  String _countriesData;
   List<String> _states = ["City"];
   var responses;
 
   @override
   void initState() {
-    getCounty();
     super.initState();
+    getCounty();
   }
 
   Future getResponse() async {
-    var res = await rootBundle.loadString('assets/country.json');
+    if (_countriesData?.isNotEmpty ?? false) {
+      return jsonDecode(_countriesData);
+    }
+    _countriesData = await rootBundle.loadString('assets/country.json');
     // await DefaultAssetBundle.of(context).loadString('assets/country.json');
-    return jsonDecode(res);
+    return jsonDecode(_countriesData);
   }
 
   Future getCounty() async {
@@ -45,44 +56,44 @@ class _SelectStateState extends State<SelectState> {
       var model = StatusModel.StatusModel();
       model.name = data['name'];
       model.emoji = data['emoji'];
-      setState(() {
-        _country.add(model.emoji + "    " + model.name);
-        // _country..addAll(takecountry2);
-      });
+      _country.add(model.emoji + "    " + model.name);
     });
+    _selectedCountry = widget.countryInitialValue;
+    if (widget.cityInitialValue?.isNotEmpty ?? false) {
+      _selectedCity = widget.cityInitialValue;
+      _selectedState = widget.cityInitialValue;
+      getState();
+    }
+    setState(() {});
 
     return _country;
   }
 
   Future getState() async {
     var response = await getResponse();
-    var takestate = response
-        .map((map) => StatusModel.StatusModel.fromJson(map))
-        .where((item) => item.emoji + "    " + item.name == _selectedCountry)
-        .map((item) => item.state)
-        .toList();
+    var takestate = response.map((map) {
+      return StatusModel.StatusModel.fromJson(map);
+    }).where((item) {
+      return item.emoji + "    " + item.name == _selectedCountry;
+    }).map((item) {
+      return item.state;
+    }).toList();
     var states = takestate as List;
     states.forEach((f) {
-      setState(() {
-        var name = f.map((item) => item.name).toList();
-        for (var statename in name) {
-          print(statename.toString());
-
-          _states.add(statename.toString());
-        }
-      });
+      var name = f.map((item) => item.name).toList();
+      for (var statename in name) {
+        print(statename.toString());
+        _states.add(statename.toString());
+      }
     });
+    setState(() {});
 
     return _states;
   }
 
   Future getCity() async {
     var response = await getResponse();
-    var takestate = response
-        .map((map) => StatusModel.StatusModel.fromJson(map))
-        .where((item) => item.emoji + "    " + item.name == _selectedCountry)
-        .map((item) => item.state)
-        .toList();
+    var takestate = response.map((map) => StatusModel.StatusModel.fromJson(map)).where((item) => item.emoji + "    " + item.name == _selectedCountry).map((item) => item.state).toList();
     var states = takestate as List;
     states.forEach((f) {
       var name = f.where((item) => item.name == _selectedState);
@@ -163,7 +174,6 @@ class _SelectStateState extends State<SelectState> {
                   child: Text(dropDownStringItem),
                 );
               }).toList(),
-              // onChanged: (value) => print(value),
               onChanged: (value) => _onSelectedState(value),
               value: _selectedState,
             ),
