@@ -30,7 +30,7 @@ class GeneralDetailsCtrl extends ControllerMVC {
 
     final res = await general_repo.getDetails();
     setState(() {
-      fetchingAddresses = true;
+      fetchingAddresses = false;
     });
     return res;
   }

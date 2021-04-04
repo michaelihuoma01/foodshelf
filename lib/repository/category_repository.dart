@@ -184,7 +184,7 @@ Future<IResponse<Cart>> addCart(
 }
 
 Future<IResponse<Cart>> updateCart(
-    int uid, String deviceID, productID, qty, total, Map products) async {
+    var deviceID, uid, productID, qty, total) async {
   try {
     FlutterSecureStorage storage = getIt<FlutterSecureStorage>();
 
@@ -197,12 +197,11 @@ Future<IResponse<Cart>> updateCart(
     var res = await http.post(
       "$url/update-cart",
       body: json.encode({
-        'user_id': uid,
         'device_id': deviceID,
+        'user_id': uid,
         'product_id': productID,
         'qty': qty,
-        'total': total,
-        'product': products
+        'total': total
       }),
       headers: headers,
     );
@@ -217,7 +216,7 @@ Future<IResponse<Cart>> updateCart(
     switch (res.statusCode) {
       case 200:
       case 409:
-        alRes.data = Cart.fromJSON(json.decode(res.body)['message']);
+        alRes.data = Cart.fromJSON(json.decode(res.body));
         break;
       default:
         break;

@@ -31,6 +31,7 @@ class Category {
         image = json['product']['image'];
         productID = json['product']['id'].toString();
         description = json['product']['description'];
+        price = json['product']['price'];
       }
     } catch (e) {
       print(e);
@@ -55,6 +56,7 @@ class Category {
       map['product']['title'] = title;
       map['product']['image'] = image;
       map['product']['id'] = productID;
+      map['product']['price'] = price;
       map['product']['description'] = description;
     }
 

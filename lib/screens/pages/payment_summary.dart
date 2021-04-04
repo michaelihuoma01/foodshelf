@@ -61,7 +61,9 @@ class _PaymentSummaryState extends StateMVC<PaymentSummary> {
     // TODO: implement initState
     super.initState();
     _getData();
-    numController.text = widget.qty;
+    setState(() {
+      numController.text = widget.qty;
+    });
   }
 
   @override
@@ -159,11 +161,16 @@ class _PaymentSummaryState extends StateMVC<PaymentSummary> {
                                 children: [
                                   CounterButton(
                                       iconData: Icons.remove,
-                                      onTap: () {},
+                                      onTap: () {
+                                        print(widget.qty);
+                                        setState(() {
+                                          numController.text = widget.qty;
+                                        });
+                                      },
                                       color: Colors.red),
                                   Padding(
                                     padding: const EdgeInsets.only(
-                                        left: 1, right: 1, top: 4),
+                                        left: 5, right: 5, top: 4),
                                     child: Container(
                                       width: 20,
                                       height: 20,

@@ -24,7 +24,7 @@ class HomeTabController extends ControllerMVC {
   ValueNotifier<List<Category>> getCartList;
   String deviceID;
 
-  var fetchingAddresses = true;
+  var fetchingAddresses = true, isSuccessful = false;
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   FlutterSecureStorage storage = getIt<FlutterSecureStorage>();
 
@@ -157,15 +157,14 @@ class HomeTabController extends ControllerMVC {
     }
   }
 
-  updateCartItem(
-      int uid, String deviceID, productID, qty, total, Map products) async {
+  updateCartItem(var deviceID, uid, productID, qty, total) async {
     if (!fetchingAddresses) {
       setState(() {
         fetchingAddresses = true;
       });
     }
-    IResponse<Cart> res = await categoryRepo.updateCart(
-        uid, deviceID, productID, qty, total, products);
+    IResponse<Cart> res =
+        await categoryRepo.updateCart(deviceID, uid, productID, qty, total);
 
     if (res.statusCode == 200) {
       Utility.showMessage(
@@ -174,9 +173,9 @@ class HomeTabController extends ControllerMVC {
       );
       setState(() {
         fetchingAddresses = false;
+        // isSuccessful = true;
       });
-      Navigator.push(scaffoldKey?.currentContext,
-          MaterialPageRoute(builder: (context) => CartTab()));
+      print('isusccesful ooooo');
     } else {
       Utility.showMessage(
         scaffoldKey?.currentContext,
@@ -184,6 +183,7 @@ class HomeTabController extends ControllerMVC {
       );
       setState(() {
         fetchingAddresses = false;
+        // isSuccessful = false;
       });
       print(res.message.toString());
     }

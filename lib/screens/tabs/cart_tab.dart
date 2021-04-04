@@ -24,12 +24,15 @@ class _CartTabState extends StateMVC<CartTab> {
     _ctrl = controller;
   }
 
-  TextEditingController numController = new TextEditingController();
+  // TextEditingController numController = new TextEditingController();
   var focusKeyboard = FocusNode();
   String deviceID;
+  int count;
+  String counter;
   bool keyboardVisible = true;
   FlutterSecureStorage storage = getIt<FlutterSecureStorage>();
   Category cart;
+
   void setFocus() {
     if (!keyboardVisible) {
       FocusScope.of(context).unfocus();
@@ -54,21 +57,38 @@ class _CartTabState extends StateMVC<CartTab> {
   Widget build(BuildContext context) {
     var cartList = <Widget>[];
     if (_ctrl?.getCartList?.value != null) {
-      numController.text = _ctrl.cartList.qty;
       cartList = _ctrl.getCartList.value
           .map(
-            (cart) => GestureDetector(
-              onTap: () {},
-              child: AddToCartItem(
-                title: cart.title,
-                author: cart.description,
-                price: cart.total,
-                url: cart.image,
-                context: context,
-                qty: cart.qty,
-                focusKeyboard: focusKeyboard,
-                onPressed: () {
-                  print(cart.total);
+            (cart) => AddToCartItem(
+              title: cart.title,
+              author: cart.description,
+              price: cart.total,
+              url: cart.image,
+              context: context,
+              qty: cart.qty,
+              focusKeyboard: focusKeyboard,
+              plus: () {
+                setState(() {
+                  count++;
+                  print(count);
+                  cart.qty = count.toString();
+                });
+              },
+              minus: () {
+                count = int.parse(cart.qty);
+                setState(() {
+                  count--;
+                  print(count);
+                  cart.qty = count.toString();
+                });
+              },
+              onPressed: () async {
+                print(cart.price);
+                String uuid = await storage.read(key: 'uid');
+                _ctrl.updateCartItem(deviceID, int.parse(uuid), cart.productID,
+                    cart.qty, cart.total);
+
+                Future.delayed(const Duration(seconds: 1), () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -77,13 +97,15 @@ class _CartTabState extends StateMVC<CartTab> {
                               desc: cart.description,
                               qty: cart.qty,
                               title: cart.title,
-                              subtotal: cart.total)));
-                },
-                keyboardVisible: true,
-                numController: numController,
-                onTap: () => _ctrl.deleteCartItem(deviceID, cart.productID),
-                // onPressed: () => _ctrl.updateCartItem(),
-              ),
+                              subtotal:
+                                  '${double.parse(cart.price) * double.parse(cart.qty)}')));
+                  // : Utility.showMessage(context,
+                  //     message: 'Could not update cart');
+                });
+              },
+              keyboardVisible: true,
+              count: cart.qty,
+              onTap: () => _ctrl.deleteCartItem(deviceID, cart.productID),
             ),
           )
           .toList();

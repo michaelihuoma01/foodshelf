@@ -5,8 +5,8 @@ import 'package:foodshelf/widgets/counter_button.dart';
 class AddToCartItem extends StatelessWidget {
   final String title, author, price, qty, url;
   final BuildContext context;
-  final TextEditingController numController;
-  final Function onTap, onPressed;
+  final String count;
+  final Function onTap, onPressed, plus, minus;
   final focusKeyboard;
 
   final bool keyboardVisible;
@@ -17,10 +17,12 @@ class AddToCartItem extends StatelessWidget {
       this.onPressed,
       this.title,
       this.context,
+      this.plus,
+      this.minus,
       this.qty,
       this.price,
       this.url,
-      this.numController,
+      this.count,
       this.focusKeyboard,
       this.keyboardVisible});
 
@@ -47,38 +49,42 @@ class AddToCartItem extends StatelessWidget {
                     children: [
                       CounterButton(
                           iconData: Icons.remove,
-                          onTap: () {},
+                          onTap: minus,
                           color: Colors.red),
                       Padding(
-                        padding:
-                            const EdgeInsets.only(left: 10, right: 1, top: 4),
-                        child: Container(
-                          width: 20,
-                          height: 20,
-                          color: Colors.transparent,
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              fillColor: Colors.transparent,
-                              enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide.none),
-                              focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide.none),
-                              border: UnderlineInputBorder(
-                                  borderSide: BorderSide.none),
-                              labelText: qty,
-                            ),
-                            focusNode: focusKeyboard,
-                            controller: numController,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontFamily: 'Helvetica'),
-                            keyboardType: TextInputType.number,
-                            onFieldSubmitted: (value) {},
-                          ),
-                        ),
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(count),
                       ),
+                      // Padding(
+                      //   padding:
+                      //       const EdgeInsets.only(left: 10, right: 1, top: 4),
+                      //   child: Container(
+                      //     width: 20,
+                      //     height: 20,
+                      //     color: Colors.transparent,
+                      //     child: TextFormField(
+                      //       decoration: InputDecoration(
+                      //         fillColor: Colors.transparent,
+                      //         enabledBorder: UnderlineInputBorder(
+                      //             borderSide: BorderSide.none),
+                      //         focusedBorder: UnderlineInputBorder(
+                      //             borderSide: BorderSide.none),
+                      //         border: UnderlineInputBorder(
+                      //             borderSide: BorderSide.none),
+                      //         labelText: qty,
+                      //       ),
+                      //       focusNode: focusKeyboard,
+                      //       controller: numController,
+                      //       textAlign: TextAlign.center,
+                      //       style: TextStyle(fontFamily: 'Helvetica'),
+                      //       keyboardType: TextInputType.number,
+                      //       onFieldSubmitted: (value) {},
+                      //     ),
+                      //   ),
+                      // ),
                       CounterButton(
                         iconData: Icons.add,
-                        onTap: () {},
+                        onTap: plus,
                         color: Colors.black,
                       ),
                     ],
