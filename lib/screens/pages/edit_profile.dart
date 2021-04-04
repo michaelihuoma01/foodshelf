@@ -33,8 +33,8 @@ class _EditProfileState extends StateMVC<EditProfile> {
 
   void _getUserProfile() async {
     final IResponse<User> profileResponse = await _ctrl.getUserProfile();
-    _user = profileResponse.data;
-    setState(() {});
+    _user = profileResponse?.data;
+    // setState(() {});
 
     _fnameField.text = _user?.name;
     _phoneField.text = _user?.phone;
@@ -135,6 +135,8 @@ class _EditProfileState extends StateMVC<EditProfile> {
                             style: TextStyle(fontSize: 16)),
                         SizedBox(height: 20),
                         SelectState(
+                          cityInitialValue: city,
+                          countryInitialValue: country,
                           onCountryChanged: (value) {
                             setState(() {
                               countryValue = value;
