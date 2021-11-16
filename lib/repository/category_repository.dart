@@ -23,7 +23,7 @@ Future<IResponse<List<Category>>> getCategory() async {
   };
 
   var res = await http.get(
-    "$url/categories",
+     Uri.parse("$url/categories"),
     headers: headers,
   );
   final Map resData = json.decode(res.body);
@@ -54,7 +54,7 @@ Future<IResponse<List<Category>>> getProducts() async {
   };
 
   var res = await http.get(
-    "$url/products",
+    Uri.parse( "$url/products"),
     headers: headers,
   );
   final Map resData = json.decode(res.body);
@@ -85,7 +85,7 @@ Future<IResponse<List<Category>>> getCart(String deviceId) async {
   };
 
   var res = await http.get(
-    "$url/get-cart?device_id=$deviceId",
+     Uri.parse("$url/get-cart?device_id=$deviceId"),
     headers: headers,
   );
   final Map resData = json.decode(res.body);
@@ -120,7 +120,7 @@ Future<IResponse<Category>> getProductDetails({
     };
 
     var res = await http.get(
-      "$url/products/$id",
+       Uri.parse("$url/products/$id"),
       headers: headers,
     );
     final Map data = json.decode(res.body);
@@ -148,7 +148,7 @@ Future<IResponse<Cart>> addCart(
     };
 
     var res = await http.post(
-      "$url/add-to-cart",
+       Uri.parse("$url/add-to-cart"),
       body: json.encode({
         'user_id': uid,
         'device_id': deviceID,
@@ -195,7 +195,7 @@ Future<IResponse<Cart>> updateCart(
     };
 
     var res = await http.post(
-      "$url/update-cart",
+       Uri.parse("$url/update-cart"),
       body: json.encode({
         'device_id': deviceID,
         'user_id': uid,
@@ -241,7 +241,7 @@ Future<IResponse<Cart>> deleteCartItem(String deviceID, productID) async {
     };
 
     var res = await http.post(
-      "$url/delete-cart-item",
+      Uri.parse( "$url/delete-cart-item"),
       body: json.encode({
         'device_id': deviceID,
         'product_id': productID,
@@ -285,7 +285,7 @@ Future<IResponse<Cart>> clearCart(String deviceID) async {
     };
 
     var res = await http.post(
-      "$url/clear-cart",
+       Uri.parse("$url/clear-cart"),
       body: json.encode({
         'device_id': deviceID,
       }),

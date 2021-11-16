@@ -9,6 +9,7 @@ import 'package:foodshelf/utility/brand_colors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   await setupLocator();
   runApp(MyApp());
 }
@@ -19,18 +20,18 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final RemoteConfigService _remoteConfigService = getIt<RemoteConfigService>();
+  // final RemoteConfigService _remoteConfigService = getIt<RemoteConfigService>();
 
-  initRemoteConfig() async {
-    await _remoteConfigService.initialise();
-    print(_remoteConfigService.getBaseUrl);
-  }
+  // initRemoteConfig() async {
+  //   await _remoteConfigService.initialise();
+  //   print(_remoteConfigService.getBaseUrl);
+  // }
 
   @override
   void initState() {
     super.initState();
     _initFirebase();
-    initRemoteConfig();
+    // initRemoteConfig();
   }
 
   void _initFirebase() async {

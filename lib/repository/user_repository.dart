@@ -24,7 +24,7 @@ Future<IResponse<User>> login(User user) async {
   };
 
   var res = await http.post(
-    "$url/login",
+     Uri.parse("$url/login"),
     body: json.encode(user.loginCredentials()),
     headers: headers,
   );
@@ -58,7 +58,7 @@ Future<IResponse<User>> userSignUp(User user) async {
   };
 
   var res = await http.post(
-    "$url/signup",
+     Uri.parse("$url/signup"),
     body: json.encode(user.toMap()),
     headers: headers,
   );
@@ -97,7 +97,7 @@ Future<IResponse<ContactModel>> contact(
   };
 
   var res = await http.post(
-    "$url/contact-us",
+     Uri.parse("$url/contact-us"),
     body: json.encode(
         {'message': message, 'name': name, 'subject': subject, 'email': email}),
     headers: headers,
@@ -136,7 +136,7 @@ Future<IResponse<User>> logout(User user) async {
     };
 
     var res = await http.get(
-      "$url}/auth/logout",
+       Uri.parse("$url}/auth/logout"),
       headers: headers,
     );
     final resData = json.decode(res.body);
@@ -161,7 +161,7 @@ Future<IResponse<User>> forgotPassword(String phone) async {
   };
 
   var res = await http.post(
-    "$url/forgot-password",
+    Uri.parse( "$url/forgot-password"),
     body: json.encode({'phone': phone}),
     headers: headers,
   );
@@ -198,7 +198,7 @@ Future<IResponse<User>> verifyToken(String code) async {
   };
 
   var res = await http.post(
-    "$url/verify-code",
+     Uri.parse("$url/verify-code"),
     body: json.encode({'code': code}),
     headers: headers,
   );
@@ -232,7 +232,7 @@ Future<IResponse<User>> resetPassword(
   };
 
   var res = await http.post(
-    "$url/reset-password",
+     Uri.parse("$url/reset-password"),
     body: json.encode({
       'password': password,
       'password_confirmation': passwordConfirmation,
@@ -274,7 +274,7 @@ Future<IResponse<User>> updateProfileDetails(
     };
 
     var res = await http.post(
-      "$url/update",
+       Uri.parse("$url/update"),
       body: json.encode({
         'name': name,
         'phone': phone,
@@ -320,7 +320,7 @@ Future<IResponse<User>> getUser() async {
     };
 
     var res = await http.get(
-      "$url/user",
+       Uri.parse("$url/user"),
       headers: headers,
     );
     final Map data = json.decode(res.body);
@@ -348,7 +348,7 @@ Future<IResponse<User>> changePassword(
   };
 
   var res = await http.post(
-    "$url/change-password",
+    Uri.parse( "$url/change-password"),
     body: json.encode({
       'old_password': oldPassword,
       'new_password': newPassword,

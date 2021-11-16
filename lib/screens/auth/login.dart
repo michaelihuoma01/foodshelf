@@ -136,7 +136,11 @@ class _LoginPageState extends StateMVC<LoginPage> {
                       return;
                     }
 
-                    _con.login();
+                    // _con.login();
+                     Navigator.of(_con.scaffoldKey?.currentContext).pushReplacementNamed(
+          MainPage.routeName,
+          arguments: 0,
+        );
                   },
                   title: 'Sign In'),
               SizedBox(height: 10),

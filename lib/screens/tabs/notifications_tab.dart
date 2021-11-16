@@ -55,9 +55,11 @@ class _NotificationsTabState extends StateMVC<NotificationsTab> {
             child: Scaffold(
               key: _ctrl.scaffoldKey,
               backgroundColor: Colors.transparent,
-              body: (_ctrl.fetchingAddresses)
-                  ? Center(child: CircularProgressIndicator())
-                  : Padding(
+              body:
+              //  (_ctrl.fetchingAddresses)
+              //     ? Center(child: CircularProgressIndicator())
+              //     :
+                   Padding(
                       padding:
                           const EdgeInsets.only(left: 20, right: 20, top: 170),
                       child: Column(
@@ -81,37 +83,38 @@ class _NotificationsTabState extends StateMVC<NotificationsTab> {
                               ),
                             ],
                           ),
-                          (_ctrl.getNotificationsList.value.length != 0)
-                              ? Expanded(
+                          // (_ctrl.getNotificationsList.value.length != 0)
+                          //     ? 
+                              Expanded(
                                   child: ListView(
-                                      children: _ctrl?.getNotificationsList
-                                                  ?.value !=
-                                              null
-                                          ? _ctrl.getNotificationsList.value
-                                              .map(
-                                                (NotificationsModel
-                                                        notificationsModel) =>
-                                                    Column(
+                                      children:
+                                      //  _ctrl?.getNotificationsList
+                                      //             ?.value !=
+                                      //         null
+                                      //     ? _ctrl.getNotificationsList.value
+                                      //         .map(
+                                      //           (NotificationsModel
+                                      //                   notificationsModel) =>
+                                                 [   Column(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     NotificationsTile(
-                                                      title: notificationsModel
-                                                          .description,
+                                                      title: 'Your order has been shipped'
+                                                          ,
                                                       price: '49.99',
                                                       context: context,
                                                     ),
                                                     SizedBox(height: 20)
                                                   ],
-                                                ),
+                                                )],
                                               )
-                                              .toList()
-                                          : []),
-                                )
-                              : Padding(
-                                padding: const EdgeInsets.only(top: 30),
-                                child:   Text('No Notifications'),
-                              ),
+                                             ),
+                            
+                              // : Padding(
+                              //   padding: const EdgeInsets.only(top: 30),
+                              //   child:   Text('No Notifications'),
+                              // ),
                         ],
                       ),
                     ),

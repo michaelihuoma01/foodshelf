@@ -27,7 +27,7 @@ Future<IResponse<Delivery>> deliveryDetails(
     };
 
     var res = await http.post(
-      "$url/delivery-details",
+       Uri.parse("$url/delivery-details"),
       body: json.encode({
         'area': area,
         'building': building,
@@ -77,7 +77,7 @@ Future<IResponse<Delivery>> getDelivryAddress() async {
     String uuid = await storage.read(key: 'uid');
 
     var res = await http.get(
-      "$url/delivery-details/$uuid",
+      Uri.parse( "$url/delivery-details/$uuid"),
       headers: headers,
     );
     final Map data = json.decode(res.body);

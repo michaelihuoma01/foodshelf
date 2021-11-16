@@ -21,8 +21,8 @@ Future<IResponse<List<NotificationsModel>>> getNotification(String id) async {
     "authorization": 'Bearer ${await storage.read(key: 'token')}',
   };
 
-  var res = await http.get(
-    "$url/notifications?user_id=$id",
+  var res = await http.get( 
+    Uri.parse("$url/notifications?user_id=$id"),
     headers: headers,
   );
   final Map resData = json.decode(res.body);
@@ -56,7 +56,7 @@ Future<IResponse<NotificationsModel>> clearNotifications(String uid) async {
     };
 
     var res = await http.get(
-      "$url/clear-notifications/$uid",
+       Uri.parse("$url/clear-notifications/$uid"),
       headers: headers,
     );
     final Map resData = json.decode(res.body);
@@ -66,7 +66,6 @@ Future<IResponse<NotificationsModel>> clearNotifications(String uid) async {
       token: resData['access_token'],
     );
 
-<<<<<<< HEAD
     // TODO: Remove, Inherit from Interceptor
     switch (res.statusCode) {
       case 200:
@@ -76,18 +75,7 @@ Future<IResponse<NotificationsModel>> clearNotifications(String uid) async {
       default:
         break;
     }
-=======
-    // switch (res.statusCode) {
-    //   case 200:
-    //   case 409:
-    //     alRes.data =
-    //         NotificationsModel.fromJSON(resData['message']);
-    //     break;
-    //   default:
-    //     break;
-    // }
 
->>>>>>> 1b0a4e94c05b546974d443e4430c16249860c78d
     return alRes;
   } catch (e) {
     print(e);

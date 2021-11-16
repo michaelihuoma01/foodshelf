@@ -27,7 +27,7 @@ class RemoteConfigService {
     try {
       await _remoteConfig.setDefaults(defaults);
       await _fetchAndActivate();
-    } on FetchThrottledException catch (exception) {
+    }  catch (exception) {
       // Fetch throttled.
       print('Remote config fetch throttled: $exception');
     } catch (exception) {
@@ -38,7 +38,7 @@ class RemoteConfigService {
 
   Future _fetchAndActivate() async {
     await _remoteConfig.fetch();
-    await _remoteConfig.activateFetched();
+    await _remoteConfig.fetchAndActivate();
 
     print('URL: $getBaseUrl');
   }

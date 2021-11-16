@@ -13,6 +13,7 @@ class User {
       uuid,
       name, 
       country,
+      state,
       city;
 
   User();
@@ -25,6 +26,7 @@ class User {
       name = jsonMap['name']; 
       country = jsonMap['country'];
       city = jsonMap['city'];
+      state = jsonMap['state'];
       password = jsonMap['password'];
       passwordConfirmation = jsonMap['password_confirmation'];
     } catch (e) {
@@ -42,6 +44,7 @@ class User {
     map["id"] = uuid.toString();
     map["name"] = name; 
     map["city"] = city;
+    map["state"] = state;
     map["country"] = country;
 
     return map;

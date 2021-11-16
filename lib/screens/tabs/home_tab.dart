@@ -141,195 +141,235 @@ class _HomeTabState extends StateMVC<HomeTab> {
               ),
               Scaffold(
                 backgroundColor: Colors.transparent,
-                body: (_ctrl.fetchingAddresses)
-                    ? Center(child: CircularProgressIndicator())
-                    : Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                body:
+                    //  (_ctrl.fetchingAddresses)
+                    //     ? Center(child: CircularProgressIndicator())
+                    //     :
+                    Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 60, bottom: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 60, bottom: 10),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Container(
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Colors.white,
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(15),
-                                            child: SvgPicture.asset(
-                                                'assets/images/svg/hello.svg'),
-                                          )),
-                                      SizedBox(width: 10),
-                                      Column(
-                                        children: [
-                                          RichText(
-                                            // textAlign: TextAlign.center,
-                                            text: TextSpan(
-                                              children: <TextSpan>[
-                                                new TextSpan(
-                                                    text: 'Hello! \n',
-                                                    style: TextStyle(
-                                                        color: Colors.white)),
-                                                new TextSpan(
-                                                    text: '-- \n',
-                                                    style: TextStyle(
-                                                        color: BrandColors
-                                                            .colorAccent)),
-                                                new TextSpan(
-                                                    text:
-                                                        'A simple way for you to find \n',
-                                                    style: TextStyle(
-                                                        color: Colors.white)),
-                                                new TextSpan(
-                                                    text: 'Healthy Food ',
-                                                    style: TextStyle(
-                                                        color: BrandColors
-                                                            .colorAccent)),
-                                                new TextSpan(
-                                                    text: 'everyday',
-                                                    style: TextStyle(
-                                                        color: Colors.white)),
-                                              ],
-                                            ),
-                                          ),
+                            Row(
+                              children: [
+                                Container(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white,
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(15),
+                                      child: SvgPicture.asset(
+                                          'assets/images/svg/hello.svg'),
+                                    )),
+                                SizedBox(width: 10),
+                                Column(
+                                  children: [
+                                    RichText(
+                                      // textAlign: TextAlign.center,
+                                      text: TextSpan(
+                                        children: <TextSpan>[
+                                          new TextSpan(
+                                              text: 'Hello! \n',
+                                              style: TextStyle(
+                                                  color: Colors.white)),
+                                          new TextSpan(
+                                              text: '-- \n',
+                                              style: TextStyle(
+                                                  color:
+                                                      BrandColors.colorAccent)),
+                                          new TextSpan(
+                                              text:
+                                                  'A simple way for you to find \n',
+                                              style: TextStyle(
+                                                  color: Colors.white)),
+                                          new TextSpan(
+                                              text: 'Healthy Food ',
+                                              style: TextStyle(
+                                                  color:
+                                                      BrandColors.colorAccent)),
+                                          new TextSpan(
+                                              text: 'everyday',
+                                              style: TextStyle(
+                                                  color: Colors.white)),
                                         ],
                                       ),
-                                    ],
-                                  ),
-                                  InkWell(
-                                      child: Icon(Icons.search,
-                                          color: Colors.white))
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: 100),
-                            Container(
-                              height: MediaQuery.of(context).size.height * .16,
-                              child: ListView(
-                                  scrollDirection: Axis.horizontal,
-                                  children: categoriesList),
-                            ),
-                            (isVisible)
-                                ? Expanded(
-                                    child: Container(
-                                      child: GridView.count(
-                                        crossAxisCount: 4,
-                                        childAspectRatio:
-                                            (itemWidth / itemHeight),
-                                        children: _ctrl?.getCatList?.value !=
-                                                null
-                                            ? _ctrl.getCatList.value
-                                                .map(
-                                                  (Category category) =>
-                                                      GestureDetector(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        _ctrl.categoryList
-                                                                .title =
-                                                            category.title;
-                                                      });
-                                                    },
-                                                    child: FoodType(
-                                                      url:
-                                                          'assets/images/svg/rice.svg',
-                                                      title: category.title,
-                                                      isSelected:
-                                                          (category.title ==
-                                                              _ctrl.categoryList
-                                                                  .title),
-                                                    ),
-                                                  ),
-                                                )
-                                                .toList()
-                                                .sublist(
-                                                    4,
-                                                    _ctrl.getCatList.value
-                                                        .length)
-                                            : [],
-                                      ),
                                     ),
-                                  )
-                                : Expanded(
-                                    child: Container(
-                                      child: GridView.count(
-                                        crossAxisCount: 2,
-                                        children: (isFiltered)
-                                            ? _ctrl?.getProdList?.value != null
-                                                ? _ctrl.getProdList.value
-                                                    .map(
-                                                      (Category category) =>
-                                                          InkWell(
-                                                        onTap: () {
-                                                          _ctrl.productsList
-                                                                  .categoryID =
-                                                              category
-                                                                  .categoryID;
-
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder: (context) =>
-                                                                      DetailsPage(
-                                                                          id: category
-                                                                              .id)));
-                                                        },
-                                                        child: FoodHome(
-                                                            url: category.image,
-                                                            title:
-                                                                category.title,
-                                                            subtitle:
-                                                                '${category.price} AED',
-                                                            bgColor: Colors
-                                                                .grey[400]),
-                                                      ),
-                                                    )
-                                                    .toList()
-                                                : []
-                                            : filteredList != null
-                                                ? filteredList
-                                                    .map(
-                                                      (Category category) =>
-                                                          InkWell(
-                                                        onTap: () {
-                                                          _ctrl.productsList
-                                                                  .categoryID =
-                                                              category
-                                                                  .categoryID;
-
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder: (context) =>
-                                                                      DetailsPage(
-                                                                          id: category
-                                                                              .id)));
-                                                        },
-                                                        child: FoodHome(
-                                                            url: category.image,
-                                                            title:
-                                                                category.title,
-                                                            subtitle:
-                                                                '${category.price} AED',
-                                                            bgColor: Colors
-                                                                .grey[400]),
-                                                      ),
-                                                    )
-                                                    .toList()
-                                                : [],
-                                      ),
-                                    ),
-                                  ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            InkWell(
+                                child: Icon(Icons.search, color: Colors.white))
                           ],
                         ),
                       ),
+                      SizedBox(height: 100),
+                      Container(
+                        height: MediaQuery.of(context).size.height * .16,
+                        child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: categoriesList),
+                      ),
+                      (isVisible)
+                          ? Expanded(
+                              child: Container(
+                                child: GridView.count(
+                                    crossAxisCount: 4,
+                                    childAspectRatio: (itemWidth / itemHeight),
+                                    children:
+                                        //  _ctrl?.getCatList?.value !=
+                                        //         null
+                                        //     ?
+                                        // _ctrl.getCatList.value
+                                        //     .map(
+                                        //       (Category category) =>
+                                        [
+                                      GestureDetector(
+                                        onTap: () {
+                                          // setState(() {
+                                          //   _ctrl.categoryList
+                                          //           .title =
+                                          //       .title;
+                                          // });
+                                        },
+                                        child: FoodType(
+                                          url: 'assets/images/svg/rice.svg',
+                                          title: 'title',
+                                          isSelected: ('title' ==
+                                              _ctrl.categoryList.title),
+                                        ),
+                                      ),
+                                    ]
+
+                                    // .sublist(
+                                    //     4,
+                                    //     _ctrl.getCatList.value
+                                    //         .length)
+                                    // : [],
+                                    ),
+                              ),
+                            )
+                          : Expanded(
+                              child: Container(
+                                  child: GridView.count(
+                                      crossAxisCount: 2,
+                                      children: (isFiltered)
+                                          ?
+                                          // _ctrl?.getProdList?.value != null
+                                          //     ?
+
+                                          //  _ctrl.getProdList.value
+                                          //     .map(
+                                          //       (Category category) =>
+                                          [
+                                              InkWell(
+                                                onTap: () {
+                                                  // _ctrl.productsList
+                                                  //         .categoryID =
+                                                  //     category
+                                                  //         .categoryID;
+
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              DetailsPage(
+                                                                  id: 'll')));
+                                                },
+                                                child: FoodHome(
+                                                    url:
+                                                        'https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322775_2200-800x1200.jpg',
+                                                    title: 'Rice',
+                                                    subtitle: '${200} AED',
+                                                    bgColor: Colors.grey[400]),
+                                              ),
+                                              InkWell(
+                                                onTap: () {
+                                                  // _ctrl.productsList
+                                                  //         .categoryID =
+                                                  //     category
+                                                  //         .categoryID;
+
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              DetailsPage(
+                                                                  id: 'll')));
+                                                },
+                                                child: FoodHome(
+                                                    url:
+                                                        'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/homemade-bread-horizontal-1547759080.jpg?crop=0.671xw:1.00xh;0.0801xw,0&resize=640:*',
+                                                    title: 'Rice',
+                                                    subtitle: '${200} AED',
+                                                    bgColor: Colors.grey[400]),
+                                              ),
+                                              InkWell(
+                                                onTap: () {
+                                                  // _ctrl.productsList
+                                                  //         .categoryID =
+                                                  //     category
+                                                  //         .categoryID;
+
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              DetailsPage(
+                                                                  id: 'll')));
+                                                },
+                                                child: FoodHome(
+                                                    url:
+                                                        'https://www.grandturkishbazaar.com/wp-content/uploads/2020/12/luxury-assorted-turkish-nuts-1.jpg',
+                                                    title: 'Mixed Nuts',
+                                                    subtitle: '${200} AED',
+                                                    bgColor: Colors.grey[400]),
+                                              )
+                                            ]
+
+                                          // .toList()
+                                          // : []
+                                          : filteredList != null
+                                              ?
+
+                                              // filteredList
+                                              //     .map(
+                                              //       (Category category) =>
+                                              InkWell(
+                                                  onTap: () {
+                                                    // _ctrl.productsList
+                                                    //         .categoryID =
+                                                    //     category
+                                                    //         .categoryID;
+
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                DetailsPage(
+                                                                    id: 'category')));
+                                                  },
+                                                  child: FoodHome(
+                                                      url:
+                                                          'https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322775_2200-800x1200.jpg',
+                                                      title: 'title',
+                                                      subtitle: '${100} AED',
+                                                      bgColor:
+                                                          Colors.grey[400]),
+                                                )
+                                              : [])
+                                  // .toList()
+                                  ),
+                            ),
+                    ],
+                  ),
+                ),
               ),
             ],
           );

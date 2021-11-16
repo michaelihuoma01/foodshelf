@@ -21,7 +21,7 @@ Future<IResponse<GeneralDetails>> getDetails() async {
     };
 
     var res = await http.get(
-      "$url/home",
+      Uri.parse("$url/home"),
       headers: headers,
     );
 
@@ -62,7 +62,7 @@ Future<IResponse<List<GeneralDetails>>> getFaqs() async {
   };
 
   var res = await http.get(
-    "$url/home",
+    Uri.parse("$url/home"),
     headers: headers,
   );
   final Map resData = json.decode(res.body);
